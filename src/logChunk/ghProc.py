@@ -8,7 +8,8 @@ The log file name is stored in LOG_FILE variable(by default all_log_nomerge_func
 
 import sys
 import os
-import datetime
+#import datetime
+from datetime import datetime, timedelta
 #from git import *
 
 
@@ -17,6 +18,7 @@ sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 import Util
 from Util import ConfigInfo
+from Config import Config
 from ghLogDb import ghLogDb
 from getGitLog import LOG_FILE
 
@@ -77,7 +79,8 @@ def main():
 
     project = str(sys.argv[1])
     config_file = sys.argv[2]
-    config_info = ConfigInfo(config_file)   
+    config_info = ConfigInfo(config_file)  
+
 
     if(config_info.DATABASE):
         if(len(sys.argv) < 4):
@@ -92,18 +95,29 @@ def main():
         return
 
     if(config_info.LOGTIME):
-        start = datetime.datetime.now()
+        start = datetime.now()
 
-    #dumpLog(project)
-    if(config_info.DATABASE):
-        parseFinish = processLog(project, config_info, password)
+    cfg = Config(config_file)
+    log_config = cfg.ConfigSectionMap("Log")
+    try:
+        patch = log_config['patch']
+        print "you are in patch %s" % (patch)
+    except:
+        patch = True
+
+    if patch=='False':
+      print "!!!Todo: new parsing for non-patch"
+      parseFinish = datetime.now()
     else:
+      if(config_info.DATABASE):
+        parseFinish = processLog(project, config_info, password)
+      else:
         parseFinish = processLog(project, config_info)
 
     print "!! Done"
 
     if(config_info.LOGTIME):
-        end = datetime.datetime.now()
+        end = datetime.now()
         print("Project: " + project)
         print("Start time: " + str(start))
         print("Parse Finish time:" + str(parseFinish))

@@ -45,8 +45,8 @@ def dumpLog(projPath, languages, patch):
         #Python and Java
         #logCmd = "git log --date=short --no-merges -U1 --function-context -- " + all_extn + " > " + LOG_FILE
         #C and C++ and Python
-        if patch is False:
-            logCmd = "git log --date=short --no-merges -- " + all_extn + " > " + LOG_FILE
+        if patch == 'False':
+            logCmd = "git log --date=short --numstat --no-merges -- " + all_extn + " > " + LOG_FILE
         else:
             if(".c" in extSet or ".cpp" in extSet or ".py" in extSet):
                 #This will still fail on really big files.... (could we see what the biggest file is and use that?)
@@ -116,8 +116,11 @@ def main():
 
     try:
         patch = log_config['patch']
+        print "you are in patch %s" % (patch)
     except:
         patch = True
+
+    print patch
 
     if not os.path.isdir(project):
         print("!! Please provide a valid directory")
@@ -126,7 +129,6 @@ def main():
 
     getGitLog(project, langs, patch)
 
-    print patch
     print "Done!!"
 
 
