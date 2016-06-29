@@ -11,7 +11,9 @@ import os
 import datetime
 #from git import *
 
-sys.path.append("../util")
+
+from os.path import dirname
+sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 import Util
 from Util import ConfigInfo

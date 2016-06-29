@@ -5,11 +5,14 @@ import subprocess
 import getpass
 import os
 import argparse
-sys.path.append("../util")
+#sys.path.append("../util")
+from os.path import dirname
+sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 import Util
 from Util import ConfigInfo
 from Config import Config
+
 '''
 Gitcproc.py is the master script, it invokes:
 1) The downloads from GitHub

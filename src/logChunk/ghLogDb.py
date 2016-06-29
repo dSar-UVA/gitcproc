@@ -6,7 +6,8 @@ import csv
 import signal
 from logChunk import logChunk
 from datetime import datetime, timedelta
-sys.path.append("../util")
+from os.path import dirname
+sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 from dumpLogs import dumpLogs
 from Config import Config
