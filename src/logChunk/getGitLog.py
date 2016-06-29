@@ -4,7 +4,8 @@ import copy
 from git import *
 
 
-sys.path.append("../util")
+from os.path import dirname
+sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 import Util
 import LanguageSwitcherFactory
@@ -14,26 +15,22 @@ from Config import Config
 
 LOG_FILE = "all_log.txt"
 
-def dumpLog(projPath, languages):
+def dumpLog(projPath, languages, patch):
 
     if not os.path.isdir(projPath):
         print("!! Please provide a valid directory")
         return
 
     log_file = projPath + os.sep + LOG_FILE
- 
-    '''
-    if os.path.isfile(log_file):
-        print("%s exists!!" % (log_file))
-        return
-    '''
+
     extSet = LanguageSwitcherFactory.LanguageSwitcherFactory.getExtensions(languages)
     #print(extSet)
     all_extn = ""
-    #for e in Util.cpp_extension:
+
     for e in extSet:
         all_extn += " \\*"  + e
         all_extn += " \\*"  + e.upper()
+
     with Util.cd(projPath):
         #I think there are some problems here that are making us trace some unnecessary changes:
         #I'm going to list some of the optional commands that I think may be relevant (b/c I'm seeing)
@@ -48,14 +45,18 @@ def dumpLog(projPath, languages):
         #Python and Java
         #logCmd = "git log --date=short --no-merges -U1 --function-context -- " + all_extn + " > " + LOG_FILE
         #C and C++ and Python
-        if(".c" in extSet or ".cpp" in extSet or ".py" in extSet): 
-            #This will still fail on really big files.... (could we see what the biggest file is and use that?)
-            logCmd = "git log --date=short --no-merges -U99999 --function-context -- " + all_extn + " > " + LOG_FILE
-        else: #Java
-            logCmd = "git log --date=short --no-merges -U1 --function-context -- " + all_extn + " > " + LOG_FILE
+        if patch is False:
+            logCmd = "git log --date=short --no-merges -- " + all_extn + " > " + LOG_FILE
+        else:
+            if(".c" in extSet or ".cpp" in extSet or ".py" in extSet):
+                #This will still fail on really big files.... (could we see what the biggest file is and use that?)
+                logCmd = "git log --date=short --no-merges -U99999 --function-context -- " + all_extn + " > " + LOG_FILE
+            else: #Java
+                logCmd = "git log --date=short --no-merges -U1 --function-context -- " + all_extn + " > " + LOG_FILE
 
         #os.system("git stash save --keep-index; git pull")
         print(logCmd)
+
         #Remove the old logs.
         try:
             os.system("rm " + LOG_FILE)
@@ -63,7 +64,6 @@ def dumpLog(projPath, languages):
             print("Rm failed.")
             pass
         os.system(logCmd)
-
 
 
 #This seems deprecated relative to ghProc.py
@@ -83,7 +83,7 @@ def processLog(projPath):
     ghDb.processLog()
 
 
-def getGitLog(project, languages):
+def getGitLog(project, languages, patch=True):
 
     projects = os.listdir(project)
     count = 0
@@ -93,7 +93,7 @@ def getGitLog(project, languages):
         #  continue
         proj_path = os.path.join(project, p)
         print proj_path
-        dumpLog(proj_path, languages)
+        dumpLog(proj_path, languages, patch)
         #processLog(proj_path)
 
 
@@ -114,12 +114,19 @@ def main():
     except:
         langs = [] #Treat empty as showing all supported languages.
 
+    try:
+        patch = log_config['patch']
+    except:
+        patch = True
+
     if not os.path.isdir(project):
         print("!! Please provide a valid directory")
         return
 
-    getGitLog(project, langs)
-    #processLog(project)
+
+    getGitLog(project, langs, patch)
+
+    print patch
     print "Done!!"
 
 
