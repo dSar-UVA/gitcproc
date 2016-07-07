@@ -14,7 +14,7 @@ class dumpLogs:
 
     def __init__(self, password, c_info):
         self.config_info = c_info
-        self.cfg = Config(self.config_info.CONFIG)
+        self.db_config = self.config_info.config_db
         self.dbPass = password
         self.connectDb()
         #self.cleanDb()
@@ -37,7 +37,7 @@ class dumpLogs:
         return dictStr
 
     def connectDb(self):
-        self.db_config = self.cfg.ConfigSectionMap("Database")
+        #self.db_config = self.cfg.ConfigSectionMap("Database")
         logging.debug("Database configuration = %r\n", self.db_config)
         self.dbCon = DatabaseCon(self.db_config['database'], self.db_config['user'], \
                                  self.db_config['host'], self.db_config['port'], \
@@ -79,6 +79,49 @@ class dumpLogs:
         self.dbCon.create(sql_command)
         #self.dbCon.create("ALTER TABLE " + table + " OWNER TO " + user + ";")
         #self.dbCon.create("GRANT ALL ON TABLE " + table + " TO " + user + ";")
+        
+    def createFileChangesTable(self):
+        schema = self.db_config['schema']
+        table = schema + "." + self.db_config['table_file_detail']
+        user = self.db_config['user']
+
+        sql_command = "CREATE TABLE IF NOT EXISTS " + table + \
+            " (project character varying(500) NOT NULL," + \
+            " sha text NOT NULL," + \
+            " language character varying(500)," + \
+            " file_name text," + \
+            " is_test boolean," + \
+            " committer character varying(500), commit_date date," + \
+            " author character varying(500), author_date date," + \
+            " is_bug boolean," + \
+            " total_adds integer, total_dels integer," +\
+            " CONSTRAINT " + self.db_config['table_file_detail'] + "_pkey PRIMARY KEY (project, sha, file_name)) WITH (OIDS=FALSE);"
+
+        if(self.config_info.DEBUG):
+            print(sql_command)
+       
+            
+        self.dbCon.create(sql_command)
+        self.dbCon.commit()
+        #self.dbCon.create("ALTER TABLE " + table + " OWNER TO " + user + ";")
+        #self.dbCon.create("GRANT ALL ON TABLE " + table + " TO " + user + ";")
+        
+        
+    def dumpFileChanges(self, summaryStr):
+
+        schema = self.db_config['schema']
+        table = schema + "." + self.db_config['table_file_detail']
+
+        sql_command = " INSERT INTO " + table + \
+                      "(project, sha, language, file_name, is_test, committer, commit_date," + \
+                      " author, author_date, is_bug, total_adds, total_dels)" + \
+                      "  VALUES (" + summaryStr + ");"
+
+        if(self.config_info.DEBUG):
+           print sql_command
+        
+        self.dbCon.insert(sql_command)
+        #self.dbCon.commit()
 
     def createMethodChangesTable(self, titleString):
         schema = self.db_config['schema']

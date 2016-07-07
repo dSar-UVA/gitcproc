@@ -7,13 +7,15 @@ import argparse
 import csv
 from datetime import datetime, timedelta
 import random
+from sets import Set
 
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.corpus import stopwords
 
 
-from sets import Set
+
 from commit import commit
+from dumpLogs import dumpLogs
 
 
 #import util
@@ -51,6 +53,16 @@ extn2tag = { '.c' : 'c', \
         '.hs' : 'haskell'
         }
 
+
+def toStr(text):
+    try:
+        text1 = str(text).encode('iso-8859-1')
+        temp_text = text1.replace("\'","\"")
+        temp_text = temp_text.strip()
+        return "\'" + str(temp_text) + "\'"
+    except:
+        print type(text)
+        return "\'NA\'"
 
 #----------------------------------------------------#
 
@@ -99,16 +111,13 @@ def get_time(commit_date):
 
 class ghProcNoPatch:
 
-    tag2xml = {}
-
-    def __init__(self, project, no_merge_log, no_stat_log, config_file, bug_db=None):
-
-        global CSV
+    def __init__(self, project, no_merge_log, no_stat_log, config_file, password='', bug_db=None):
 
         self.noMergeLog = no_merge_log
         self.noStatLog = no_stat_log
         self.configInfo = ConfigInfo(config_file) 
         self.extBugDb = bug_db
+        self.dbPass = password
 
         self.project = project
         self.sha2commit = {}
@@ -124,6 +133,9 @@ class ghProcNoPatch:
     def dump(self, bug_only):
       if self.configInfo.CSV:
         self.dump2csv(bug_only)
+        
+      if self.configInfo.DATABASE:
+        self.dump2db(bug_only)
       
       
       
@@ -132,12 +144,12 @@ class ghProcNoPatch:
         if self.configInfo.CSV is False:
             return
             
-        out_file = os.path.join(self.project, "ChangeSummaryNoPatch.csv")
+        out_file = os.path.join(self.project, "FileChanges.csv")
         print out_file
         
         of=open(out_file,'w')
         
-        out_str = "project, sha, language, file_name, is_test, committer, commit_date, author, author_date, total_add, total_del,is_bug"
+        out_str = "project, sha, language, file_name, is_test, committer, commit_date, author, author_date, is_bug, total_add, total_del"
         of.write(out_str + '\n')
         
         for sha, co in self.sha2commit.iteritems():
@@ -151,8 +163,34 @@ class ghProcNoPatch:
             out_str = (',').join((co.project, co.sha, \
                 language, file_name, is_test, \
                 co.committer, co.commit_date, co.author, co.author_date, \
-                insertion,deletion,str(co.isbug)))
+                str(co.isbug),insertion,deletion))
             of.write(out_str + '\n')
+            
+            
+    def dump2db(self, bug_only):
+
+        if self.configInfo.DATABASE is False:
+            return
+            
+        dl = dumpLogs(self.dbPass, self.configInfo)
+        dl.createFileChangesTable()
+        
+        for sha, co in self.sha2commit.iteritems():
+          for ch in co.changes:
+            insertion, deletion, file_name, language = ch.get() 
+            if "test" in file_name:
+              is_test = "True"
+            else:
+              is_test = "False"
+              
+            out_str = (',').join((toStr(co.project), toStr(co.sha), \
+                toStr(language), toStr(file_name), toStr(is_test), \
+                toStr(co.committer), toStr(co.commit_date), toStr(co.author), toStr(co.author_date), \
+                toStr(co.isbug),toStr(insertion),toStr(deletion)))
+            dl.dumpFileChanges(out_str)
+            
+        dl.close()
+        
 
             
         

@@ -110,7 +110,7 @@ def main():
       no_stat = os.path.join(project,'no_stat_log.txt')
       parseFinish = datetime.now()
       
-      pl = ghProcNoPatch(project, no_merge, no_stat, config_file)
+      pl = ghProcNoPatch(project, no_merge, no_stat, config_file, password)
       pl.parse()
       
     else:
