@@ -17,8 +17,7 @@ from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 import Util
-from Util import ConfigInfo
-from Config import Config
+from ConfigInfo import ConfigInfo
 from ghLogDb import ghLogDb
 from getGitLog import LOG_FILE
 

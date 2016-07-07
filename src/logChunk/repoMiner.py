@@ -1,6 +1,6 @@
 import sys
 
-import configProc
+
 import ghProc
 import getGitLog
 import subprocess
@@ -12,8 +12,7 @@ from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 import Util
-from Util import ConfigInfo
-from Config import Config
+from ConfigInfo import ConfigInfo
 
 '''
 Gitcproc.py is the master script, it invokes:
@@ -40,13 +39,13 @@ else:
     password = ""
 
 
-cfg = Config(config_file)
-repo_config = cfg.ConfigSectionMap("Repos")
+#cfg = Config(config_file)
+#repo_config = cfg.ConfigSectionMap("Repos")
 
 
 
 if(args.download):
-    count = sum(1 for line in open(repo_config['repo_url_file'])) #Default is to read all of them in.
+    count = sum(1 for line in open(config_info.config_repo['repo_url_file'])) #Default is to read all of them in.
 
     #Check that the repo list file exists
     if(not os.path.isfile(repo_config['repo_url_file'])):
@@ -62,14 +61,19 @@ if(args.download):
 
 if(args.write_log):
     #Also should include logging for time...
-    subprocess.call(["python", "getGitLog.py", repo_config['repo_locations'], config_file])
+    subprocess.call(["python", "getGitLog.py", config_file])
 
 if(args.parse_log):
 
-  repos = configProc.getRepos(repo_config)
+  repos = config_info.getRepos()
+  print repos
+  
+  repo_loc = config_info.getDumpLocation()
   
   #Run ghProc
-  dirs_and_names = [(os.path.join(repo_config['repo_locations'], name), name) for name in os.listdir(repo_config['repo_locations']) if os.path.isdir(os.path.join(repo_config['repo_locations'], name))]
+  dirs_and_names = [(os.path.join(repo_loc, name), name) \
+                    for name in os.listdir(repo_loc) \
+                    if os.path.isdir(os.path.join(repo_loc, name))]
   
   for next_project, name in dirs_and_names:
     if (len(repos) != 0 and name in repos) or (len(repos) == 0):

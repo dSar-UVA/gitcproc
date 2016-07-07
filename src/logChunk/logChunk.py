@@ -7,7 +7,7 @@ from PatchMethod import PatchMethod
 sys.path.append("../util")
 
 import Util
-from Util import ConfigInfo
+from ConfigInfo import ConfigInfo
 import scopeTracker
 import LanguageSwitcherFactory
 import languageSwitcher
@@ -16,7 +16,7 @@ from UnsupportedScopeException import *
 from InvalidCodeException import *
 from CountException import *
 from dictUtil import incrementDict, nonZeroCount
-from Config import Config
+#from Config import Config
 from chunkingConstants import *
 
 #A log contains a raw set of text and a set of functions

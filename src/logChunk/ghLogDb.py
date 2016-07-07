@@ -10,7 +10,7 @@ from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 from dumpLogs import dumpLogs
-from Config import Config
+#from Config import Config
 from PatchMethod import PatchMethod
 import TimeExceededError
 from chunkingConstants import *

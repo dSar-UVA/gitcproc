@@ -6,7 +6,7 @@ import codecs
 sys.path.append("../util")
 
 from DatabaseCon import DatabaseCon
-from Config import Config
+#from Config import Config
 import Util
 
 

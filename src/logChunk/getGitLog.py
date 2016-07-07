@@ -8,9 +8,8 @@ from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 import Util
-import configProc
+from ConfigInfo import ConfigInfo
 import LanguageSwitcherFactory
-from Config import Config
 from ghLogDb import ghLogDb
 
 LOG_FILE = "all_log.txt"
@@ -43,7 +42,7 @@ def dumpLog(projPath, languages, patch='True'):
 
     with Util.cd(projPath):
         
-      if patch == 'False':
+      if patch == False:
              LOG_FILE = ["no_merge_log.txt","no_stat_log.txt"]
              git_cmd1 = "git log --no-merges --numstat --pretty=\">>>>>>>>>>>> %H <<|>> " \
                     + projPath + " <<|>> %cn <<|>> %cd <<|>> %an <<|>> %ad <<|>>\"" \
@@ -71,54 +70,41 @@ def dumpLog(projPath, languages, patch='True'):
            
 
 
-def getGitLog(project, languages, repo_config, patch=True):
+def getGitLog(dumpLocation, repos, languages, patchMode=True):
 
-    projects = os.listdir(project)
-    repos = configProc.getRepos(repo_config)
+    projects = os.listdir(dumpLocation)
 
     count = 0
     for p in projects:
         if (len(repos) != 0 and p in repos) or (len(repos) == 0):
           count += 1      
-          proj_path = os.path.join(project, p)
-          print "===> Dumping log at %s." % proj_path
-          dumpLog(proj_path, languages, patch)
+          proj_path = os.path.join(dumpLocation, p)
+          print "===> Dumping log -- Location : %s,  Patch Mode : %s " % (proj_path, patchMode)
+          dumpLog(proj_path, languages, patchMode)
 
 
 def main():
     print "==== Utility to process Github logs ==="
-    #subprocess.call(["python", "getGitLog.py", repo_config['repo_locations'], config_file])
+    #subprocess.call(["python", "getGitLog.py", config_file])
     
-    if len(sys.argv) < 3:
-      print "!!! Usage: python getGitLog.py project config_file"
+    if len(sys.argv) < 2:
+      print "!!! Usage: python getGitLog.py config_file"
       sys.exit()
 
-    project = sys.argv[1]
-    config_file = sys.argv[2]        
+    config_file = sys.argv[1]  
+    config_info = ConfigInfo(config_file)         
+    
+    langs = config_info.getLanguages()
+    patch_mode = config_info.getPatchMode()
+    dump_location = config_info.getDumpLocation()
+    repos = config_info.getRepos()
 
-    cfg = Config(config_file)
-    log_config  = cfg.ConfigSectionMap("Log")
-    repo_config = cfg.ConfigSectionMap("Repos")
-            
-    try:
-        langs = log_config['languages'].split(",")
-    except:
-        langs = [] #Treat empty as showing all supported languages.
-
-    try:
-        patch = log_config['patch']
-    except:
-        patch = True
-
-    print "Patch Mode : %s" % (patch)
- 
-
-    if not os.path.isdir(project):
-        print("!!== Please provide a valid directory: given %s" % project)
-        return
+    if not os.path.isdir(dump_location):
+      print("!!== Please provide a valid directory: given %s" % dump_location)
+      return
 
 
-    getGitLog(project, langs, repo_config, patch)
+    getGitLog(dump_location, repos, langs, patch_mode)
 
     print "Done!!"
 
