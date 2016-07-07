@@ -14,11 +14,13 @@ from datetime import datetime, timedelta
 
 from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'..','util'))
+sys.path.append(os.path.join(dirname(__file__),'.','ghProcNoPatch'))
 
 import Util
 from ConfigInfo import ConfigInfo
 from ghLogDb import ghLogDb
 from getGitLog import LOG_FILE
+from parseLog import parseLog
 
 '''
 

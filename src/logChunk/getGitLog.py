@@ -33,7 +33,7 @@ def dumpLog(projPath, languages, patch='True'):
         return
 
     extSet = LanguageSwitcherFactory.LanguageSwitcherFactory.getExtensions(languages)
-    #print(extSet)
+    print(extSet)
     all_extn = ""
 
     for e in extSet:
@@ -99,6 +99,7 @@ def main():
     dump_location = config_info.getDumpLocation()
     repos = config_info.getRepos()
 
+    
     if not os.path.isdir(dump_location):
       print("!!== Please provide a valid directory: given %s" % dump_location)
       return

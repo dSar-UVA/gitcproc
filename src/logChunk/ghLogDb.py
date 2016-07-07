@@ -25,8 +25,7 @@ DATE  = '[0-9]{4}-[0-9]{2}-[0-9]{2}'
 lmtzr = WordNetLemmatizer()
 stoplist = stopwords.words('english')
 
-ERR_STR  = '\\berror\\b|\\bbug\\b|\\bfix\\b|\\bfixing\\b|\\bfixups\\b|\\bfixed\\b|\\bissue\\b|\\bmistake\\b|\\bblunder\\b|' \
-            + '\\bincorrect\\b|\\bfault\\b|\\bdefect\\b|\\bflaw\\b|\\bglitch\\b|\\bgremlin\\b|\\btypo\\b|\\berroneous\\b'
+
 
 
 def timeout(signum, frame):
@@ -222,7 +221,6 @@ class Sha:
 
 
     def if_bug(self, text):
-        global ERR_STR
         global lmtzr
         global stoplist
         isBug = False
@@ -238,7 +236,7 @@ class Sha:
         if "bug= " in bug_desc or "bug=none" in bug_desc:
             return isBug
         
-        if re.search(ERR_STR, '\b'+bug_desc+'\b', re.IGNORECASE):
+        if re.search(Util.ERR_STR, '\b'+bug_desc+'\b', re.IGNORECASE):
             isBug = True
 
         return isBug
