@@ -3,13 +3,15 @@ import os
 import copy
 from git import *
 
+
 from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 import Util
+import configProc
 import LanguageSwitcherFactory
-from ghLogDb import ghLogDb
 from Config import Config
+from ghLogDb import ghLogDb
 
 LOG_FILE = "all_log.txt"
 
@@ -69,23 +71,17 @@ def dumpLog(projPath, languages, patch='True'):
            
 
 
-def getGitLog(project, languages, repo_file=None, patch=True):
+def getGitLog(project, languages, repo_config, patch=True):
 
     projects = os.listdir(project)
-    repos = set()
-    
-    if not repo_file is None:
-      f = open(repo_file, 'r')
-      for line in f:
-        repo_url = line.strip()
-        _, repo = repo_url.split(os.sep) 
-        repos.add(repo)
+    repos = configProc.getRepos(repo_config)
 
     count = 0
     for p in projects:
         if (len(repos) != 0 and p in repos) or (len(repos) == 0):
           count += 1      
           proj_path = os.path.join(project, p)
+          print "===> Dumping log at %s." % proj_path
           dumpLog(proj_path, languages, patch)
 
 
@@ -103,11 +99,6 @@ def main():
     cfg = Config(config_file)
     log_config  = cfg.ConfigSectionMap("Log")
     repo_config = cfg.ConfigSectionMap("Repos")
-    
-    try:
-        repo_file = repo_config['repo_url_file']
-    except:
-        repo_file = None
             
     try:
         langs = log_config['languages'].split(",")
@@ -127,7 +118,7 @@ def main():
         return
 
 
-    getGitLog(project, langs, repo_file, patch)
+    getGitLog(project, langs, repo_config, patch)
 
     print "Done!!"
 
