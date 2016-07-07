@@ -122,14 +122,24 @@ class ghProcNoPatch:
 
 
     def dump(self, bug_only):
+      if self.configInfo.CSV:
+        self.dump2csv(bug_only)
+      
+      
+      
+    def dump2csv(self, bug_only):
 
         if self.configInfo.CSV is False:
             return
             
         out_file = os.path.join(self.project, "ChangeSummaryNoPatch.csv")
+        print out_file
         
-        inf1=open(out_file,'w')
-            
+        of=open(out_file,'w')
+        
+        out_str = "project, sha, language, file_name, is_test, committer, commit_date, author, author_date, total_add, total_del,is_bug"
+        of.write(out_str + '\n')
+        
         for sha, co in self.sha2commit.iteritems():
           for ch in co.changes:
             insertion, deletion, file_name, language = ch.get() 
@@ -138,10 +148,11 @@ class ghProcNoPatch:
             else:
               is_test = "False"
               
-            print (',').join((co.project, co.sha, \
+            out_str = (',').join((co.project, co.sha, \
                 language, file_name, is_test, \
                 co.committer, co.commit_date, co.author, co.author_date, \
-                insertion,deletion))
+                insertion,deletion,str(co.isbug)))
+            of.write(out_str + '\n')
 
             
         

@@ -105,7 +105,7 @@ def main():
     patch_mode = config_info.getPatchMode()
 
     if patch_mode==False:
-      print "!!!Todo: new parsing for non-patch"
+      
       no_merge = os.path.join(project,'no_merge_log.txt')
       no_stat = os.path.join(project,'no_stat_log.txt')
       parseFinish = datetime.now()
