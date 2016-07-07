@@ -38,7 +38,7 @@ def dumpLog(projPath):
         print logCmd
         os.system(logCmd)
 
-def processLog(projPath, c_info, password = ""):
+def processLog(projPath, c_info, is_patch, password = ""):
 
     
     log_file = projPath + os.sep + LOG_FILE
@@ -49,7 +49,7 @@ def processLog(projPath, c_info, password = ""):
     else:
         print("Going to process %s " % (log_file))
     
-    ghDb = ghLogDb(log_file, c_info, password)
+    ghDb = ghLogDb(log_file, c_info, is_patch, password)
     return ghDb.processLog()
 
 def checkProj(project):
@@ -91,7 +91,7 @@ def main():
 
 
     if checkProj(project) == False:
-        print("!! Please provide a valid directory")
+        print("!! Please provide a valid directory, given %s" % projPath)
         return
 
     if(config_info.LOGTIME):
@@ -100,19 +100,19 @@ def main():
     cfg = Config(config_file)
     log_config = cfg.ConfigSectionMap("Log")
     try:
-        patch = log_config['patch']
-        print "you are in patch %s" % (patch)
+        is_patch = log_config['patch']
+        print "you are in patch %s" % (is_patch)
     except:
-        patch = True
+        is_patch = True
 
-    if patch=='False':
+    if is_patch=='False':
       print "!!!Todo: new parsing for non-patch"
       parseFinish = datetime.now()
     else:
       if(config_info.DATABASE):
-        parseFinish = processLog(project, config_info, password)
+        parseFinish = processLog(project, config_info, is_patch, password)
       else:
-        parseFinish = processLog(project, config_info)
+        parseFinish = processLog(project, config_info, is_patch)
 
     print "!! Done"
 

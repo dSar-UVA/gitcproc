@@ -253,9 +253,10 @@ class Sha:
 
 class ghLogDb:
 
-    def __init__(self, logFile, c_info, password = ""):
+    def __init__(self, logFile, c_info, is_patch, password = ""):
 
         self.log_file = logFile
+        self.is_patch = is_patch
         self.project_name = None
         self.curr_method = None
         self.cur_lang = None
@@ -429,6 +430,199 @@ class ghLogDb:
         #except TimeExceededError.TimeExceededError:
         #    print "Processing timed out. Skipping Chunk"
 
+    def processLogNoPatch(self, config = ""):
+        if(config == ""):
+            config = self.config_info.CONFIG
+
+        signal.signal(signal.SIGALRM, timeout)
+
+        project1 = os.path.split(self.log_file)[0]
+        project1 = project1.rstrip(os.sep)
+        self.project_name = os.path.basename(project1)
+        print("---------- %s ------------\n" % (self.project_name))
+
+        if(self.config_info.DATABASE):
+            dl = dumpLogs(self.dbPass, self.config_info)
+
+        if(self.config_info.CSV):
+            if not os.path.isdir("../Results"):
+                os.mkdir("../Results")
+            inf1=open("../Results/"+str(self.project_name)+"ChangeSummary.csv",'a')
+            fPtrChangeSummary=open("../Results/"+"ChangeSummary.csv",'a')
+
+            inf1.write("project,sha,author,commit_date,is_bug,total_add,total_del\n")
+
+
+
+        inf = codecs.open(self.log_file, "r", "iso-8859-1")
+
+        shaObj   = None
+        patchObj = None
+        is_diff  = False
+        log_mssg = ""
+        is_no_prev_ver = False
+        is_no_next_ver = False
+        curLogChunk = logChunk("", "C", self.config_info)
+        linenum = 0
+
+        for l in inf:
+
+            try:
+                signal.alarm(0)
+
+                sha  = self.isSha(l)
+                line = l
+
+
+                #if(self.config_info.DEBUGLITE):
+                #    try:
+                #        print(line)
+                #    except:
+                #        pass
+
+                if sha:
+                    shaObj = Sha(self.project_name, sha)
+                    #if(self.config_info.DEBUGLITE): #Save for testing.
+                    self.shas.append(shaObj) #This will become very memory intensive in large git logs.
+                    
+                    is_diff = False
+                    log_mssg = ""
+                    
+                    continue
+
+                elif self.isAuthor(line,shaObj):
+                    continue
+
+                elif self.isDate(line,shaObj):
+                    continue
+
+                fullLine=line
+                line=line.rstrip()
+
+                if line.startswith('diff --git '):
+                    shaObj.setLog(log_mssg)
+                    is_diff = True
+                    is_no_prev_ver = False
+                    is_no_next_ver = False
+                    continue
+
+                    if patchObj != None:
+                        shaObj.patches.append(patchObj)
+
+                elif is_diff == False:
+                    if not line.strip():
+                        continue
+                    log_mssg += line + "\t"
+
+
+                if is_diff:
+                    if line.startswith("--- a/"):
+                        #Finish the changes to the old patch object
+                        if(patchObj != None):
+                            #If there is an existing chunk to parse, process it
+                            if(curLogChunk.header != ""):
+                                if(self.config_info.DEBUG): 
+                                    print("New diff with previous version: " + line)
+                                    print("HEADER: " + curLogChunk.header)
+                                self.processLastChunk(patchObj, curLogChunk)
+                            
+                            #Reset the current chunk obj
+                            if (self.config_info.DEBUG):
+                                print("Resetting.")
+                            curLogChunk.reset()
+                            curLogChunk.setLang("." + self.cur_lang) #DOUBLE CHECK ME!
+
+                        patchObj = self.createPatch(line)
+                        shaObj.patches.append(patchObj)
+                        #print patchObj
+                        #print shaObj.patches
+                    elif (line == '--- /dev/null'): #earlier file was empty
+                        is_no_prev_ver = True
+                    elif (line == '+++ /dev/null'): #next file version was empty
+                        is_no_next_ver = True
+                        continue
+                    elif (is_no_prev_ver == True) and line.startswith("+++ b/"):
+                        #Finish the changes to the old patch object
+                        if(patchObj != None):
+                            if(curLogChunk.header != ""): #If there is an existing chunk
+                                if (self.config_info.DEBUG): 
+                                    print("New diff with no previous version: " + line)
+                                    print("HEADER: " + curLogChunk.header)
+                                self.processLastChunk(patchObj, curLogChunk)
+
+                                if (self.config_info.DEBUG):
+                                    print("Resetting.")
+                                curLogChunk.reset()
+                                curLogChunk.setLang("." + self.cur_lang) #DOUBLE CHECK ME!
+
+                        patchObj = self.createPatchWithNoPrevVersion(line)
+                        shaObj.patches.append(patchObj)
+                    else: #Then we reached a content line.
+                        self.processPatch(fullLine, patchObj, curLogChunk)
+
+            except TimeExceededError.TimeExceededError:
+                print("Line Timed out, moving to next.")
+                continue
+
+        #Clear timeouts.
+        signal.alarm(0)
+
+        #Make sure to get the last patch in the file!
+        if(curLogChunk.header != ""): #If there is an existing chunk to parse
+            if(self.config_info.DEBUG): 
+                print("Last Patch: " + line)
+                print("HEADER: " + curLogChunk.header)
+            self.processLastChunk(patchObj, curLogChunk)
+
+        #if shaObj != None:
+        #    shaObj.patches.append(patchObj)
+
+        parseFinish = datetime.now()
+
+        if(self.shas != []): #If the log wasn't empty...
+            #Create the change summary table and the method change table now if necessary
+            if(self.config_info.DATABASE):
+                cfg = Config(self.config_info.CONFIG)
+                keywordFile = cfg.ConfigSectionMap("Keywords")
+                full_title = dumpLogs.getFullTitleString(curLogChunk.getEmptyKeywordDict())
+
+                dl.createSummaryTable()
+
+                if(full_title != ""): #Check if the changes table exists and create it if we have a title.
+                    dl.createMethodChangesTable(full_title)
+
+            for s in self.shas:
+                #s.printSha()
+                if s != None:
+                   if(self.config_info.DATABASE):            
+                       s.dumpSha(dl)
+                   elif(self.config_info.CSV):
+                       s.shaToCsv(inf1,inf2,fPtrChangeSummary,fPtrPatchSummary)
+                   else:
+                       s.printSha()
+
+
+        #Write out last sha.
+        #if(shaObj != None and self.config_info.DATABASE):
+        #    if(self.config_info.DEBUGLITE):
+        #        print("Writing to db.")
+        #    shaObj.dumpSha(dl)
+
+        if(self.config_info.DATABASE):
+            print("Closing Time.")
+            dl.close()
+        
+        if(self.config_info.CSV):
+            shaObj.shaToCsv(inf1,inf2,fPtrChangeSummary,fPtrPatchSummary)
+            inf1.close()
+            inf2.close()
+            fPtrChangeSummary.close()
+            fPtrPatchSummary.close()
+
+        print("Sha's processed:")
+        print(len(self.shas))
+
+        return parseFinish
 
     def processLog(self, config = ""):
         if(config == ""):

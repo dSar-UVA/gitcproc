@@ -41,6 +41,8 @@ else:
 cfg = Config(config_file)
 repo_config = cfg.ConfigSectionMap("Repos")
 
+
+
 if(args.download):
     count = sum(1 for line in open(repo_config['repo_url_file'])) #Default is to read all of them in.
 
