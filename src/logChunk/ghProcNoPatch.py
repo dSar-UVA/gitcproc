@@ -16,28 +16,41 @@ from sets import Set
 from commit import commit
 
 
-import util
-import zlib
+#import util
+
 
 from os.path import dirname
-sys.path.append(os.path.join(dirname(__file__),'../..','util'))
-sys.path.append(os.path.join(dirname(__file__),'..','.'))
+sys.path.append(os.path.join(dirname(__file__),'..','util'))
+
 
 import Util
 from ConfigInfo import ConfigInfo
 
 #----------------------------------------------------#
 
-
-XML = True
-
-
-
-
-
-
-
 delim = '<<|>>'
+
+extn2tag = { '.c' : 'c', \
+        '.cpp' : 'cpp', '.cpp_' : 'cpp', '.cpp1' : 'cpp', '.cpp2' : 'cpp', '.cppclean' : 'cpp', '.cpp_NvidiaAPI_sample' : 'cpp', '.cpp-s8inyu' : 'cpp', '.cpp-woains' : 'cpp', \
+        '.cs' : 'csharp', '.csharp' : 'csharp',  \
+        '.m' : 'objc', \
+        '.java' : 'java', \
+        '.scala' : 'scala', '.scla' : 'scala', \
+        '.go' : 'go', \
+        '.javascript' : 'javascript', '.js' : 'javascript', \
+        '.coffee' : 'coffeescript', '.coffeescript' : 'coffeescript', \
+        '.ts' : 'typescript', '.typescript' : 'typescript', \
+        '.rb'  : 'ruby', \
+        '.php' : 'php', \
+        '.pl' : 'perl', \
+        '.py' : 'python', \
+        '.sh' : 'shell', '.SH' : 'shell', '.ksh' : 'shell', '.bash' : 'shell', '.bat' : 'shell',  '.bats' : 'shell', \
+        '.cljx' : 'clojure', '.cljscm' : 'clojure', '.clj' : 'clojure', '.cljc': 'clojure', '.cljs' : 'clojure', \
+        '.css' : 'css', \
+        '.erl' : 'erlang', \
+        '.hs' : 'haskell'
+        }
+
 
 #----------------------------------------------------#
 
@@ -105,32 +118,15 @@ class ghProcNoPatch:
 
         self.parse_no_merge()
         self.parse_no_stat(bug_only)
-        #self.dump2Xml(bug_only)
-        self.dump2Csv(bug_only)
-        #self.dumpLogMssg2Csv()
-
-    def dumpLogMssg2Csv(self):
-        from sqlCon import sqlCon
-
-        conn = sqlCon("lang_study", "postgres", "localhost", "5432")
-
-        for sha, co in self.sha2commit.iteritems():
-            #print sha, co
-            #subj = zlib.compress(co.subject)
-            #bd = zlib.compress(co.body)
-            print ",".join((co.project, co.sha, co.body, co.subject))
-            conn.insert(co.project, co.sha, co.body, co.subject)
+        self.dump(bug_only)
 
 
-        conn.commit()
-        conn.close()
-
-    def dump2Csv(self, bug_only):
+    def dump(self, bug_only):
 
         if self.configInfo.CSV is False:
             return
             
-        out_file = os.path.join(self.project, "ChangeSummary.csv")
+        out_file = os.path.join(self.project, "ChangeSummaryNoPatch.csv")
         
         inf1=open(out_file,'w')
             
@@ -170,7 +166,7 @@ class ghProcNoPatch:
         for ch in change_files:
             insertion, deletion, file_name = ch[0], ch[1], ch[2]
             lang_extension = os.path.splitext(file_name)[1].strip().lower()
-            tag = util.extn2tag.get(lang_extension, None)
+            tag = extn2tag.get(lang_extension, None)
 
             if not tag is None:
                 co.addChange(insertion, deletion, file_name, tag)
@@ -318,7 +314,7 @@ def test():
     project = "/localtmp/feng/defects4j_origRepos/joda-time"
     no_merge = os.path.join(project,'no_merge_log.txt')
     no_stat = os.path.join(project,'no_stat_log.txt')
-    config_file = '../test_conf.ini'
+    config_file = 'test_conf.ini'
     pl = ghProcNoPatch(project, no_merge, no_stat, config_file)
     pl.parse(False)
     
