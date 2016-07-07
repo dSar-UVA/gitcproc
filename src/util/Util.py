@@ -9,22 +9,6 @@ from Config import Config
 
 supportedLanguages = ["C", "C++", "Java", "Python"]
 
-class ConfigInfo:
-    def __init__(self, newFile):
-        self.setConfigFile(newFile)
-
-
-    def setConfigFile(self, newFile):
-        self.CONFIG = newFile
-        cfg = Config(self.CONFIG)
-        option_flags = cfg.ConfigSectionMap("Flags")
-        self.SEP = option_flags['sep']
-        self.DEBUG = bool(util.strtobool(option_flags['debug']))
-        self.DEBUGLITE = bool(util.strtobool(option_flags['debuglite']))
-        self.DATABASE = bool(util.strtobool(option_flags['database']))
-        self.CSV = bool(util.strtobool(option_flags['csv']))
-        self.LOGTIME = bool(util.strtobool(option_flags['logtime']))
-
 
 class cd:
     """Context manager for changing the current working directory"""
@@ -65,17 +49,13 @@ def cleanup(path):
 
     if os.path.isdir(path):
         print "!!! Cleaning up " , path
-        shutil.rmtree(path)
-
-        # var = raw_input("Path %s exists; do you want to delete it?" % (path))
-        # print "you entered", var
-        # if var.lower().startswith('y'):
-        #   print "!!! Cleaning up " , path
-        #   shutil.rmtree(path)
-        
+        shutil.rmtree(path)        
     elif os.path.isfile(path):
         print "!!! Removing " , path
         os.remove(path)
+        
+def str2bool(v):
+  return v.lower() in ("yes", "true", "t", "1")
 
 all_extension = ['.c', '.cc', '.cpp', '.c++', '.cp', '.cxx', '.h', '.ic', \
 #                 '.cpp_' , '.cpp1' , '.cpp2' , '.cppclean' , \
@@ -89,3 +69,9 @@ all_extension = ['.c', '.cc', '.cpp', '.c++', '.cp', '.cxx', '.h', '.ic', \
 
 #cpp_extension = [ '.c', '.cc', '.cpp', '.c++', '.cp', '.cxx', '.h', '.ic']
 cpp_extension = [ '.c', '.cc', '.cpp', '.c++', '.cp', '.cxx']
+
+
+ERR_STR  = '\\berror\\b|\\bbug\\b|\\bfix\\b|\\bfixing\\b|\\bfixups\\b|\\bfixed\\b|\\bissue\\b|\\bmistake\\b|\\bblunder\\b|' \
+            + '\\bincorrect\\b|\\bfault\\b|\\bdefect\\b|\\bflaw\\b|\\bglitch\\b|\\bgremlin\\b|\\btypo\\b|\\berroneous\\b'
+            
+            

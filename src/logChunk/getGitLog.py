@@ -33,7 +33,7 @@ def dumpLog(projPath, languages, patch='True'):
         return
 
     extSet = LanguageSwitcherFactory.LanguageSwitcherFactory.getExtensions(languages)
-    print(extSet)
+    #print(extSet)
     all_extn = ""
 
     for e in extSet:

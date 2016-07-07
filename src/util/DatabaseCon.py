@@ -23,7 +23,7 @@ class DatabaseCon:
         try:
             cur.execute(sql_command)
         except psycopg2.IntegrityError:
-            print "Copy already exists."
+            print "!!! Copy already exists."
             print(sql_command)
             self.conn.rollback()
             return
