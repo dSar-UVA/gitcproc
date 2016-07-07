@@ -111,7 +111,8 @@ def main():
       parseFinish = datetime.now()
       
       pl = ghProcNoPatch(project, no_merge, no_stat, config_file)
-      pl.parse(False)
+      pl.parse()
+      
     else:
       if(config_info.DATABASE):
         parseFinish = processLog(project, config_info, is_patch, password)

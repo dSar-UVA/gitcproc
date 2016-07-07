@@ -114,7 +114,7 @@ class ghProcNoPatch:
         self.sha2commit = {}
 
 
-    def parse(self, bug_only):
+    def parse(self, bug_only=False):
 
         self.parse_no_merge()
         self.parse_no_stat(bug_only)
