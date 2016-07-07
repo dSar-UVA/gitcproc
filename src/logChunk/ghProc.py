@@ -14,13 +14,13 @@ from datetime import datetime, timedelta
 
 from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'..','util'))
-sys.path.append(os.path.join(dirname(__file__),'.','ghProcNoPatch'))
+
 
 import Util
 from ConfigInfo import ConfigInfo
 from ghLogDb import ghLogDb
 from getGitLog import LOG_FILE
-from parseLog import parseLog
+from ghProcNoPatch import ghProcNoPatch
 
 '''
 
@@ -106,7 +106,12 @@ def main():
 
     if patch_mode==False:
       print "!!!Todo: new parsing for non-patch"
+      no_merge = os.path.join(project,'no_merge_log.txt')
+      no_stat = os.path.join(project,'no_stat_log.txt')
       parseFinish = datetime.now()
+      
+      pl = ghProcNoPatch(project, no_merge, no_stat, config_file)
+      pl.parse(False)
     else:
       if(config_info.DATABASE):
         parseFinish = processLog(project, config_info, is_patch, password)
