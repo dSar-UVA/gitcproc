@@ -84,7 +84,7 @@ def getGitLog(dumpLocation, repos, languages, patchMode=True):
 
 
 def main():
-    print "==== Utility to process Github logs ==="
+    print "==== Utility to download Github logs ==="
     #subprocess.call(["python", "getGitLog.py", config_file])
     
     if len(sys.argv) < 2:

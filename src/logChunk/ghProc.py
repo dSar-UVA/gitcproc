@@ -8,9 +8,8 @@ The log file name is stored in LOG_FILE variable(by default all_log_nomerge_func
 
 import sys
 import os
-#import datetime
 from datetime import datetime, timedelta
-#from git import *
+
 
 
 from os.path import dirname
@@ -21,7 +20,7 @@ from ConfigInfo import ConfigInfo
 from ghLogDb import ghLogDb
 from getGitLog import LOG_FILE
 
-#LOG_FILE = "all_changed_log_java.txt"
+'''
 
 def dumpLog(projPath):
 
@@ -36,6 +35,7 @@ def dumpLog(projPath):
         logCmd = "git log --date=short -U1 -- \*.java > all_log.txt"
         print logCmd
         os.system(logCmd)
+'''
 
 def processLog(projPath, c_info, is_patch, password = ""):
 
@@ -71,15 +71,19 @@ def checkProj(project):
 
 def main():
     print "Utility to process github logs"
-
+    print sys.argv
     if len(sys.argv) < 3:
         print "!!! Usage: python ghProc.py project config_file [password]"
         sys.exit()
 
-    project = str(sys.argv[1])
-    config_file = sys.argv[2]
-    config_info = ConfigInfo(config_file)  
-
+    #project = str(sys.argv[1])
+    #config_file = sys.argv[2]
+    #config_info = ConfigInfo(config_file)  
+  
+    project     = str(sys.argv[1])
+    config_file = sys.argv[2]  
+    config_info = ConfigInfo(config_file)         
+    
 
     if(config_info.DATABASE):
         if(len(sys.argv) < 4):
@@ -95,16 +99,10 @@ def main():
 
     if(config_info.LOGTIME):
         start = datetime.now()
+        
+    patch_mode = config_info.getPatchMode()
 
-    cfg = Config(config_file)
-    log_config = cfg.ConfigSectionMap("Log")
-    try:
-        is_patch = log_config['patch']
-        print "you are in patch %s" % (is_patch)
-    except:
-        is_patch = True
-
-    if is_patch=='False':
+    if patch_mode==False:
       print "!!!Todo: new parsing for non-patch"
       parseFinish = datetime.now()
     else:

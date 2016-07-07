@@ -64,7 +64,7 @@ if(args.write_log):
     subprocess.call(["python", "getGitLog.py", config_file])
 
 if(args.parse_log):
-
+  
   repos = config_info.getRepos()
   print repos
   
@@ -78,7 +78,7 @@ if(args.parse_log):
   for next_project, name in dirs_and_names:
     if (len(repos) != 0 and name in repos) or (len(repos) == 0):
         print next_project, name
-        #subprocess.call(["python", "ghProc.py", next_project, config_file, password])
+        subprocess.call(["python", "ghProc.py", next_project, config_file, password])
         #subprocess.call(["nohup", "sh", "run.sh", next_project, name, config_file, password]) 
 
 
