@@ -11,7 +11,7 @@ import random
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.corpus import stopwords
 
-from xmlWrite import xmlWrite
+
 from sets import Set
 from commit import commit
 
@@ -149,48 +149,7 @@ class ghProcNoPatch:
 
             
         
-    def dump2Xml(self, bug_only):
-
-        if XML is False:
-            return
-
-        for sha, co in self.sha2commit.iteritems():
-            #print sha, co
-
-            if bug_only is True:
-                if co.isbug is False:
-                    threshold = 3
-                else:
-                    threshold = 5
-
-                #selecting only 1/threshold of the commits for learning
-                selectedRandomNumber= random.randint(1,10)
-                #print "selectedRandomNumber = " , selectedRandomNumber
-                if selectedRandomNumber > threshold:
-                    #print "skipping"
-                    continue
-                
-            self.outFile.setCommit(sha)
-            self.outFile.setProject(co.project)
-
-            if bug_only is False:
-                self.outFile.setCommitter(co.committer, co.commit_date)
-                self.outFile.setAuthor(co.author, co.author_date)
-            
-            self.outFile.setIsBug(co.isbug)
-            #self.outFile.setBugType("bug_type_root",co.bug_type_root)
-            #self.outFile.setBugType("bug_type_impact",co.bug_type_impact)
-            #self.outFile.setBugType("bug_type_component",co.bug_type_comp)
-            self.outFile.setSubject(co.subject)
-            self.outFile.setBody(co.body)
-
-            if bug_only is False:
-                for ch in co.changes:
-                    insertion, deletion, file_name, tag = ch.get() #ch[0], ch[1], ch[2], ch[3]
-                    #print (',').join((insertion, deletion, file_name, tag))
-                    self.outFile.setChanges(insertion, deletion, file_name, tag)
-
-        self.outFile.dump()
+    
 
 
     def dumpLog(self, sha, committer, commit_date, author, author_date, change_files):
