@@ -62,8 +62,6 @@ def downloadSnapshot(snapshotDir, projectDir, projectName):
   msg += '---------------------------------------------------- \n'
   print(msg)
            
-  #cmd = format_cmd('python generate_snapshot_data/get_snapshot_data.py ' + data_root_path + ' ' + language + ' ' \
-  #                   + project_name + ' dump ' + num_of_intervals)
   project_snapshot_dir = os.path.join(snapshotDir, projectName)
   project_cur_clone = os.path.join(projectDir, projectName)
   
@@ -71,11 +69,9 @@ def downloadSnapshot(snapshotDir, projectDir, projectName):
     print "!! %s already exists...going to delete it \n" % project_snapshot_dir
     call(format_cmd("rm -rf " + project_snapshot_dir))
   
-  #call(format_cmd("mkdir " + project_snapshot_dir))
-                     
-  #os.system('python generate_snapshot_data/dump.py -p ' + os.path.join(PROJECTS_DIR, PROJECT) + ' -v d -d ' + SNAPSHOTS_DIR + ' --conf src/generate_snapshot_data/config.ini -l ' + LANGUAGE + ' -m ' + str(INTERVAL))
   cmd = format_cmd('python generate_snapshot_data/dump.py -p ' + project_cur_clone + ' -v d -d ' + snapshotDir + ' --conf src/generate_snapshot_data/config.ini -l java -m 3')# + LANGUAGE + ' -m ' + str(INTERVAL))
   print cmd
+  call(cmd)
 
 
    

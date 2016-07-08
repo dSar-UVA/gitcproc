@@ -7,9 +7,6 @@ import sys
 import os
 from distutils import util
 
-from os.path import dirname
-sys.path.append(os.path.join(dirname(__file__),'..','util'))
-
 import Util
 from Config import Config
 
