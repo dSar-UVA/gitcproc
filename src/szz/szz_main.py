@@ -9,7 +9,7 @@ from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'..','util'))
 
 import Util
-from ConfigInfo import ConfigInfo
+from ConfigInfoSZZ import ConfigInfoSZZ
 
 
 #----------------------------------------------------------------------------------
@@ -54,54 +54,7 @@ def printUsage():
     print(printUsage.__doc__)
     
 #----------------------------------------------------------------------------------
-def downloadSnapshot(snapshotDir, projectDir, projectName):
 
-  # 2. Dump the snapshots for a project
-  msg =  '---------------------------------------------------- \n'
-  msg += ' Dump the snapshots for project %s \n' % projectName
-  msg += '---------------------------------------------------- \n'
-  print(msg)
-           
-  project_snapshot_dir = os.path.join(snapshotDir, projectName)
-  project_cur_clone = os.path.join(projectDir, projectName)
-  
-  if os.path.isdir(project_snapshot_dir):
-    print "!! %s already exists...going to delete it \n" % project_snapshot_dir
-    call(format_cmd("rm -rf " + project_snapshot_dir))
-  
-  cmd = format_cmd('python generate_snapshot_data/dump.py -p ' + project_cur_clone + ' -v d -d ' + snapshotDir + ' --conf src/generate_snapshot_data/config.ini -l java -m 3')# + LANGUAGE + ' -m ' + str(INTERVAL))
-  print cmd
-  call(cmd)
-
-
-   
-def downloadSnapshots(config_info):
-  
-  repo_config = config_info.config_repo
-  
-  #Check that the repo list file exists
-  if(not os.path.isfile(repo_config['repo_url_file'])):
-    print(repo_config['repo_url_file'] + ", the file containing the list of projects to download,")
-    print("cannot be found.  Make sure your path and name are correct.")
-    return
-
-  #Create the output directory if it doesn't exist yet.
-  project_dir = repo_config['repo_locations']
-  if(not os.path.isdir(project_dir)):
-    print(project_dir + " is not found")
-    print("Please give a valid directory containing the projects")
-    print("Use repoMiner -dl to download projects")
-    return
-      
-      
-  snapshot_dir = repo_config['snapshot_locations']
-  if(not os.path.isdir(snapshot_dir)):
-    call(format_cmd('mkdir ' + snapshot_dir))
-      
-  repos = config_info.getRepos()
-  for r in repos:
-    print r
-    downloadSnapshot(snapshot_dir, project_dir, r)
     
 
 
@@ -114,7 +67,7 @@ def main():
   args = parser.parse_args()
   
   config_file = args.config_file
-  config_info = ConfigInfo(config_file)  
+  config_info = ConfigInfoSZZ(config_file)  
   
   if(config_info.DATABASE): #If we have database output selected and are performing the parse-log step.
     password = getpass.getpass(prompt="Database option selected, enter your password:")
@@ -123,7 +76,9 @@ def main():
 
   
   if(args.snapshots):
-    downloadSnapshots(config_info)
+    cmd = format_cmd('python generate_snapshot_data/dumpSnapshot.py ' + config_file)
+    #print cmd
+    call(cmd)
     
       
   
