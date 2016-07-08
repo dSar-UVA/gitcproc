@@ -63,6 +63,7 @@ def main():
   parser = argparse.ArgumentParser()
   parser.add_argument("config_file", help = "This is the path to your configuration file.")
   parser.add_argument("-s","--snapshots", action="store_true", help = "Flag that indicates you want to download the snapshots.")
+  parser.add_argument("-c","--corpus",    action="store_true", help = "Flag that indicates you want to download the snapshots.")
   
   args = parser.parse_args()
   
@@ -77,6 +78,11 @@ def main():
   
   if(args.snapshots):
     cmd = format_cmd('python generate_snapshot_data/dumpSnapshot.py ' + config_file)
+    #print cmd
+    call(cmd)
+    
+  if(args.corpus):
+    cmd = format_cmd('python generate_snapshot_data/dumpCorpus.py ' + config_file)
     #print cmd
     call(cmd)
     

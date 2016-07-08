@@ -1,12 +1,12 @@
 import sys
-
-
-import ghProc
-import getGitLog
+#import ghProc
+#import getGitLog
 import subprocess
 import getpass
 import os
 import argparse
+from shlex import split as format_cmd
+from subprocess import Popen, PIPE, STDOUT, call
 
 from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'..','util'))
@@ -35,40 +35,49 @@ def main():
   config_info = ConfigInfo(config_file)   
   repo_config = config_info.config_repo
   
+  #Check that the repo list file exists
+  if(not os.path.isfile(repo_config['repo_url_file'])):
+      print(repo_config['repo_url_file'] + ", the file containing the list of projects to download,")
+      print("cannot be found.  Make sure your path and name are correct.")
+          
   if(config_info.DATABASE and args.parse_log): #If we have database output selected and are performing the parse-log step.
       password = getpass.getpass(prompt="Database option selected, enter your password:")
   else:
       password = ""
-  
-  
-  
-  
+      
+  repos = config_info.getRepos()
+  print repos
+    
+  repo_loc = config_info.getDumpLocation()
+  print repo_loc
+ 
   
   if(args.download):
-      count = sum(1 for line in open(config_info.config_repo['repo_url_file'])) #Default is to read all of them in.
-  
-      #Check that the repo list file exists
-      if(not os.path.isfile(repo_config['repo_url_file'])):
-          print(repo_config['repo_url_file'] + ", the file containing the list of projects to download,")
-          print("cannot be found.  Make sure your path and name are correct.")
-  
-      #Create the output directory if it doesn't exist yet.
-      if(not os.path.isdir(repo_config['repo_locations'])):
-          subprocess.call(["mkdir", "-p", repo_config['repo_locations']])
-  
-      #Invoke the Java Downloads
-      subprocess.call(["java", "-jar", "../../bin/githubCloner.jar", repo_config['repo_url_file'], repo_config['repo_locations'], "0", str(count)])
-  
+      
+      if(not os.path.isdir(repo_loc)):
+          call(format_cmd('mkdir ', repo_loc))
+          
+      for r in repos:
+        project_dir = os.path.join(repo_loc,r)
+        if os.path.isdir(project_dir):
+          print "%s exists, going to delete it" % project_dir
+          call(format_cmd('rm -rf ' + project_dir))
+          
+        call(format_cmd('mkdir -p ' + project_dir))
+        git_url = config_info.getGitUrl(r)
+        print git_url
+        call(format_cmd('git clone ' + git_url + ' ' + project_dir))
+          
+      
+      #subprocess.call(["java", "-jar", "../../bin/githubCloner.jar", repo_config['repo_url_file'], repo_config['repo_locations'], "0", str(count)])
+      
   if(args.write_log):
       #Also should include logging for time...
       subprocess.call(["python", "getGitLog.py", config_file])
   
   if(args.parse_log):
     
-    repos = config_info.getRepos()
-    print repos
     
-    repo_loc = config_info.getDumpLocation()
     
     #Run ghProc
     dirs_and_names = [(os.path.join(repo_loc, name), name) \

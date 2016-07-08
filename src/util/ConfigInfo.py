@@ -1,8 +1,6 @@
 '''
   Common script to process configuration file
 '''
-
-
 import sys
 import os
 from distutils import util
@@ -14,13 +12,13 @@ class ConfigInfo:
   
   def __init__(self, newFile):
     self.configFile = newFile
-    cfg = Config(self.configFile)
+    self.cfg = Config(self.configFile)
     
-    self.config_db    = cfg.ConfigSectionMap("Database")
-    self.config_repo  = cfg.ConfigSectionMap("Repos")
-    self.config_key   = cfg.ConfigSectionMap("Keywords")
-    self.config_log   = cfg.ConfigSectionMap("Log")    
-    self.config_flags = cfg.ConfigSectionMap("Flags")
+    self.config_db    = self.cfg.ConfigSectionMap("Database")
+    self.config_repo  = self.cfg.ConfigSectionMap("Repos")
+    self.config_key   = self.cfg.ConfigSectionMap("Keywords")
+    self.config_log   = self.cfg.ConfigSectionMap("Log")    
+    self.config_flags = self.cfg.ConfigSectionMap("Flags")
     
     self.setFlags()
 
@@ -52,6 +50,27 @@ class ConfigInfo:
         repo_file = None
     
       return repos
+      
+  def getGitUrl(self,projName):
+
+      git_url = ""
+  
+      try:
+        repo_file = self.config_repo['repo_url_file']
+        f = open(repo_file, 'r')
+        for line in f:
+          repo_url = line.strip()
+          url, repo = repo_url.split(os.sep) 
+          if repo == projName:
+            git_url = "http://github.com/" + repo_url
+            break
+          
+      except IOError:
+        print "!! Repo url file \"%s\" does not exist." % repo_file
+        print "... Going to process all the repositories in the directory : \"%s\"." % self.getDumpLocation()
+        repo_file = None
+    
+      return git_url
   
   def getDumpLocation(self):
     return self.config_repo['repo_locations']
@@ -70,8 +89,3 @@ class ConfigInfo:
      except:
        langs = [] #Treat empty as showing all supported languages.
      return langs
-      
-    
-    
-  
-

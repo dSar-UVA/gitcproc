@@ -34,6 +34,10 @@ class ConfigInfoSZZ(ConfigInfo):
   def getShaFiles(self):
     self.snapshot_sha_file = self.config_szz['snapshot_sha_file']
     return self.snapshot_sha_file
+    
+  def getCorpusLocation(self):
+    self.corpus_location = self.config_szz['corpus_locations']
+    return self.corpus_location
       
     
     

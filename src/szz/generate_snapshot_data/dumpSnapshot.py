@@ -258,13 +258,6 @@ def main():
 
     #project specific arguments
     parser.add_argument("config_file", help = "This is the path to your configuration file.")
-    '''
-    parser.add_argument('-p',dest="proj_dir", help="the directory containing original src code")
-    parser.add_argument('-d',dest="out_dir", default='out_dir', help="directories to dump the snapshots")
-    parser.add_argument('-l',dest="lang", default='java', help="languages to be processed")
-    parser.add_argument('-m',dest="ss_interval_len", default='6', help="duration of interval (in months) between two snapshots")
-    parser.add_argument('-s',dest="ss_sha_file", default='sha.txt', help="files containing shas that need to be dumped")
-    '''
 
     #logging and config specific arguments
     parser.add_argument("-v", "--verbose", default = 'w', nargs="?", \
@@ -284,30 +277,7 @@ def main():
     
     config_info = ConfigInfoSZZ(args.config_file)  
     downloadSnapshots(config_info)
-    '''
-    return
-
-    #1. First, retrieve the 1st commit date from SQL server
-    commit_dates = fetchCommitDates(cfg, args.proj_dir, args.lang)
-
-    #2. Snapshot
-    dumpSnapShots(args.proj_dir, args.out_dir, int(args.ss_interval_len), commit_dates[0], commit_dates[1])
-
-    project_name = pathLeaf(args.proj_dir)
-    ss_dir = os.path.abspath(args.out_dir)
-    ss_names = os.listdir(ss_dir + '/' + project_name)
-    ss_names.sort()
-    ss_paths = [ss_dir + '/' + project_name + '/' + ss_name + '/' for ss_name in ss_names]
-
-    ss_name_to_sha = {}
-    for ss_index, ss_path in enumerate(ss_paths):
-        repo = Repo(ss_path)
-        ss_sha = repo.git.log('--format=%H', '-n', '1')
-        ss_name_to_sha[ss_names[ss_index]] = ss_sha
-
-    with open(ss_dir + '/' + project_name + '/ss_sha_info.txt', 'wb') as out_file:
-        pickle.dump(ss_name_to_sha, out_file)
-    '''
+    
 
 
 
