@@ -85,10 +85,7 @@ def main():
     cmd = format_cmd('python generate_snapshot_data/dumpCorpus.py ' + config_file)
     #print cmd
     call(cmd)
-    
-      
-  
-     
+
 
   if False:
       if len(sys.argv) == 7:
