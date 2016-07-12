@@ -72,13 +72,15 @@ def dumpSnapshotsBySha(srcPath, destPath, shaList):
       snapshot = os.path.join(destPath, sha[0])
 
       if not os.path.isdir(snapshot):
+        print ">>>>>>>>>> ", snapshot
         Util.copy_dir(srcPath,snapshot)
-        git_command = "git checkout " + sha[1] 
+        git_command = "git checkout -f " + sha[1]
         print git_command
         with cd(snapshot):
           os.system("git reset --hard")
           #os.system("git checkout")
           os.system(git_command)
+          os.system("git reset --hard")
         
       
     
@@ -108,6 +110,7 @@ def dumpSnapshotsByInterval(srcPath, destPath, ss_interval_len, commitDateMin, c
                 os.system("git reset --hard")
                 #os.system("git checkout")
                 os.system(git_command)
+                os.system("git reset --hard")
 
         start_date = start_date + timedelta(days=ss_interval_len*30)
 
@@ -205,6 +208,7 @@ def downloadSnapshot(snapshotDir, projectDir, projectName, configInfo):
       csvreader.next()
       for row in csvreader:
         bug_no,buggy_sha,bugfix_sha,project = row[:]
+        print (',').join((bug_no,buggy_sha,bugfix_sha,project))
         if project.strip("\"") == projectName:
           #print bug_no,buggy_sha,bugfix_sha,project
           buggy_sha = buggy_sha.strip("\"")
