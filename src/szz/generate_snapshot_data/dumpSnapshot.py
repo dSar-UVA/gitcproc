@@ -77,10 +77,10 @@ def dumpSnapshotsBySha(srcPath, destPath, shaList):
         git_command = "git checkout -f " + sha[1]
         print git_command
         with cd(snapshot):
-          os.system("git reset --hard")
-          #os.system("git checkout")
-          os.system(git_command)
-          os.system("git reset --hard")
+          Util.runCmd("git reset --hard")
+          #Util.runCmd("git checkout")
+          Util.runCmd(git_command)
+          Util.runCmd("git reset --hard")
         
       
     
@@ -107,10 +107,10 @@ def dumpSnapshotsByInterval(srcPath, destPath, ss_interval_len, commitDateMin, c
             Util.copy_dir(srcPath,snapshot)
             git_command = "git checkout `git rev-list -n 1 --no-merges --before=\"" + str(start_date) + "\" " +  str(branch) + "`"
             with cd(snapshot):
-                os.system("git reset --hard")
-                #os.system("git checkout")
-                os.system(git_command)
-                os.system("git reset --hard")
+                Util.runCmd("git reset --hard")
+                #Util.runCmd("git checkout")
+                Util.runCmd(git_command)
+                Util.runCmd("git reset --hard")
 
         start_date = start_date + timedelta(days=ss_interval_len*30)
 
@@ -123,9 +123,9 @@ def dumpSnapshotsByInterval(srcPath, destPath, ss_interval_len, commitDateMin, c
         Util.copy_dir(srcPath,snapshot)
         git_command = "git checkout `git rev-list -n 1 --no-merges --before=\"" + str(start_date) + "\" " +  str(branch) + "`"
         with cd(snapshot):
-            os.system("git reset --hard")
-            #os.system("git checkout")
-            os.system(git_command)
+            Util.runCmd("git reset --hard")
+            #Util.runCmd("git checkout")
+            Util.runCmd(git_command)
 
 
 
