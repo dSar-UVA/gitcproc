@@ -38,7 +38,8 @@ def downloadCorpus(snapshotDir, corpusDir, projectName, configInfo):
     return
     
   corpus = Corpus(project_snapshot_dir, 'java', project_corpus_dir, configInfo)
-  logging.debug(corpus)
+  #logging.debug(corpus)
+  print corpus
   corpus.dump()
 
     

@@ -3,12 +3,27 @@ import sys
 import os.path
 import errno
 import shutil
+
 from distutils import util
 from Config import Config
 
 
 supportedLanguages = ["C", "C++", "Java", "Python"]
 
+import shlex
+from subprocess import Popen, PIPE
+
+def runCmd(cmd):
+    """
+    Execute the external command and get its exitcode, stdout and stderr.
+    """
+    args = shlex.split(cmd)
+
+    proc = Popen(args, stdout=PIPE, stderr=PIPE)
+    out, err = proc.communicate()
+    exitcode = proc.returncode
+    #
+    return exitcode, out, err
 
 class cd:
     """Context manager for changing the current working directory"""
