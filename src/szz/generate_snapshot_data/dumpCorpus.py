@@ -35,11 +35,11 @@ def downloadCorpus(snapshotDir, corpusDir, projectName, configInfo):
   
   if os.path.isdir(project_corpus_dir):
     print "!! %s already exists...returning \n" % project_corpus_dir
-    return
+    #return
     
   corpus = Corpus(project_snapshot_dir, 'java', project_corpus_dir, configInfo)
   #logging.debug(corpus)
-  print corpus
+  #print corpus
   corpus.dump()
 
     
@@ -61,8 +61,10 @@ def downloadCorpuses(config_info):
     return
   
   corpus_dir = config_info.getCorpusLocation()
+  print ">>>>>>", corpus_dir
   if(not os.path.isdir(corpus_dir)):
-    call(format_cmd('mkdir ' + corpus_dir))
+    print "Going to create ", corpus_dir
+    os.system('mkdir ' + corpus_dir)
       
   repos = config_info.getRepos()
   for r in repos:

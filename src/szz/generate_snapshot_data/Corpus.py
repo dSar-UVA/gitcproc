@@ -6,10 +6,12 @@ import os.path
 import shutil
 import logging
 import datetime
+import csv
 
 
 
 from DbEdits import DbEdits
+from DbEdits import edit
 from GitRepo import GitRepo
 from OutDir import OutDir
 from SnapShot import SnapShot
@@ -45,9 +47,7 @@ class Corpus:
         self.changed_files_per_date = {} #commit_date -> set(file_name)
         self.edit_to_snapshot = {}
         self.snapshot2edit = {}
-
-        #self.initEdits()
-        self.edits = self.fetchEdits()
+        self.initEdits()
         self.initSnapshots()
 
     def __str__(self):
@@ -66,7 +66,10 @@ class Corpus:
 
     def initEdits(self):
 
-        self.edits = self.fetchEdits()
+        if self.cfg_info.DATABASE == True:
+            self.edits = self.fetchEdits()
+        else:
+            self.edits = self.fetchEditsFromCsv()
 
         # for e in self.edits:
 
@@ -81,6 +84,28 @@ class Corpus:
         # if self.debug:
         #     for key in sorted(self.changed_files_per_date):
         #         print key, self.changed_files_per_date[key]
+
+    def fetchEditsFromCsv(self):
+        print "fetchEditsFromCsv"
+        proj_loc = self.cfg_info.getProjectLocation(self.project_name)
+        change_db_csv = os.path.join(proj_loc,'FileChanges.csv')
+        if not os.path.isfile(change_db_csv):
+            print "!!! %s does not exist, first dump the changes" % (change_db_csv)
+        else:
+            print "Going to process change db: %s" % (change_db_csv)
+
+        csv_edits = []
+        with open(change_db_csv, 'rb') as csvfile:
+            csvreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+            csvreader.next()
+            for row in csvreader:
+                project, sha, language, file_name, is_test, committer, \
+                commit_date, author, author_date, is_bug, total_add, total_del = row[:]
+                #print (',').join((project, file_name, sha, commit_date, is_bug, is_test))
+                e = edit(project, file_name, is_test, sha, commit_date, is_bug)
+                csv_edits.append(e)
+
+        return csv_edits
 
 
     def fetchEdits(self):
@@ -100,10 +125,10 @@ class Corpus:
         return db_edits.edits
 
     @staticmethod
-    def minKey(commitDate, snapshot):
+    def minKey(commitDate, snapshotDate):
 
-        if commitDate >= snapshot.date:
-            return (commitDate - snapshot.date).days
+        if commitDate >= snapshotDate:
+            return (commitDate - snapshotDate).days
         else:
             return 9999
 
@@ -111,17 +136,26 @@ class Corpus:
 
         for e in self.edits:
             cd = e.commit_date
-            snap = min(self.snapshots, key=lambda sd : self.minKey(cd,sd))
-            if cd < snap.date:
-                print("---> skipping: commit_date %s: snapshot %s" % (cd, snap.date))
+            cd = cd.split(" ")[0]
+
+            cd = datetime.datetime.strptime(cd, '%Y-%m-%d').date()
+
+            #snap = min(self.snapshots, key=lambda sd : self.minKey(cd,sd))
+            snap = min(self.date2snapshot.keys(), key=lambda sd: self.minKey(cd, sd))
+            if cd < snap:
+                logging.warning("!!! skipping: commit_date %s: snapshot %s" % (cd, snap))
                 continue
 
             self.edit_to_snapshot[e] = snap
-            snap.addEdit(e)
 
+            for s in self.date2snapshot[snap]:
+                s.addEdit(e)
+
+        '''
         logging.debug("mapEditToSnapshot : <edit> : <snapshot>")
         for key in self.edit_to_snapshot:
             logging.debug("%s:%s" % (key, self.edit_to_snapshot[key]))
+        '''
 
     def initSnapshots(self):
 
@@ -129,11 +163,20 @@ class Corpus:
         # 'ss_sha_info.txt' is not a snapshot directory, hence can be removed
         # ...it actually contains some metadata about the commit SHAs of each snapshot
         # ...which is used by `src/generate_asts_and_type_data/gather_typedata_into_csv.py`
-        snaps.remove('ss_sha_info.txt')
+        #snaps.remove('ss_sha_info.txt')
+
         snaps.sort()
+
+
+        self.date2snapshot = {}
 
         for snap in snaps:
             s = SnapShot(self.src_path, snap, self.out_path)
+
+            if not self.date2snapshot.has_key(s.date):
+                self.date2snapshot[s.date] = []
+
+            self.date2snapshot[s.date].append(s)
             self.snapshots.append(s)
 
         self.mapEditToSnapshot()
@@ -141,9 +184,12 @@ class Corpus:
 
     def dump(self):
 
-        Util.cleanup(self.out_path + "/*")
+        temp_path = os.path.join(self.out_path, '*')
+        Util.cleanup(temp_path)
+
         for snap in self.snapshots:
             snap.dumpTestFiles()
             snap.dumpTrainFiles()
+
 
 

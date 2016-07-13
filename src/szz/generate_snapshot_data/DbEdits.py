@@ -11,13 +11,13 @@ sys.path.append(os.path.join(dirname(__file__),'../../','util'))
 from DatabaseCon import DatabaseCon
 
 
-edit = namedtuple('edit', ['project', 'file_name', 'sha', 'commit_date', 'isbug'])
+edit = namedtuple('edit', ['project', 'file_name', 'is_test','sha', 'commit_date', 'isbug'])
 
-class edit(namedtuple('edit', ['project', 'file_name', 'sha', 'commit_date', 'isbug'])):
+class edit(namedtuple('edit', ['project', 'file_name', 'is_test','sha', 'commit_date', 'isbug'])):
     __slots__ = ()
 
     def __repr__(self):
-        return "%s|%s|%s|%s\n" % (self.file_name, self.sha, self.commit_date, self.isbug)
+        return "%s|%s|%s|%s|%s\n" % (self.file_name, self.is_test, self.sha, self.commit_date, self.isbug)
 
 
 class DbEdits:
@@ -41,7 +41,7 @@ class DbEdits:
 
 	def fetchEditsFromTable(self, table):
 
-		sql_command = "SELECT project, file_name, sha, commit_date, isbug "
+		sql_command = "SELECT project, file_name, sha, commit_date, isbug, is_test "
 		sql_command +=  " FROM " + table + " WHERE tag = \'" + self.language + \
 						"\' and project = \'" + self.project + "\'"
 
@@ -50,8 +50,8 @@ class DbEdits:
 		rows = self.dbCon.execute(sql_command)
 
 		for row in rows:
-			project, file_name, sha, commit_date, isbug = row
-			e = edit(project, file_name, sha, commit_date, isbug)
+			project, file_name, sha, commit_date, isbug, is_test = row
+			e = edit(project, file_name, is_test, sha, commit_date, isbug)
 			self.edits.append(e)
 
 

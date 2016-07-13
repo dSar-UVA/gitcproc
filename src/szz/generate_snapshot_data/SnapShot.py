@@ -24,13 +24,16 @@ def path_leaf(path):
 
 class SnapShot:
 
-    def __init__(self, projPath, snapshot, outDir, debug=False):
+    def __init__(self, projPath, snapshotName, outDir, debug=False):
 
-        self.src_path = projPath + os.sep + snapshot
-        self.out_path = outDir + os.sep + snapshot
+        self.name = snapshotName
+        self.src_path = os.path.join(projPath, snapshotName)
+
+
         self.debug    = debug
         self.git_repo = GitRepo(self.src_path)
-        self.date     = datetime.datetime.strptime(snapshot, '%Y-%m-%d').date()
+        self.date  = self.getSnapshotDate() #datetime.datetime.strptime(snapshot, '%Y-%m-%d').date
+        self.out_path = os.path.join(outDir, snapshotName + "_" + str(self.date))
 
         self.out_dir = None
         self.edits = []
@@ -39,12 +42,28 @@ class SnapShot:
 
     def __str__(self):
 
-        retStr = str(self.date) + "\n"
+        retStr = self.name + "\n"
+        retStr += str(self.date) + "\n"
         retStr += "========\n"
 
         for e in self.edits:
             retStr += str(e)
         return retStr
+
+    def getSnapshotDate(self):
+
+        try:
+            snapshot_date = datetime.datetime.strptime(snapshot, '%Y-%m-%d').date()
+        except:
+            with Util.cd(self.src_path):
+                git_show = Util.runCmd('git show --date=short')[1]
+                for l in git_show.split('\n'):
+                    if l.startswith('Date:'):
+                        snapshot_date = l.split('Date: ')[1].strip()
+                        snapshot_date = datetime.datetime.strptime(snapshot_date, '%Y-%m-%d').date()
+
+        return snapshot_date
+
 
     def addEdit(self, edit):
 
