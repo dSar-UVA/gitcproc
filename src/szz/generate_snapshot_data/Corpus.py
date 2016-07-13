@@ -171,7 +171,7 @@ class Corpus:
         self.date2snapshot = {}
 
         for snap in snaps:
-            s = SnapShot(self.src_path, snap, self.out_path)
+            s = SnapShot(self.src_path, snap, self.out_path, self.cfg_info)
 
             if not self.date2snapshot.has_key(s.date):
                 self.date2snapshot[s.date] = []
