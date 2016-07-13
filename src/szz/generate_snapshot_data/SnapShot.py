@@ -88,28 +88,34 @@ class SnapShot:
             # no edits corr to this snapshot
             return
 
-        print('Dumping files in test dir for ' + path_leaf(self.src_path))
+        print('>>>> Dumping files in test dir for ' + path_leaf(self.src_path))
         test_dirs = self.out_dir.get_test_dirs()
+        print test_dirs
+
 
         for e in self.edits:
-            files = self.git_repo.fetchFiles(e.file_name, e.sha)
-            for i, sha in enumerate(files):
-
-              #copy_content = self.git_repo.showFile(e.file_name, sha)
-
-              file_name = e.file_name.replace(os.sep, self.config_info.SEP)
-              file_name, extn = os.path.splitext(file_name)
-
-              if extn.lower() not in ['.c', '.cpp', '.cc', '.java']:
+            if e.isbug is "False":
+                #only considering bugfix files for time being
                 continue
 
-              file_name = file_name + self.config_info.SEP + e.sha + extn
-              dest_file = test_dirs[i] + self.config_info.SEP + file_name
-              #print file_name, dest_file
-	      self.git_repo.dumpFile(e.file_name, sha, dest_file)
-              #copy_content = self.git_repo.showFile(e.file_name, sha)
-	      #with codecs.open(dest_file, "w", encoding="utf-8") as f:
-	      #   f.write(copy_content)
+            print ">>>>" , e.file_name, e.sha
+
+
+
+            file_versions = self.git_repo.fetchFiles(e.file_name, e.sha)
+
+            for i, sha in enumerate(file_versions):
+                print i, sha
+                file_name = e.file_name.replace('/', self.config_info.SEP)
+                file_name, extn = os.path.splitext(file_name)
+                if extn.lower() not in ['.c', '.cpp', '.cc', '.java']:
+                    continue
+                file_name = file_name + self.config_info.SEP + e.sha + extn
+                dest_file = os.path.join(test_dirs[i], file_name)
+                print file_name, dest_file
+                self.git_repo.dumpFile(e.file_name, sha, dest_file)
+
+
 
 
 
@@ -146,11 +152,11 @@ class SnapShot:
                     continue
 
                 if file_name in self.test_files:
-                    dest_file = self.out_dir.changed_dir + os.sep + file_name.replace(os.sep, Util.SEP)
+                    dest_file = self.out_dir.changed_dir + os.sep + file_name.replace(os.sep, self.config_info.SEP)
                     shutil.copyfile(src_file, dest_file)
                     continue
 
                 self.train_files.add(file_name)
 
-                dest_file = self.out_dir.learn_dir + os.sep + file_name.replace(os.sep, Util.SEP)
+                dest_file = self.out_dir.learn_dir + os.sep + file_name.replace(os.sep, self.config_info.SEP)
                 shutil.copyfile(src_file, dest_file)
