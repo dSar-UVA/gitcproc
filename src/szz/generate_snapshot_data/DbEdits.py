@@ -19,6 +19,9 @@ class edit(namedtuple('edit', ['project', 'file_name', 'is_test','sha', 'commit_
     def __repr__(self):
         return "%s|%s|%s|%s|%s\n" % (self.file_name, self.is_test, self.sha, self.commit_date, self.isbug)
 
+	def getCommitDate(self):
+		return self.commit_date.split(" ")[0]
+
 
 class DbEdits:
 

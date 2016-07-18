@@ -55,6 +55,41 @@ def getProjName(projectPath):
     return project_name
     
 #--------------------------------------------------------------------------------------------------------------------------
+def pruneSnapshot(srcPath, shaList):
+
+    filteredSha = []
+    date2sha = {}
+    with Util.cd(srcPath):
+        for sha in shaList:
+            git_show = Util.runCmd('git show --date=short %s' % (sha[1]))[1]
+            for l in git_show.split('\n'):
+                if l.startswith('Date:'):
+                    snapshot_date = l.split('Date: ')[1].strip()
+                    snapshot_date = datetime.strptime(snapshot_date, '%Y-%m-%d').date()
+
+                    if not date2sha.has_key(snapshot_date):
+                        date2sha[snapshot_date] = []
+
+                    date2sha[snapshot_date].append(sha)
+
+    keys = sorted(date2sha.keys())
+
+    prevDate = keys[0]
+    filteredSha.append((date2sha[prevDate],prevDate))
+
+    for i, key in enumerate(keys):
+        #print ">>>>>>> ", i, key, date2sha[key]
+
+        day_diff = (keys[i] - prevDate).days
+        if day_diff > 180: #6 months
+            prevDate = keys[i]
+            filteredSha.append((date2sha[prevDate], prevDate))
+
+    for i in filteredSha:
+        print i
+
+
+
 def dumpSnapshotsBySha(srcPath, destPath, shaList):
 
     print srcPath, destPath
@@ -66,6 +101,8 @@ def dumpSnapshotsBySha(srcPath, destPath, shaList):
     print branch
 
     project_name = getProjName(srcPath)
+
+
     
     for sha in shaList:
       print sha[0],sha[1]
@@ -208,12 +245,13 @@ def downloadSnapshot(snapshotDir, projectDir, projectName, configInfo):
       csvreader.next()
       for row in csvreader:
         bug_no,buggy_sha,bugfix_sha,project = row[:]
-        print (',').join((bug_no,buggy_sha,bugfix_sha,project))
+        #print (',').join((bug_no,buggy_sha,bugfix_sha,project))
         if project.strip("\"") == projectName:
           #print bug_no,buggy_sha,bugfix_sha,project
           buggy_sha = buggy_sha.strip("\"")
           sha_list.append((bug_no,buggy_sha))
-    dumpSnapshotsBySha(project_cur_clone, project_snapshot_dir, sha_list)
+    #dumpSnapshotsBySha(project_cur_clone, project_snapshot_dir, sha_list)
+    pruneSnapshot(project_cur_clone, sha_list)
   
   else:
     print "!! No valid interval....not able to download snapshots"

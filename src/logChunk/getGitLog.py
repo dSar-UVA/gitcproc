@@ -37,16 +37,20 @@ def dumpLog(projPath, languages, patch='True'):
     all_extn = ""
 
     for e in extSet:
-        all_extn += " \\*"  + e
-        all_extn += " \\*"  + e.upper()
+        all_extn += " *"  + e
+        all_extn += " *"  + e.upper()
+        #all_extn += " \\*" + e
+        #all_extn += " \\*" + e.upper()
 
     with Util.cd(projPath):
+      print ">>>>" , os.getcwd()
         
       if patch == False:
              LOG_FILE = ["no_merge_log.txt","no_stat_log.txt"]
              git_cmd1 = "git log --no-merges --numstat --pretty=\">>>>>>>>>>>> %H <<|>> " \
                     + projPath + " <<|>> %cn <<|>> %cd <<|>> %an <<|>> %ad <<|>>\"" \
                     + " --diff-filter=M -- " + all_extn + " >  no_merge_log.txt"
+             print git_cmd1
              runCmd(git_cmd1, "no_merge_log.txt")
              
              git_cmd2 = "git log --no-merges --pretty=\">>>>>>>>>>>> %H <<|>> " \

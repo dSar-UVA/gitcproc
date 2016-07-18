@@ -154,8 +154,24 @@ class Corpus:
         '''
         logging.debug("mapEditToSnapshot : <edit> : <snapshot>")
         for key in self.edit_to_snapshot:
-            logging.debug("%s:%s" % (key, self.edit_to_snapshot[key]))
+            sd = self.edit_to_snapshot[key]
+            snapshot = self.date2snapshot.get(sd)
+            print("%s->%s:%s" % (key.commit_date, sd, snapshot[0].name))
         '''
+
+        for s in self.snapshots:
+
+            print "%s:%s" % (s.name, s.date)
+            edit_dates = set()
+            for e in s.edits:
+                td =  "%s" % e.commit_date
+                edit_dates.add(td.split(" ")[0])
+
+            #print edit_dates
+            edit_dates = sorted(edit_dates)
+            edit_str = (",".join(edit_dates))
+            print "\t", edit_str
+
 
     def initSnapshots(self):
 
@@ -189,7 +205,13 @@ class Corpus:
 
         for snap in self.snapshots:
             snap.dumpTestFiles()
+            '''
+            For bugfix model, I think the training data will be at snapshot
+            So no need to dump the training data?
+            '''
             snap.dumpTrainFiles()
+            return
+
 
 
 

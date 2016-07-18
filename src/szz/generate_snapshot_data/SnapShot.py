@@ -30,7 +30,7 @@ class SnapShot:
         self.src_path = os.path.join(projPath, snapshotName)
 
         self.config_info = configInfo
-        self.debug    = configInfo.DEBUG
+        self.debug      = configInfo.DEBUG
         self.git_repo = GitRepo(self.src_path)
         self.date  = self.getSnapshotDate() #datetime.datetime.strptime(snapshot, '%Y-%m-%d').date
         self.out_path = os.path.join(outDir, snapshotName + "_" + str(self.date))
@@ -94,13 +94,14 @@ class SnapShot:
 
 
         for e in self.edits:
+
             if e.isbug is "False":
-                #only considering bugfix files for time being
+                '''
+                only considering bugfix files for time being
+                '''
                 continue
 
             print ">>>>" , e.file_name, e.sha
-
-
 
             file_versions = self.git_repo.fetchFiles(e.file_name, e.sha)
 
@@ -114,9 +115,6 @@ class SnapShot:
                 dest_file = os.path.join(test_dirs[i], file_name)
                 print file_name, dest_file
                 self.git_repo.dumpFile(e.file_name, sha, dest_file)
-
-
-
 
 
     def getTrainFiles(self):

@@ -25,7 +25,7 @@ class ConfigInfo:
 
 
   def setFlags(self):
-    self.SEP          = self.config_flags['sep']
+    self.SEP          = self.config_flags['sep'].strip('\'')
     self.DEBUG        = bool(util.strtobool(self.config_flags['debug']))
     self.DEBUGLITE    = bool(util.strtobool(self.config_flags['debuglite']))
     self.DATABASE     = bool(util.strtobool(self.config_flags['database']))
@@ -71,6 +71,13 @@ class ConfigInfo:
         repo_file = None
     
       return git_url
+
+  def getProjectLocation(self, projName):
+
+      dump_loc = self.config_repo['repo_locations']
+      proj_loc = os.path.join(dump_loc,projName)
+
+      return proj_loc
   
   def getDumpLocation(self):
     return self.config_repo['repo_locations']

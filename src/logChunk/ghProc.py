@@ -93,6 +93,8 @@ def main():
             sys.exit()
 
         password = str(sys.argv[3])
+    else:
+        password = ""
 
 
     if checkProj(project) == False:
