@@ -55,13 +55,15 @@ def getProjName(projectPath):
     return project_name
     
 #--------------------------------------------------------------------------------------------------------------------------
-def pruneShas(srcPath, shaList):
+def pruneShas(srcPath, shaList,interval):
 
     filteredSha = []
     date2sha = {}
+    
     with Util.cd(srcPath):
         for sha in shaList:
             git_show = Util.runCmd('git show --date=short %s' % (sha[1]))[1]
+            
             for l in git_show.split('\n'):
                 if l.startswith('Date:'):
                     snapshot_date = l.split('Date: ')[1].strip()
@@ -78,17 +80,15 @@ def pruneShas(srcPath, shaList):
     filteredSha.append((date2sha[prevDate],prevDate))
 
     for i, key in enumerate(keys):
-        print ">>>>>>> ", i, key, date2sha[key]
-
+        #print ">>>>>>> ", i, key, date2sha[key]
         day_diff = (keys[i] - prevDate).days
-        if day_diff > 90: #6 months
+        if day_diff > (interval * 30): 
             prevDate = keys[i]
             filteredSha.append((date2sha[prevDate], prevDate))
 
-    for i in filteredSha:
-        print i
+    #for i in filteredSha:
+    #    print i
     return filteredSha
-
 
 
 def dumpSnapshotsBySha(srcPath, destPath, shaList):
@@ -217,15 +217,18 @@ def downloadSnapshot(snapshotDir, projectDir, projectName, configInfo):
     print(msg)
     
     project_snapshot_dir = os.path.join(snapshotDir, projectName)
-    project_cur_clone = os.path.join(projectDir, projectName)
+    project_cur_clone    = os.path.join(projectDir, projectName)
     
     if os.path.isdir(project_snapshot_dir):
         print "!! %s already exists...going to delete it \n" % project_snapshot_dir
         Util.runCmd("rm -rf " + project_snapshot_dir)
         
-    interval = configInfo.getSnapshotInterval()
-    
-    if interval > 0:
+    interval_option, interval = configInfo.getSnapshotInterval()
+        
+    if interval_option == True:
+        '''
+            This path is not tested
+        '''
         #1. First, retrieve the 1st commit date from SQL server
         langs = configInfo.getLanguages()
         commit_dates = fetchCommitDates(configInfo, project_cur_clone, langs)
@@ -234,57 +237,53 @@ def downloadSnapshot(snapshotDir, projectDir, projectName, configInfo):
         dumpSnapshotsByInterval(project_cur_clone, project_snapshot_dir, \
                                 interval, commit_dates[0], commit_dates[1])
         
-    elif interval == -1:
+    else:
         sha_list = []
         snapshot_sha_file = configInfo.getShaFiles()
-        print snapshot_sha_file
-        with open(snapshot_sha_file, 'rb') as csvfile:
+        
+        with open(snapshot_sha_file, 'r') as csvfile:
             csvreader = csv.reader(csvfile, delimiter=',', quotechar='|')
             csvreader.next()
             for row in csvreader:
-                bug_no,buggy_sha,bugfix_sha,project = row[:]
-                #print (',').join((bug_no,buggy_sha,bugfix_sha,project))
+                bug_no,buggy_sha,bugfix_sha,project = row[:]                
                 if project.strip("\"") == projectName:
                     #print bug_no,buggy_sha,bugfix_sha,project
                     buggy_sha = buggy_sha.strip("\"")
                     sha_list.append((bug_no,buggy_sha))
                     
-        pruned_sha_list = pruneShas(project_cur_clone, sha_list)
-        dumpSnapshotsBySha(project_cur_clone, project_snapshot_dir, pruned_sha_list)
-        
-    else:
-        print "!! No valid interval....not able to download snapshots"
+        pruned_sha_list = pruneShas(project_cur_clone, sha_list,interval)
+        dumpSnapshotsBySha(project_cur_clone, project_snapshot_dir, pruned_sha_list)     
+    
   
     
-
+#----------------------------------------------------------------------------------------------
 
 def downloadSnapshots(config_info):
-  
-  repo_config = config_info.config_repo
-  
-  #Check that the repo list file exists
-  if(not os.path.isfile(repo_config['repo_url_file'])):
-    print(repo_config['repo_url_file'] + ", the file containing the list of projects to download,")
-    print("cannot be found.  Make sure your path and name are correct.")
-    return
-
-  #Create the output directory if it doesn't exist yet.
-  project_dir = repo_config['repo_locations']
-  if(not os.path.isdir(project_dir)):
-    print(project_dir + " is not found")
-    print("Please give a valid directory containing the projects")
-    print("Use repoMiner -dl to download projects")
-    return
-      
-      
-  snapshot_dir = config_info.config_szz['snapshot_locations']
-  if(not os.path.isdir(snapshot_dir)):
-    call(format_cmd('mkdir ' + snapshot_dir))
-      
-  repos = config_info.getRepos()
-  for r in repos:
-    print r
-    downloadSnapshot(snapshot_dir, project_dir, r, config_info)
+    
+    repo_config = config_info.config_repo
+    
+    #Check that the repo list file exists
+    if(not os.path.isfile(repo_config['repo_url_file'])):
+        print(repo_config['repo_url_file'] + ", the file containing the list of projects to download,")
+        print("cannot be found.  Make sure your path and name are correct.")
+        return
+    
+    #Create the output directory if it doesn't exist yet.
+    project_dir = repo_config['repo_locations']
+    if(not os.path.isdir(project_dir)):
+        print(project_dir + " is not found")
+        print("Please give a valid directory containing the projects")
+        print("Use repoMiner -dl to download projects")
+        return
+    
+    snapshot_dir = config_info.config_szz['snapshot_locations']
+    if(not os.path.isdir(snapshot_dir)):
+        Util.runCmd('mkdir ' + snapshot_dir)
+        
+    repos = config_info.getRepos()
+    for r in repos:
+        print r
+        downloadSnapshot(snapshot_dir, project_dir, r, config_info)
 #=============================================================================================
 
 
@@ -308,8 +307,6 @@ def main():
     					help="file to store the logs, by default it will be stored at log.txt")
     
 
-
-
     args = parser.parse_args()
 
     Util.cleanup(args.log_file)
@@ -323,4 +320,4 @@ def main():
 
 
 if __name__ == "__main__":
-  main()
+    main()
