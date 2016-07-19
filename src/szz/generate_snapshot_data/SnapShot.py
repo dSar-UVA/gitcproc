@@ -40,6 +40,8 @@ class SnapShot:
         self.out_dir = None
         self.edits = []
         self.changed_files = set()
+        self.nonbugfix_files = set()
+        self.bugfix_files = set()
         self.train_files = set()
 
     def __str__(self):
@@ -80,22 +82,20 @@ class SnapShot:
 
 
     def getChangedFiles(self, isBug=-1):
-        
-        changed_files = set()
-        
-        for e in self.edits:
-            if isBug == -1: #all edits
-                changed_files.add(e.file_name)
-                
-            elif isBug == 0:
-                if e.isbug == 'False':
-                    changed_files.add(e.file_name)
-            elif isBug == 1:
-                if e.isbug == 'True':
-                    changed_files.add(e.file_name)
                     
-        self.changed_files = changed_files
-        return self.changed_files
+        for e in self.edits:
+          if e.isbug == 'False':
+            self.nonbugfix_files.add(e.file_name)
+          elif e.isbug == 'True':
+            self.bugfix_files.add(e.file_name)
+
+        if isBug == -1: #all
+          return self.nonbugfix_files | self.bugfix_files
+        elif isBug == 0: #only non-bug
+          return self.nonbugfix_files
+        elif isBug == 1: #only bug 
+          return self.bugfix_files
+        
 
 
     def dumpTestFiles(self):
@@ -117,7 +117,6 @@ class SnapShot:
                 only considering bugfix files for time being
                 '''
                 continue
-            
 
             logging.debug(">>>>" , e.file_name, e.sha)
 
@@ -146,7 +145,7 @@ class SnapShot:
             return
 
         print('Dumping files in learn and change dirs for ' + path_leaf(self.src_path))
-        print self.getChangedFiles(0) #only get NonBugfix files
+        changed_files = self.getChangedFiles(-1) #get all changed files
         # self.git_repo.git.stash('-u')
 
         #all files under snapshot except test files
@@ -167,11 +166,12 @@ class SnapShot:
                 if extn.lower() not in ['.c', '.cpp', '.cc', '.java']:
                     continue
                 
-                print file_name
-                if file_name in self.changed_files:
-                    print "CCCC : ", file_name
+                if file_name in self.nonbugfix_files:
                     dest_file = self.out_dir.changed_dir + os.sep + file_name.replace(os.sep, self.config_info.SEP)
                     shutil.copyfile(src_file, dest_file)
+                
+                elif file_name in self.bugfix_files:
+                  continue
                 
                 else:
                     self.train_files.add(file_name)

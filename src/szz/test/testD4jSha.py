@@ -67,7 +67,7 @@ def main():
 
 if __name__ == "__main__":
     
-    #main()
-    projTest()
+    main()
+    #projTest()
 
 

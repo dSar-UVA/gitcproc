@@ -203,9 +203,3 @@ class Corpus:
             '''
             
             snap.dumpTrainFiles()
-            return
-            
-
-
-
-
