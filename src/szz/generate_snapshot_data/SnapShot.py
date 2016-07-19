@@ -39,7 +39,7 @@ class SnapShot:
 
         self.out_dir = None
         self.edits = []
-        self.test_files = set()
+        self.changed_files = set()
         self.train_files = set()
 
     def __str__(self):
@@ -79,11 +79,23 @@ class SnapShot:
         self.edits.append(edit)
 
 
-    def getTestFiles(self):
-
+    def getChangedFiles(self, isBug=-1):
+        
+        changed_files = set()
+        
         for e in self.edits:
-            self.test_files.add(e.file_name)
-        return self.test_files
+            if isBug == -1: #all edits
+                changed_files.add(e.file_name)
+                
+            elif isBug == 0:
+                if e.isbug == 'False':
+                    changed_files.add(e.file_name)
+            elif isBug == 1:
+                if e.isbug == 'True':
+                    changed_files.add(e.file_name)
+                    
+        self.changed_files = changed_files
+        return self.changed_files
 
 
     def dumpTestFiles(self):
@@ -99,20 +111,20 @@ class SnapShot:
 
 
         for e in self.edits:
-            print e
-            if e.isbug is 'False':
+            #print e
+            if e.isbug == 'False':
                 '''
                 only considering bugfix files for time being
                 '''
-                print "XXXXXXXXXXXXXXXXXXXXXX"
                 continue
+            
 
             logging.debug(">>>>" , e.file_name, e.sha)
 
             file_versions = self.git_repo.fetchFiles(e.file_name, e.sha)
 
             for i, sha in enumerate(file_versions):
-                print i, sha
+                #print i, sha
                 file_name = e.file_name.replace('/', self.config_info.SEP)
                 file_name, extn = os.path.splitext(file_name)
                 if extn.lower() not in ['.c', '.cpp', '.cc', '.java']:
@@ -122,41 +134,6 @@ class SnapShot:
                 #print file_name, dest_file
                 self.git_repo.dumpFile(e.file_name, sha, dest_file)
                 
-    
-    def dumpNonbugfixFiles(self):
-        #dumping in change repo
-
-
-        if self.out_dir is None:
-            # no edits corr to this snapshot
-            return
-
-        print('>>>> Dumping non bugfix files in change dir for ' + path_leaf(self.src_path))
-        change_dirs = self.out_dir.get_change_dir()
-
-        for e in self.edits:
-
-            if e.isbug is "False":
-                '''
-                only considering bugfix files for time being
-                '''
-                continue
-
-            logging.debug(">>>>" , e.file_name, e.sha)
-
-            file_versions = self.git_repo.fetchFiles(e.file_name, e.sha)
-
-            for i, sha in enumerate(file_versions):
-                print i, sha
-                file_name = e.file_name.replace('/', self.config_info.SEP)
-                file_name, extn = os.path.splitext(file_name)
-                if extn.lower() not in ['.c', '.cpp', '.cc', '.java']:
-                    continue
-                file_name = file_name + self.config_info.SEP + e.sha + extn
-                dest_file = os.path.join(test_dirs[i], file_name)
-                #print file_name, dest_file
-                self.git_repo.dumpFile(e.file_name, sha, dest_file)
-
 
     def getTrainFiles(self):
 
@@ -169,7 +146,7 @@ class SnapShot:
             return
 
         print('Dumping files in learn and change dirs for ' + path_leaf(self.src_path))
-        self.getTestFiles()
+        print self.getChangedFiles(0) #only get NonBugfix files
         # self.git_repo.git.stash('-u')
 
         #all files under snapshot except test files
@@ -179,7 +156,7 @@ class SnapShot:
                 file_name = src_file.split(self.src_path)#[1].strip(os.sep)
 
                 if len(file_name) < 2:
-                    logger.error(file_name)
+                    logging.error(file_name)
                     continue
 
                 file_name = file_name[1].strip(os.sep)
@@ -189,13 +166,14 @@ class SnapShot:
                 file_name_without_extn, extn = os.path.splitext(file_name)
                 if extn.lower() not in ['.c', '.cpp', '.cc', '.java']:
                     continue
-
-                if file_name in self.test_files:
+                
+                print file_name
+                if file_name in self.changed_files:
+                    print "CCCC : ", file_name
                     dest_file = self.out_dir.changed_dir + os.sep + file_name.replace(os.sep, self.config_info.SEP)
                     shutil.copyfile(src_file, dest_file)
-                    continue
-
-                self.train_files.add(file_name)
-
-                dest_file = self.out_dir.learn_dir + os.sep + file_name.replace(os.sep, self.config_info.SEP)
-                shutil.copyfile(src_file, dest_file)
+                
+                else:
+                    self.train_files.add(file_name)
+                    dest_file = self.out_dir.learn_dir + os.sep + file_name.replace(os.sep, self.config_info.SEP)
+                    shutil.copyfile(src_file, dest_file)

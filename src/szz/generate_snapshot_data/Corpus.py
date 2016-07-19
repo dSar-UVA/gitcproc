@@ -201,8 +201,10 @@ class Corpus:
             For bugfix model, I think the training data will be at snapshot
             So no need to dump the training data?
             '''
+            
             snap.dumpTrainFiles()
             return
+            
 
 
 

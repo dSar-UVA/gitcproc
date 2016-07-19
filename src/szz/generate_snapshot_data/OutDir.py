@@ -13,10 +13,10 @@ class OutDir(object):
 
     def __init__(self,path):
         self.root = path
-        self.learn_dir = self.root + os.sep + "learn"
-        self.changed_dir = self.root + os.sep + "change"
-        self.test_new = self.root  + os.sep + "test" + os.sep + "new"
-        self.test_old = self.root  + os.sep + "test" + os.sep + "old"
+        self.learn_dir = self.root + os.sep + "nonChange"
+        self.changed_dir = self.root + os.sep + "nonBugfix"
+        self.test_new = self.root  + os.sep + "bugFix" + os.sep + "new"
+        self.test_old = self.root  + os.sep + "bugFix" + os.sep + "old"
 
     def __str__(self):
         return self.root
