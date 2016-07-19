@@ -16,14 +16,16 @@ def testSha(inputProject,d4jShaFile,changeFile):
                 commit_date, author, author_date, is_bug, total_add, total_del = row[:]
                 #print (',').join((project, file_name, sha, commit_date, is_bug, is_test))
                 if project != inputProject:
-                    #print project, inputProject
+                    print "!! project %s does not match with input project %s" % (project, inputProject)
                     continue
                 #print (',').join((project, file_name, sha, commit_date, is_bug, is_test))
                 if is_bug == 'True':
                     file_bugfix_edits.add(sha)
                 else:
                     file_nonbugfix_edits.add(sha)
-                
+               
+
+    alRight = True
     
     with open(d4jShaFile, 'r') as csvfile:
             csvreader = csv.reader(csvfile, delimiter=',', quotechar='|')
@@ -34,12 +36,16 @@ def testSha(inputProject,d4jShaFile,changeFile):
                     continue     
                 if bugfix_sha in file_bugfix_edits:
                     continue
-                    
                 elif bugfix_sha in file_nonbugfix_edits:
                     print "\t %s not found as bugfix " % bugfix_sha
+                    alRight = False
                     #continue
                 else:
                     print "\t %s not found " % bugfix_sha
+                    alRight = False
+
+    if alRight == True:
+      print "Looks Good"
                          
                 
     
@@ -61,7 +67,7 @@ def main():
 
 if __name__ == "__main__":
     
-    #main()
-    projTest()
+    main()
+    #projTest()
 
 

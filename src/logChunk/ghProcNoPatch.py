@@ -124,7 +124,7 @@ class ghProcNoPatch:
         
         #Following is for D4j
         _ , project_name = ntpath.split(self.project)
-        print ">>>>>> " , project_name
+        #print ">>>>>> " , project_name
          
         sha_list = {}
         
@@ -139,9 +139,8 @@ class ghProcNoPatch:
                   
                 if project.strip("\"") == project:
                     #print bug_no,buggy_sha,bugfix_sha,project
-                    buggy_sha = buggy_sha.strip("\"")
-                    print buggy_sha
-                    sha_list[(self.project,bugfix_sha)] = 'Bug'
+                    bugfix_sha = bugfix_sha.strip("\"")
+                    sha_list[(project,bugfix_sha)] = 'Bug'
         
         return sha_list
 

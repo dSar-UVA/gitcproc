@@ -1,1 +1,5 @@
-google/closure-compiler
+dummy/jfreechart
+dummy/closure-compiler  
+dummy/commons-lang  
+dummy/commons-math  
+dummy/joda-time
