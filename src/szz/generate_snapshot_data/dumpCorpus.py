@@ -95,30 +95,6 @@ def main():
     config_info = ConfigInfoSZZ(args.config_file)  
     downloadCorpuses(config_info)
 
-    '''
-    if not os.path.isdir(args.proj_dir):
-        print "!! Please provide a valid directory, given: %s" % (args.proj_dir)
-    	sys.exit()
-
-    print "Going to process project %s for %s" % (args.proj_dir, args.lang)
-
-    print "Creating output directory at %s" % (args.out_dir)
-
-    
-    corpus = Corpus(args.proj_dir, args.lang, args.out_dir, cfg)
-    logging.debug(corpus)
-    corpus.dump()
-
-
-    #print corpus.printSnapshots()
-    #1. Fetch one line changes of a given project for a given language from the database
-    #edits = fetchEdits(cfg, args.proj_dir, args.lang)
-
-    #2. build the test corpus based on each edit
-    #createTrainingCorpus(args.proj_dir, args.lang, args.out_dir, edits)
-    #createTestCorpus(args.proj_dir, args.lang, od, edits)
-    '''
-
 
 
 if __name__ == "__main__":

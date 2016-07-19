@@ -71,19 +71,6 @@ class Corpus:
         else:
             self.edits = self.fetchEditsFromCsv()
 
-        # for e in self.edits:
-
-        #     #print e.file_name, e.sha, e.commit_date
-        #     file_name = e.file_name.replace(os.sep,'_')
-
-        #     if not self.changed_files_per_date.has_key(e.commit_date):
-        #         self.changed_files_per_date[e.commit_date] = set()
-
-        #     self.changed_files_per_date[e.commit_date].add(file_name)
-
-        # if self.debug:
-        #     for key in sorted(self.changed_files_per_date):
-        #         print key, self.changed_files_per_date[key]
 
     def fetchEditsFromCsv(self):
         print "fetchEditsFromCsv"
