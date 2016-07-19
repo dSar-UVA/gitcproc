@@ -62,11 +62,14 @@ def pruneShas(srcPath, shaList,interval):
     
     with Util.cd(srcPath):
         for sha in shaList:
+            print sha
             git_cmd = 'git show --date=format:\"%%Y-%%m-%%d:%%H:%%M:%%S\" %s' % (sha[1])
+            print git_cmd
             git_show = Util.runCmd(git_cmd)[1]
-            
+            print git_show 
             for l in git_show.split('\n'):
                 if l.startswith('Date:'):
+                    print l
                     snapshot_date = l.split('Date: ')[1].strip()
                     snapshot_date = datetime.strptime(snapshot_date, '%Y-%m-%d:%H:%M:%S')
 
@@ -108,6 +111,9 @@ def pruneShas(srcPath, shaList,interval):
 def assertSnapshotsShas(destPath, shaList):
 
     print "!! Checking Snapshot Directories"
+
+    isAlright = 'Good'
+
     
     for comp_sha in shaList:
         
@@ -128,6 +134,10 @@ def assertSnapshotsShas(destPath, shaList):
                     if(snapshot_commit_id != commit_id):
                         print("!!snapshot %s has different commit ID. Expected: %s, Got: %s" \
                               % (snapshot,commit_id,snapshot_commit_id))
+                        isAlright = 'Not Good'
+    
+    print "Everithing is %s" % isAlright
+
         
 #----------------------------------------------------------------------------------------------------------------
 
@@ -281,12 +291,17 @@ def downloadSnapshot(snapshotDir, projectDir, projectName, configInfo):
             csvreader = csv.reader(csvfile, delimiter=',', quotechar='|')
             csvreader.next()
             for row in csvreader:
-                bug_no,buggy_sha,bugfix_sha,project = row[:]                
+                bug_no,buggy_sha,bugfix_sha,project = row[:]           
                 if project.strip("\"") == projectName:
+                    print project, projectName
                     #print bug_no,buggy_sha,bugfix_sha,project
                     buggy_sha = buggy_sha.strip("\"")
                     sha_list.append((bug_no,buggy_sha))
-                    
+        
+        if len(sha_list) == 0:
+          print "!! Could not find any shas to process...returning"
+          return 
+        
         pruned_sha_list = pruneShas(project_cur_clone, sha_list,interval)
         dumpSnapshotsBySha(project_cur_clone, project_snapshot_dir, pruned_sha_list)     
         assertSnapshotsShas(project_snapshot_dir, pruned_sha_list)
