@@ -80,7 +80,7 @@ def main():
     parser.add_argument("config_file", help = "This is the path to your configuration file.")
     
     #logging and config specific arguments
-    parser.add_argument("-v", "--verbose", default = 'w', nargs="?", \
+    parser.add_argument("-v", "--verbose", default = 'd', nargs="?", \
                             help="increase verbosity: d = debug, i = info, w = warnings, e = error, c = critical.  " \
                             "By default, we will log everything above warnings.")
     parser.add_argument("--log", dest="log_file", default='log.txt', \

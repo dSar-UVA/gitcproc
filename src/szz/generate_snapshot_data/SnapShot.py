@@ -40,9 +40,10 @@ class SnapShot:
         self.out_dir = None
         self.edits = []
         self.changed_files = set()
+        
         self.nonbugfix_files = set()
         self.bugfix_files = set()
-        self.train_files = set()
+        self.nonchanged_files = set()
 
     def __str__(self):
 
@@ -82,12 +83,15 @@ class SnapShot:
 
 
     def getChangedFiles(self, isBug=-1):
+        
+        
                     
         for e in self.edits:
+          file_name = e.file_name.replace('/',os.sep)
           if e.isbug == 'False':
-            self.nonbugfix_files.add(e.file_name)
+            self.nonbugfix_files.add(file_name)
           elif e.isbug == 'True':
-            self.bugfix_files.add(e.file_name)
+            self.bugfix_files.add(file_name)
 
         if isBug == -1: #all
           return self.nonbugfix_files | self.bugfix_files
@@ -118,7 +122,7 @@ class SnapShot:
                 '''
                 continue
 
-            logging.debug(">>>>" , e.file_name, e.sha)
+            logging.debug(">>>> %s, %s" % (e.file_name, e.sha))
 
             file_versions = self.git_repo.fetchFiles(e.file_name, e.sha)
 
@@ -136,7 +140,7 @@ class SnapShot:
 
     def getTrainFiles(self):
 
-        return self.train_files
+        return self.nonchanged_files
 
 
     def dumpTrainFiles(self):
@@ -145,9 +149,8 @@ class SnapShot:
             return
 
         print('Dumping files in learn and change dirs for ' + path_leaf(self.src_path))
-        changed_files = self.getChangedFiles(-1) #get all changed files
-        # self.git_repo.git.stash('-u')
-
+        self.getChangedFiles(-1) #get all changed files
+        
         #all files under snapshot except test files
         for root, dirs, files in os.walk(self.src_path):
             for f in files:
@@ -159,21 +162,28 @@ class SnapShot:
                     continue
 
                 file_name = file_name[1].strip(os.sep)
-
+                               
                 # Condition to filter out all files except C source files. Added on 2014-09-25 1:32PM PDT by Saheel.
                 # Changed on 2015-02-01 by Saheel to consider C++ files as well.
-                file_name_without_extn, extn = os.path.splitext(file_name)
+                extn = os.path.splitext(file_name)[1]
                 if extn.lower() not in ['.c', '.cpp', '.cc', '.java']:
+                    logging.debug(".... Ignoring!! %s" % file_name)
                     continue
                 
                 if file_name in self.nonbugfix_files:
+      
+                    logging.debug("NB %s" % file_name)
                     dest_file = self.out_dir.changed_dir + os.sep + file_name.replace(os.sep, self.config_info.SEP)
                     shutil.copyfile(src_file, dest_file)
                 
                 elif file_name in self.bugfix_files:
-                  continue
+           
+                    logging.debug("BF %s" % file_name)
+                    continue
                 
                 else:
-                    self.train_files.add(file_name)
-                    dest_file = self.out_dir.learn_dir + os.sep + file_name.replace(os.sep, self.config_info.SEP)
+                   
+                    logging.debug("NC %s" % file_name)
+                    self.nonchanged_files.add(file_name)
+                    dest_file = os.path.join(self.out_dir.learn_dir , file_name.replace(os.sep, self.config_info.SEP))
                     shutil.copyfile(src_file, dest_file)
