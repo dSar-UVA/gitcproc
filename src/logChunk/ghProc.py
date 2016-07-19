@@ -107,19 +107,18 @@ def main():
     patch_mode = config_info.getPatchMode()
 
     if patch_mode==False:
-      
-      no_merge = os.path.join(project,'no_merge_log.txt')
-      no_stat = os.path.join(project,'no_stat_log.txt')
-      parseFinish = datetime.now()
-      
-      pl = ghProcNoPatch(project, no_merge, no_stat, config_file, password)
-      pl.parse()
+        no_merge = os.path.join(project,'no_merge_log.txt')
+        no_stat = os.path.join(project,'no_stat_log.txt')
+        parseFinish = datetime.now()
+        
+        pl = ghProcNoPatch(project, no_merge, no_stat, config_file, password)
+        pl.parse()
       
     else:
-      if(config_info.DATABASE):
-        parseFinish = processLog(project, config_info, is_patch, password)
-      else:
-        parseFinish = processLog(project, config_info, is_patch)
+        if(config_info.DATABASE):
+            parseFinish = processLog(project, config_info, patch_mode, password)
+        else:
+            parseFinish = processLog(project, config_info, patch_mode)
 
     print "!! Done"
 

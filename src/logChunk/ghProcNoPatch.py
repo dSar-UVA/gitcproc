@@ -1,13 +1,11 @@
 import sys
 import re
 import os
-from os.path import isfile
-import fnmatch
-import argparse
+import ntpath
+
 import csv
 from datetime import datetime, timedelta
-import random
-from sets import Set
+
 
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.corpus import stopwords
@@ -16,10 +14,6 @@ from nltk.corpus import stopwords
 
 from commit import commit
 from dumpLogs import dumpLogs
-
-
-#import util
-
 
 from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'..','util'))
@@ -112,15 +106,44 @@ def get_time(commit_date):
 class ghProcNoPatch:
 
     def __init__(self, project, no_merge_log, no_stat_log, config_file, password='', bug_db=None):
-
+     
         self.noMergeLog = no_merge_log
         self.noStatLog = no_stat_log
         self.configInfo = ConfigInfo(config_file) 
-        self.extBugDb = bug_db
+        
         self.dbPass = password
 
         self.project = project
         self.sha2commit = {}
+        self.extBugDb = self.getExtBugDb(bug_db)
+        
+    def getExtBugDb(self,bug_db):
+      
+        if not bug_db is None:
+            return bug_db
+        
+        #Following is for D4j
+        _ , project_name = ntpath.split(self.project)
+        print ">>>>>> " , project_name
+         
+        sha_list = {}
+        
+        config_szz  = self.configInfo.cfg.ConfigSectionMap('SZZ')
+        d4_sha_file = config_szz['snapshot_sha_file']
+        
+        with open(d4_sha_file, 'r') as csvfile:
+            csvreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+            csvreader.next()
+            for row in csvreader:
+                bug_no,buggy_sha,bugfix_sha,project = row[:]       
+                  
+                if project.strip("\"") == project:
+                    #print bug_no,buggy_sha,bugfix_sha,project
+                    buggy_sha = buggy_sha.strip("\"")
+                    print buggy_sha
+                    sha_list[(self.project,bugfix_sha)] = 'Bug'
+        
+        return sha_list
 
 
     def parse(self, bug_only=False):

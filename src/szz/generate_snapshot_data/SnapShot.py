@@ -12,7 +12,8 @@ import codecs
 from GitRepo import GitRepo
 from OutDir import OutDir
 
-sys.path.append("src/util")
+
+sys.path.append(os.path.join(dirname(__file__),'../../','util'))
 import Log
 from Util import cd
 import Util
