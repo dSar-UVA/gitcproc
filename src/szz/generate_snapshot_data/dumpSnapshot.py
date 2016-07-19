@@ -62,12 +62,13 @@ def pruneShas(srcPath, shaList,interval):
     
     with Util.cd(srcPath):
         for sha in shaList:
-            git_show = Util.runCmd('git show --date=short %s' % (sha[1]))[1]
+            git_cmd = 'git show --date=format:\"%%Y-%%m-%%d:%%H:%%M:%%S\" %s' % (sha[1])
+            git_show = Util.runCmd(git_cmd)[1]
             
             for l in git_show.split('\n'):
                 if l.startswith('Date:'):
                     snapshot_date = l.split('Date: ')[1].strip()
-                    snapshot_date = datetime.strptime(snapshot_date, '%Y-%m-%d').date()
+                    snapshot_date = datetime.strptime(snapshot_date, '%Y-%m-%d:%H:%M:%S')
 
                     if not date2sha.has_key(snapshot_date):
                         date2sha[snapshot_date] = []
@@ -77,48 +78,83 @@ def pruneShas(srcPath, shaList,interval):
     keys = sorted(date2sha.keys())
 
     prevDate = keys[0]
-    filteredSha.append((date2sha[prevDate],prevDate))
+    bug_id, commit_id = date2sha[prevDate][0][0], date2sha[prevDate][0][1]
+    filteredSha.append((bug_id, commit_id, prevDate))
 
     for i, key in enumerate(keys):
         #print ">>>>>>> ", i, key, date2sha[key]
         day_diff = (keys[i] - prevDate).days
         if day_diff > (interval * 30): 
             prevDate = keys[i]
-            filteredSha.append((date2sha[prevDate], prevDate))
+            #filteredSha.append((date2sha[prevDate], prevDate))
+            value = date2sha[prevDate]
+            assert(len(value) == 1)
+            bug_id, commit_id = value[0][0], value[0][1]
+            
+            filteredSha.append((bug_id, commit_id, prevDate))
 
-    #for i in filteredSha:
-    #    print i
+      
+    for i in filteredSha:
+        print i
+    '''
+    sys.exit(0)
+    '''
+    
     return filteredSha
 
+#----------------------------------------------------------------------------------------------------------------
 
-def dumpSnapshotsBySha(srcPath, destPath, shaList):
 
-    print srcPath, destPath
-    print len(shaList)
+def assertSnapshotsShas(destPath, shaList):
 
-    #repo = Repo(srcPath)
-    #branch = repo.active_branch
+    print "!! Checking Snapshot Directories"
     
     for comp_sha in shaList:
-        sha, sha_date = comp_sha[0], comp_sha[1]
-        sha = sha[0]
-        #print sha[0], sha_date
-        sha_date_str = "%s" % (sha_date)
-        dir_name = ('__').join((sha_date_str,sha[0]))
+        
+        bug_id, commit_id, sha_date = comp_sha[0],comp_sha[1],comp_sha[2]
+        
+        sha_date_str = "%s" % (sha_date.date())
+        dir_name = ('__').join((sha_date_str,bug_id))
+    
+        snapshot = os.path.join(destPath, dir_name)
+        
+        with Util.cd(snapshot):
+            git_cmd = 'git show --date=format:\"%%Y-%%m-%%d:%%H:%%M:%%S\" '
+            git_show = Util.runCmd(git_cmd)[1]
+            
+            for l in git_show.split('\n'):
+                if l.startswith('commit '):
+                    snapshot_commit_id = l.split('commit ')[1].strip()
+                    if(snapshot_commit_id != commit_id):
+                        print("!!snapshot %s has different commit ID. Expected: %s, Got: %s" \
+                              % (snapshot,commit_id,snapshot_commit_id))
+        
+#----------------------------------------------------------------------------------------------------------------
+
+def dumpSnapshotsBySha(srcPath, destPath, shaList):
+    #print srcPath, destPath
+    #print len(shaList)
+  
+    for comp_sha in shaList:
+
+        #print comp_sha
+        bug_id, commit_id, sha_date = comp_sha[0],comp_sha[1],comp_sha[2]
+
+        sha_date_str = "%s" % (sha_date.date())
+        dir_name = ('__').join((sha_date_str,bug_id))
         #print dir_name
         snapshot = os.path.join(destPath, dir_name)
         
         if not os.path.isdir(snapshot):
             print ">>>>>>>>>> ", snapshot
             Util.copy_dir(srcPath,snapshot)
-            git_command = "git checkout -f " + sha[1]
+            git_command = "git checkout -f " + commit_id
             print git_command
             with cd(snapshot):
                 Util.runCmd("git reset --hard")
                 Util.runCmd(git_command)
                 Util.runCmd("git reset --hard")
-        
-        
+
 #--------------------------------------------------------------------------------------------------------------------------
 def dumpSnapshotsByInterval(srcPath, destPath, ss_interval_len, commitDateMin, commitDateMax):
 
@@ -253,7 +289,7 @@ def downloadSnapshot(snapshotDir, projectDir, projectName, configInfo):
                     
         pruned_sha_list = pruneShas(project_cur_clone, sha_list,interval)
         dumpSnapshotsBySha(project_cur_clone, project_snapshot_dir, pruned_sha_list)     
-    
+        assertSnapshotsShas(project_snapshot_dir, pruned_sha_list)
   
     
 #----------------------------------------------------------------------------------------------
