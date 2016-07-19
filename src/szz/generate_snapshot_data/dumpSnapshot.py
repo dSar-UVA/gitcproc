@@ -62,14 +62,13 @@ def pruneShas(srcPath, shaList,interval):
     
     with Util.cd(srcPath):
         for sha in shaList:
-            print sha
+            #print sha
             git_cmd = 'git show --date=format:\"%%Y-%%m-%%d:%%H:%%M:%%S\" %s' % (sha[1])
-            print git_cmd
+            #print git_cmd
             git_show = Util.runCmd(git_cmd)[1]
-            print git_show 
             for l in git_show.split('\n'):
                 if l.startswith('Date:'):
-                    print l
+                    #print l
                     snapshot_date = l.split('Date: ')[1].strip()
                     snapshot_date = datetime.strptime(snapshot_date, '%Y-%m-%d:%H:%M:%S')
 
