@@ -77,8 +77,10 @@ def if_bug(text):
     imp_words = [lmtzr.lemmatize(word) for word in text.lower().split() \
             if ((word not in stoplist)) ]
     bug_desc = ' '.join([str(x) for x in imp_words])
-
-    if re.search(Util.ERR_STR, '\b'+bug_desc+'\b', re.IGNORECASE):
+    
+    found = re.search(Util.ERR_STR, '\b'+bug_desc+'\b', re.IGNORECASE)
+    
+    if found:
         isBug = True
     
 
@@ -297,7 +299,8 @@ class ghProcNoPatch:
 
         if sha is None:
             return False
-
+        #print '------\n', subject
+        #print body
         co = self.sha2commit.get(sha)
         if co is None:
             print "!!! sould have this sha"
@@ -311,13 +314,21 @@ class ghProcNoPatch:
         
         if not self.extBugDb is None:
           issue = self.extBugDb.get((proj,sha))
-      
+          #print ">>>>" , issue, is_bug
+          
         if issue == 'Bug':
+            #print "XXXXXXXX"
             is_bug = True
         else:
+            
+            #print "YYYYYYYYYY"
             is_bug |= if_bug(subject)
+           
             is_bug |= if_bug(body)
-
+            
+            
+        
+        #print is_bug
         co.subject = subject
         co.body    = body
         co.isbug   = is_bug

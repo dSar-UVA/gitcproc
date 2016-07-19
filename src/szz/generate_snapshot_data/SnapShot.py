@@ -5,14 +5,15 @@ import os, sys, inspect
 import os.path
 import shutil
 import logging
-import datetime
+
+from datetime import datetime
 import ntpath
 import codecs
 
 from GitRepo import GitRepo
 from OutDir import OutDir
 
-
+from os.path import dirname
 sys.path.append(os.path.join(dirname(__file__),'../../','util'))
 import Log
 from Util import cd
@@ -34,7 +35,7 @@ class SnapShot:
         self.debug      = configInfo.DEBUG
         self.git_repo = GitRepo(self.src_path)
         self.date  = self.getSnapshotDate() #datetime.datetime.strptime(snapshot, '%Y-%m-%d').date
-        self.out_path = os.path.join(outDir, snapshotName + "_" + str(self.date))
+        self.out_path = os.path.join(outDir, snapshotName)
 
         self.out_dir = None
         self.edits = []
@@ -54,14 +55,17 @@ class SnapShot:
     def getSnapshotDate(self):
 
         try:
-            snapshot_date = datetime.datetime.strptime(self.name, '%Y-%m-%d').date()
+            snapshot_date = datetime.strptime(self.name, '%Y-%m-%d').date()
         except:
             with Util.cd(self.src_path):
+                print ">>>>>>> ", self.src_path
+                
                 git_show = Util.runCmd('git show --date=short')[1]
                 for l in git_show.split('\n'):
                     if l.startswith('Date:'):
                         snapshot_date = l.split('Date: ')[1].strip()
-                        snapshot_date = datetime.datetime.strptime(snapshot_date, '%Y-%m-%d').date()
+                        snapshot_date = datetime.strptime(snapshot_date, '%Y-%m-%d').date()
+                        
 
         return snapshot_date
 
@@ -91,18 +95,19 @@ class SnapShot:
 
         print('>>>> Dumping files in test dir for ' + path_leaf(self.src_path))
         test_dirs = self.out_dir.get_test_dirs()
-        print test_dirs
+        #print test_dirs
 
 
         for e in self.edits:
-
-            if e.isbug is "False":
+            print e
+            if e.isbug is 'False':
                 '''
                 only considering bugfix files for time being
                 '''
+                print "XXXXXXXXXXXXXXXXXXXXXX"
                 continue
 
-            print ">>>>" , e.file_name, e.sha
+            logging.debug(">>>>" , e.file_name, e.sha)
 
             file_versions = self.git_repo.fetchFiles(e.file_name, e.sha)
 
@@ -114,7 +119,42 @@ class SnapShot:
                     continue
                 file_name = file_name + self.config_info.SEP + e.sha + extn
                 dest_file = os.path.join(test_dirs[i], file_name)
-                print file_name, dest_file
+                #print file_name, dest_file
+                self.git_repo.dumpFile(e.file_name, sha, dest_file)
+                
+    
+    def dumpNonbugfixFiles(self):
+        #dumping in change repo
+
+
+        if self.out_dir is None:
+            # no edits corr to this snapshot
+            return
+
+        print('>>>> Dumping non bugfix files in change dir for ' + path_leaf(self.src_path))
+        change_dirs = self.out_dir.get_change_dir()
+
+        for e in self.edits:
+
+            if e.isbug is "False":
+                '''
+                only considering bugfix files for time being
+                '''
+                continue
+
+            logging.debug(">>>>" , e.file_name, e.sha)
+
+            file_versions = self.git_repo.fetchFiles(e.file_name, e.sha)
+
+            for i, sha in enumerate(file_versions):
+                print i, sha
+                file_name = e.file_name.replace('/', self.config_info.SEP)
+                file_name, extn = os.path.splitext(file_name)
+                if extn.lower() not in ['.c', '.cpp', '.cc', '.java']:
+                    continue
+                file_name = file_name + self.config_info.SEP + e.sha + extn
+                dest_file = os.path.join(test_dirs[i], file_name)
+                #print file_name, dest_file
                 self.git_repo.dumpFile(e.file_name, sha, dest_file)
 
 

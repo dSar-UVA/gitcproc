@@ -8,8 +8,9 @@ import subprocess
 
 from git import *
 
-sys.path.append("src/util")
-from Util import cd
+from os.path import dirname
+sys.path.append(os.path.join(dirname(__file__),'../../','util'))
+
 import Util
 
 class GitRepo:
@@ -60,7 +61,7 @@ class GitRepo:
   # this removes unicode error
   def dumpFile(self, fileName, sha, destination):
     
-    with cd(self.repo_path):   
+    with Util.cd(self.repo_path):   
       try:
         command = 'git show ' + sha + ":" + fileName + " > " + destination
         os.system(command)
@@ -69,7 +70,7 @@ class GitRepo:
 
   def blameFile(self, fileName, sha, destination):
     
-    with cd(self.repo_path):   
+    with Util.cd(self.repo_path):   
       try:
         command = 'git blame --line-porcelain ' + sha + " -- " + fileName + " > " + destination
         #print command
@@ -79,7 +80,7 @@ class GitRepo:
 
   def countAuthorContribution(self, fileName, sha, destination):
     
-    with cd(self.repo_path):   
+    with Util.cd(self.repo_path):   
       try:
         #command = 'git blame -l --date=short ' + sha + " " + fileName + " > " + destination
         command = 'git blame --line-porcelain ' + sha + " -- " + \

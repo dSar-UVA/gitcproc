@@ -143,7 +143,7 @@ class Corpus:
             #snap = min(self.snapshots, key=lambda sd : self.minKey(cd,sd))
             snap = min(self.date2snapshot.keys(), key=lambda sd: self.minKey(cd, sd))
             if cd < snap:
-                logging.warning("!!! skipping: commit_date %s: snapshot %s" % (cd, snap))
+                logging.info("!!! skipping: commit_date %s: snapshot %s" % (cd, snap))
                 continue
 
             self.edit_to_snapshot[e] = snap
@@ -151,17 +151,9 @@ class Corpus:
             for s in self.date2snapshot[snap]:
                 s.addEdit(e)
 
-        '''
-        logging.debug("mapEditToSnapshot : <edit> : <snapshot>")
-        for key in self.edit_to_snapshot:
-            sd = self.edit_to_snapshot[key]
-            snapshot = self.date2snapshot.get(sd)
-            print("%s->%s:%s" % (key.commit_date, sd, snapshot[0].name))
-        '''
-
         for s in self.snapshots:
 
-            print "%s:%s" % (s.name, s.date)
+            #print "%s:%s" % (s.name, s.date)
             edit_dates = set()
             for e in s.edits:
                 td =  "%s" % e.commit_date
@@ -170,7 +162,7 @@ class Corpus:
             #print edit_dates
             edit_dates = sorted(edit_dates)
             edit_str = (",".join(edit_dates))
-            print "\t", edit_str
+            #print "\t", edit_str
 
 
     def initSnapshots(self):
