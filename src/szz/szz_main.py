@@ -60,34 +60,43 @@ def printUsage():
 
 #----------------------------------------------------------------------------------
 def main():
-  parser = argparse.ArgumentParser()
-  parser.add_argument("config_file", help = "This is the path to your configuration file.")
-  parser.add_argument("-s","--snapshots", action="store_true", help = "Flag that indicates you want to download the snapshots.")
-  parser.add_argument("-c","--corpus",    action="store_true", help = "Flag that indicates you want to download the snapshots.")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("config_file",      help = "This is the path to your configuration file.")
+    parser.add_argument("-s","--snapshots", action="store_true", help = "Flag that indicates you want to download the snapshots.")
+    parser.add_argument("-c","--corpus",    action="store_true", help = "Flag that indicates you want to dump a corpus of changes.")
+    parser.add_argument("-z","--szz",       action="store_true", help = "Flag that indicates you want to map .")
   
-  args = parser.parse_args()
+    args = parser.parse_args()
   
-  config_file = args.config_file
-  config_info = ConfigInfoSZZ(config_file)  
+    config_file = args.config_file
+    config_info = ConfigInfoSZZ(config_file)  
   
-  if(config_info.DATABASE): #If we have database output selected and are performing the parse-log step.
-    password = getpass.getpass(prompt="Database option selected, enter your password:")
-  else:
-    password = ""
+    if(config_info.DATABASE): #If we have database output selected and are performing the parse-log step.
+        password = getpass.getpass(prompt="Database option selected, enter your password:")
+    else:
+        password = ""
 
-  
-  if(args.snapshots):
-    cmd = format_cmd('python generate_snapshot_data/dumpSnapshot.py ' + config_file)
-    #print cmd
-    call(cmd)
+
+    if(args.snapshots):
+        cmd = format_cmd('python generate_snapshot_data/dumpSnapshot.py ' + config_file)
+        #print cmd
+        call(cmd)
     
-  if(args.corpus):
-    cmd = format_cmd('python generate_snapshot_data/dumpCorpus.py ' + config_file)
-    #print cmd
-    call(cmd)
+    if(args.corpus):
+        cmd = format_cmd('python generate_snapshot_data/dumpCorpus.py ' + config_file)
+        #print cmd
+        call(cmd)
+        
+    if(args.szz):
+        cmd = format_cmd('python map_bugs2snapshot/map_bugs.py ' + config_file)
+        #print cmd
+        call(cmd)
+
+    
+  
 
 
-  if False:
+    if False:
       if len(sys.argv) == 7:
           all_steps = True
           options = []

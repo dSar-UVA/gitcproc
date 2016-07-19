@@ -3,7 +3,6 @@ Contains the extractBugfixSHAs() function (see its doc) that fetchs you the list
 """
 #----------------------------------------------------------------------------------
 import os, sys, psycopg2
-
 #----------------------------------------------------------------------------------
 def extractBugfixSHAs(project_name, output_file_path):
     """
@@ -41,9 +40,12 @@ def extractBugfixSHAs(project_name, output_file_path):
 
 #----------------------------------------------------------------------------------
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        sys.stderr.write('\nPlease provide valid args.\nUsage: python get_list_of_bugfix_SHAs.py <project_name> <output_file_path>\n\n')
+    
+    if len(sys.argv) != 1:
+        sys.stderr.write('\nPlease provide valid configuration file.\nUsage: python get_list_of_bugfix_SHAs.py config_file\n\n')
+        return
     else:
+        
         extractBugfixSHAs(sys.argv[1], sys.argv[2])
         print("Bugfix SHAs written to " + sys.argv[2] + " successfully.")
 

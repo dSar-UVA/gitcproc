@@ -142,17 +142,19 @@ def szz_process_ss(ss_name, ss_path, ss_changes_path, bugfix_SHAs_filename):
     old_file_SHAs = []
     
     # Path to ss/test/old and ss/test/new; used to diff old and new files
-    old_files_path = ss_changes_path + 'test/old/'
-    new_files_path = ss_changes_path + 'test/new/'
+    old_files_path = ss_changes_path + 'bugFix/old/'
+    new_files_path = ss_changes_path + 'bugFix/new/'
     if not os.path.isdir(old_files_path) or not os.path.isdir(new_files_path):
-        sys.stderr.write("`test/old/` or `test/new/` path invalid for the snapshot `" + ss_name + "`. Skipping this snapshot...")
+        sys.stderr.write("`bugFix/old/` or `bugFix/new/` path invalid for the snapshot `" + ss_name + "`. Skipping this snapshot...")
         return
 
     old_file_fullnames = [filename for filename in os.listdir(old_files_path) if filename.endswith(('c', 'cpp', 'cc', 'java'))]
     old_file_fullnames.sort()
     for old_file_fullname in old_file_fullnames:
         # Example of old_file_fullname = src__oid__b7c891c629d298f2d82310d8ced2ee2e48084213.c
+        print old_file_fullname
         name_SHA_pair = dismemberFilename(old_file_fullname, 'old')
+        print name_SHA_pair
         old_file_paths_in_ss.append(name_SHA_pair[0])
         old_file_SHAs.append(name_SHA_pair[1])
 
@@ -160,6 +162,7 @@ def szz_process_ss(ss_name, ss_path, ss_changes_path, bugfix_SHAs_filename):
     for old_file_index, old_file_path_in_ss in enumerate(old_file_paths_in_ss):
         old_file_SHA = old_file_SHAs[old_file_index]
         if old_file_SHA in bugfix_SHAs:
+            print "====== ", old_file_SHA
             temp = szz_process_file(old_file_SHA, old_file_path_in_ss,
                                     old_files_path, old_file_fullnames[old_file_index],
                                     new_files_path, ss_path, ss_SHA)
