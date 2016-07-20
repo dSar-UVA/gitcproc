@@ -64,6 +64,25 @@ def szz_reverse_blame(ss_path, sha_to_blame_on, buggy_line_num, buggy_file_path_
         return None
 
 #--------------------------------------------------------------------------------------------------------------------------
+def getSnapshot2Sha(snapshotDir):
+  
+  ss_names = os.listdir(snapshotDir)
+  print ss_names
+  ss_paths = [os.path.join(snapshotDir, ss_name) for ss_name in ss_names]
+
+  ss_name_to_sha = {}
+  for ss_index, ss_path in enumerate(ss_paths):
+    repo = Repo(ss_path)
+    ss_sha = repo.git.log('--format=%H', '-n', '1')
+    ss_name_to_sha[ss_names[ss_index]] = ss_sha
+
+  #with open(ss_dir + '/' + project_name + '/ss_sha_info.txt', 'wb') as out_file:
+   #                                             pickle.dump(ss_name_to_sha, out_file)
+  for key,val in ss_name_to_sha.iteritems():
+    print key,val
+
+  return ss_name_to_sha
+#--------------------------------------------------------------------------------------------------------------------------
 def szz_process_file(old_file_SHA, old_file_path_in_ss, old_files_path, old_file_fullname, new_files_path,
                      ss_path, ss_SHA):
     """Returns buggy tuples corresponding to the lines deleted in `old_file_path_in_ss`"""
@@ -72,6 +91,7 @@ def szz_process_file(old_file_SHA, old_file_path_in_ss, old_files_path, old_file
     all_buggy_tuples_in_ss_files = []
     bugfix_SHA = old_file_SHA
     this_ss_name = pathLeaf(ss_path)
+    print "----------> ", this_ss_name
 
     # Get the line numbers of lines deleted from old_file; these are our buggy lines!
     diff_command = 'diff -N -w -E -B --unchanged-line-format="" ' \
@@ -81,9 +101,13 @@ def szz_process_file(old_file_SHA, old_file_path_in_ss, old_files_path, old_file
     process = Popen(shlex.split(diff_command), stdout=PIPE, close_fds=True)
     line_nums = process.communicate()[0].split()
 
+
     project_snapshots_dir = os.path.dirname(os.path.dirname(ss_path))
-    ss_sha_info_filename = os.path.join(project_snapshots_dir, 'ss_sha_info.txt')
-    ss_sha_info_dict = pickle.load(open(ss_sha_info_filename, 'rb'))
+    print "directory name %s" % project_snapshots_dir
+
+    #ss_sha_info_filename = os.path.join(project_snapshots_dir, 'ss_sha_info.txt')
+    #ss_sha_info_dict = pickle.load(open(ss_sha_info_filename, 'rb'))
+    ss_sha_info_dict = getSnapshot2Sha(project_snapshots_dir)
     all_ss_names = sorted(ss_sha_info_dict.keys())
     this_and_prev_ss_names = all_ss_names[:all_ss_names.index(this_ss_name)] + [this_ss_name]
 
@@ -107,7 +131,6 @@ def szz_process_file(old_file_SHA, old_file_path_in_ss, old_files_path, old_file
         buggy_SHA_date = str(ss_repo.git.log('-n', '1', '--format="%ad"', '--date=short', buggy_SHA))
         buggy_SHA_date = buggy_SHA_date.replace('"', '')
 
-        project_snapshots_dir = os.path.dirname(os.path.dirname(ss_path))
         for ss_name in this_and_prev_ss_names:
             if buggy_SHA_date < ss_name:
                 ss_sha = ss_sha_info_dict[ss_name]
@@ -120,6 +143,8 @@ def szz_process_file(old_file_SHA, old_file_path_in_ss, old_files_path, old_file
                     buggy_tuple_ss += [buggy_SHA, buggy_file_path_in_ss, buggy_line_num]
                     all_buggy_tuples_in_ss_files.append({(old_file_path_in_ss, old_file_SHA, line_num): buggy_tuple_ss})
 
+    for a in all_buggy_tuples_in_ss_files:
+      print a
     return all_buggy_tuples_in_ss_files
 
 #--------------------------------------------------------------------------------------------------------------------------
@@ -131,7 +156,6 @@ def szz_process_ss(ss_name, ss_path, ss_changes_path, bugfix_SHAs_filename):
     try:
         ss_repo = Repo(ss_path)
     except Exception as e:
-        sys.stderr.write("\nApparently, " + ss_path + " is not a valid git repo. Skipping this snapshot...")
         sys.stderr.write(str(e))
         return
 
@@ -152,9 +176,7 @@ def szz_process_ss(ss_name, ss_path, ss_changes_path, bugfix_SHAs_filename):
     old_file_fullnames.sort()
     for old_file_fullname in old_file_fullnames:
         # Example of old_file_fullname = src__oid__b7c891c629d298f2d82310d8ced2ee2e48084213.c
-        print old_file_fullname
         name_SHA_pair = dismemberFilename(old_file_fullname, 'old')
-        print name_SHA_pair
         old_file_paths_in_ss.append(name_SHA_pair[0])
         old_file_SHAs.append(name_SHA_pair[1])
 
@@ -162,12 +184,13 @@ def szz_process_ss(ss_name, ss_path, ss_changes_path, bugfix_SHAs_filename):
     for old_file_index, old_file_path_in_ss in enumerate(old_file_paths_in_ss):
         old_file_SHA = old_file_SHAs[old_file_index]
         if old_file_SHA in bugfix_SHAs:
-            print "====== ", old_file_SHA
+            #print "====== ", old_file_SHA
             temp = szz_process_file(old_file_SHA, old_file_path_in_ss,
                                     old_files_path, old_file_fullnames[old_file_index],
                                     new_files_path, ss_path, ss_SHA)
             all_buggy_lines_fixed_in_ss += temp
 
+    print ss_changes_path
     with open(ss_changes_path + '/ss_mappedOntoSSOnly.bugdata', 'wb') as ss_bugdata_outfile:
         pickle.dump(all_buggy_lines_fixed_in_ss, ss_bugdata_outfile)
 
