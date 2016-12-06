@@ -139,7 +139,6 @@ def assertSnapshotsShas(destPath, shaList):
 
         
 #----------------------------------------------------------------------------------------------------------------
-
 def dumpSnapshotsBySha(srcPath, destPath, shaList):
     #print srcPath, destPath
     #print len(shaList)
@@ -162,6 +161,7 @@ def dumpSnapshotsBySha(srcPath, destPath, shaList):
             with cd(snapshot):
                 Util.runCmd("git reset --hard")
                 Util.runCmd(git_command)
+                Util.runCmd("git clean -df")
                 Util.runCmd("git reset --hard")
 
 #--------------------------------------------------------------------------------------------------------------------------
