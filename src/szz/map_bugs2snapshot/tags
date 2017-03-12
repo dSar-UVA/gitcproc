@@ -1,0 +1,19 @@
+Mmap_bugs.py	map_bugs.py	/^def main():$/
+Popen_and_print	szz.py	/^def Popen_and_print(cmd):$/
+dismemberFilename	szz_process_ss.py	/^def dismemberFilename(myname, mode):$/
+dismemberFilename	szz.py	/^def dismemberFilename(myname, mode):$/
+dump_bugdata_ss_in_psql	dump_bugdata_into_psql_table.py	/^def dump_bugdata_ss_in_psql(bugdata_ss, project_na/
+extractBugfixSHAs	get_list_of_bugfix_SHAs.py	/^def extractBugfixSHAs(project_name, output_file_pa/
+getBugFixShas	map_bugs.py	/^def getBugFixShas(dumpDir, projectName):$/
+mapBugPerProj	map_bugs.py	/^def mapBugPerProj(configInfo,projName):$/
+mapBugs	map_bugs.py	/^def mapBugs(config_info):$/
+pathLeaf	szz_process_ss.py	/^def pathLeaf(path):$/
+pathLeaf	szz.py	/^def pathLeaf(path):$/
+printUsage	new_szz.py	/^def printUsage():$/
+printUsage	szz.py	/^def printUsage():$/
+szz	szz.py	/^def szz(project_corpus_path, $/
+szz_old	szz.py	/^def szz_old(project_corpus_path, project_snapshots/
+szz_process_file	szz_process_ss.py	/^def szz_process_file(old_file_SHA, old_file_path_i/
+szz_process_ss	szz_process_ss.py	/^def szz_process_ss(ss_name, ss_path, ss_changes_pa/
+szz_reverse_blame	new_szz.py	/^def szz_reverse_blame(ss_path, sha_to_map_onto, bu/
+szz_reverse_blame	szz_process_ss.py	/^def szz_reverse_blame(ss_path, sha_to_blame_on, bu/

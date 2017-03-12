@@ -1,0 +1,81 @@
+Corpus	Corpus.py	/^class Corpus:$/
+DbEdits	DbEdits.py	/^class DbEdits:$/
+DbProj	projDB.py	/^class DbProj:$/
+GitRepo	GitRepo.py	/^class GitRepo:$/
+MdumpCorpus.py	dumpCorpus.py	/^def main():$/
+MdumpSha.py	dumpSha.py	/^def main():$/
+MdumpSnapshot.py	dumpSnapshot.py	/^def main():$/
+Mreset.py	reset.py	/^def main():$/
+OutDir	OutDir.py	/^class OutDir(object):$/
+SnapShot	SnapShot.py	/^class SnapShot:$/
+__init__	Corpus.py	/^    def __init__(self, projectPath, language, outD/
+__init__	DbEdits.py	/^	def __init__(self, proj, lang):$/
+__init__	GitRepo.py	/^  def __init__(self, repoPath):$/
+__init__	OutDir.py	/^    def __init__(self,path):$/
+__init__	projDB.py	/^	def __init__(self, proj=None, lang=None):$/
+__init__	SnapShot.py	/^    def __init__(self, projPath, snapshotName, out/
+__repr__	DbEdits.py	/^    def __repr__(self):$/
+__repr__	projDB.py	/^    def __repr__(self):$/
+__str__	Corpus.py	/^    def __str__(self):$/
+__str__	DbEdits.py	/^	def __str__(self):$/
+__str__	OutDir.py	/^    def __str__(self):$/
+__str__	projDB.py	/^	def __str__(self):$/
+__str__	SnapShot.py	/^    def __str__(self):$/
+addEdit	SnapShot.py	/^    def addEdit(self, edit):$/
+assertSnapshotsShas	dumpSnapshot.py	/^def assertSnapshotsShas(destPath, shaList):$/
+blameFile	GitRepo.py	/^  def blameFile(self, fileName, sha, destination):/
+checkFile	GitRepo.py	/^  def checkFile(self, fileName, sha):$/
+connectDb	DbEdits.py	/^	def connectDb(self, db, dbUser, dbHost, dbPort):$/
+connectDb	projDB.py	/^	def connectDb(self, db, dbUser, dbHost, dbPort):$/
+countAuthorContribution	GitRepo.py	/^  def countAuthorContribution(self, fileName, sha,/
+countCommitBetweenDates	projDB.py	/^	def countCommitBetweenDates(self, table, snapshot/
+create_out_dir	OutDir.py	/^    def create_out_dir(self,path):$/
+downloadCorpus	dumpCorpus.py	/^def downloadCorpus(snapshotDir, corpusDir, project/
+downloadCorpuses	dumpCorpus.py	/^def downloadCorpuses(config_info):$/
+downloadSnapshot	dumpSnapshot.py	/^def downloadSnapshot(snapshotDir, projectDir, proj/
+downloadSnapshots	dumpSnapshot.py	/^def downloadSnapshots(config_info):$/
+dump	Corpus.py	/^    def dump(self):$/
+dumpFile	GitRepo.py	/^  def dumpFile(self, fileName, sha, destination):$/
+dumpShas	dumpSha.py	/^def dumpShas(srcPath, destPath, fileSha, isBlame=F/
+dumpSnapshotsByInterval	dumpSnapshot.py	/^def dumpSnapshotsByInterval(srcPath, destPath, ss_/
+dumpSnapshotsBySha	dumpSnapshot.py	/^def dumpSnapshotsBySha(srcPath, destPath, shaList)/
+dumpTestFiles	SnapShot.py	/^    def dumpTestFiles(self):$/
+dumpTrainFiles	SnapShot.py	/^    def dumpTrainFiles(self):$/
+edit	DbEdits.py	/^class edit(namedtuple('edit', ['project', 'file_na/
+fetchCommitDate	dumpSnapshot.py	/^def fetchCommitDate(cfg, projectPath, languages):$/
+fetchCommitDates	dumpSnapshot.py	/^def fetchCommitDates(cfg, projectPath, languages):/
+fetchDatesFromTable	projDB.py	/^	def fetchDatesFromTable(self, table):$/
+fetchEdits	Corpus.py	/^    def fetchEdits(self):$/
+fetchEditsFromCsv	Corpus.py	/^    def fetchEditsFromCsv(self):$/
+fetchEditsFromTable	DbEdits.py	/^	def fetchEditsFromTable(self, table):$/
+fetchFiles	GitRepo.py	/^  def fetchFiles(self, fileName, sha):$/
+getChangedFiles	SnapShot.py	/^    def getChangedFiles(self, isBug=-1):$/
+getCommitDate	DbEdits.py	/^	def getCommitDate(self):$/
+getProjName	dumpSha.py	/^def getProjName(projectPath):$/
+getProjName	dumpSnapshot.py	/^def getProjName(projectPath):$/
+getProjName	reset.py	/^def getProjName(projectPath):$/
+getSnapshotDate	SnapShot.py	/^    def getSnapshotDate(self):$/
+getTrainFiles	SnapShot.py	/^    def getTrainFiles(self):$/
+get_change_dir	OutDir.py	/^    def get_change_dir(self):$/
+get_learn_dir	OutDir.py	/^    def get_learn_dir(self):$/
+get_new_test_dir	OutDir.py	/^    def get_new_test_dir(self):$/
+get_old_test_dir	OutDir.py	/^    def get_old_test_dir(self):$/
+get_test_dirs	OutDir.py	/^    def get_test_dirs(self):$/
+initEdits	Corpus.py	/^    def initEdits(self):$/
+initSnapshots	Corpus.py	/^    def initSnapshots(self):$/
+mapEditToSnapshot	Corpus.py	/^    def mapEditToSnapshot(self):$/
+minKey	Corpus.py	/^    def minKey(commitDate, snapshotDate):$/
+pathLeaf	dumpSha.py	/^def pathLeaf(path):$/
+pathLeaf	dumpSnapshot.py	/^def pathLeaf(path):$/
+path_leaf	SnapShot.py	/^def path_leaf(path):$/
+printCommitDates	projDB.py	/^	def printCommitDates(self):$/
+printEdits	DbEdits.py	/^	def printEdits(self):$/
+printSnapshots	Corpus.py	/^    def printSnapshots(self):$/
+processBlame	dumpSha.py	/^def processBlame(projectName, destPath, outFile):$/
+processOutput	dumpSha.py	/^def processOutput(outputStr):$/
+proj	projDB.py	/^class proj(namedtuple('proj', ['language', 'projec/
+pruneShas	dumpSnapshot.py	/^def pruneShas(srcPath, shaList,interval):$/
+resetSnapShots	reset.py	/^def resetSnapShots(projPath):$/
+showFile	GitRepo.py	/^  def showFile(self, fileName, sha):$/
+test	GitRepo.py	/^def test():$/
+test_blame	GitRepo.py	/^def test_blame():$/

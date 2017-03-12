@@ -1,0 +1,564 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ADD	chunkingConstants.py	/^ADD = 1$/;"	v
+ADD_MAX	ghProcNoPatch.py	/^ADD_MAX = 3$/;"	v
+ADD_MIN	ghProcNoPatch.py	/^ADD_MIN = 0$/;"	v
+BLOCK	chunkingConstants.py	/^BLOCK = "block"$/;"	v
+BracketLanguageSwitcher	BracketLanguageSwitcher.py	/^class BracketLanguageSwitcher(languageSwitcher.languageSwitcher):$/;"	c
+BracketLanguages	ScopeTrackerFactory.py	/^BracketLanguages = ["C", "C++", "Java"]$/;"	v
+BracketScopeTracker	BracketScopeTracker.py	/^class BracketScopeTracker(scopeTracker):$/;"	c
+BugType	commit.py	/^BugType = namedtuple('BugType', 'root impact component')$/;"	v
+BugType	commit.py	/^class BugType:$/;"	c
+CBlockComments	CLanguageSwitcher.py	/^CBlockComments = ["\/*", "*\/"]$/;"	v
+CCommentPattern	CLanguageSwitcher.py	/^CCommentPattern = "\/\\*.*?\\*\/"$/;"	v
+CCommentPattern2	CLanguageSwitcher.py	/^CCommentPattern2 = "\/\/.*"$/;"	v
+CFunctionPatterns	CLanguageSwitcher.py	/^CFunctionPatterns = [" [\\w<>\\d:_]+ *[\\*&]* +[\\w\\d_#:~]+&* *\\([\\w\\d_\\-,\\[\\]\\*\\(\\)&:<> ]*\\) *{$",$/;"	v
+CHUNK_ERROR	chunkingConstants.py	/^CHUNK_ERROR = "ERROR_IN_CHUNK"/;"	v
+CLanguageSwitcher	CLanguageSwitcher.py	/^class CLanguageSwitcher(BracketLanguageSwitcher.BracketLanguageSwitcher):$/;"	c
+COMADD	chunkingConstants.py	/^COMADD = 2$/;"	v
+COMDEL	chunkingConstants.py	/^COMDEL = 3$/;"	v
+CONTINUATION	languageSwitcher.py	/^CONTINUATION = 1$/;"	v
+CONTINUATION_END	languageSwitcher.py	/^CONTINUATION_END = 2 $/;"	v
+CONTINUATION_EXPLICIT	languageSwitcher.py	/^CONTINUATION_EXPLICIT = 3$/;"	v
+CONTINUATION_START	languageSwitcher.py	/^CONTINUATION_START = 0$/;"	v
+CPP_PATH	runAll.py	/^CPP_PATH = 'projects' + os.sep + 'top_C++'$/;"	v
+CPlusPlusBlockComments	CPlusPlusLanguageSwitcher.py	/^CPlusPlusBlockComments = ["\/*", "*\/"]$/;"	v
+CPlusPlusClassPatterns	CPlusPlusLanguageSwitcher.py	/^CPlusPlusClassPatterns = [" class [\\w\\d_: ]+ {$","^class [\\w\\d_: ]+ {$"]$/;"	v
+CPlusPlusCommentPattern	CPlusPlusLanguageSwitcher.py	/^CPlusPlusCommentPattern = "\/\\*.*?\\*\/"$/;"	v
+CPlusPlusCommentPattern2	CPlusPlusLanguageSwitcher.py	/^CPlusPlusCommentPattern2 = "\/\/.*"$/;"	v
+CPlusPlusConstructorInheritsPattern	CPlusPlusLanguageSwitcher.py	/^CPlusPlusConstructorInheritsPattern = "\\) *: *.*{" #Constructors only for c++$/;"	v
+CPlusPlusFunctionPatterns	CPlusPlusLanguageSwitcher.py	/^CPlusPlusFunctionPatterns = [" [\\w<>\\d:_]+ *[\\*&]* +[\\w\\d_#:~|=&]+ *\\([\\w\\d_\\-=,\\[\\]\\*\\(\\)&:<> ]*\\) *{$",$/;"	v
+CPlusPlusLanguageSwitcher	CPlusPlusLanguageSwitcher.py	/^class CPlusPlusLanguageSwitcher(BracketLanguageSwitcher.BracketLanguageSwitcher):$/;"	c
+CPlusPlusParamPattern	CPlusPlusLanguageSwitcher.py	/^CPlusPlusParamPattern = " *\\([\\w\\d_=,\\[\\]\\*\\(\\)&:<> ]*\\)[^;]*{" #What parameters to a call look like.$/;"	v
+CPlusPlusSingleComment	CPlusPlusLanguageSwitcher.py	/^CPlusPlusSingleComment = ["\/\/"]$/;"	v
+CPlusPlusStringPattern	CPlusPlusLanguageSwitcher.py	/^CPlusPlusStringPattern = "\\".*?\\""$/;"	v
+CPlusPlusStringPattern2	CPlusPlusLanguageSwitcher.py	/^CPlusPlusStringPattern2 = "\\'.*?\\'"$/;"	v
+CPlusPlusStructPatterns	CPlusPlusLanguageSwitcher.py	/^CPlusPlusStructPatterns = [" struct [\\w\\d_: ]+ {$","^struct [\\w\\d_: ]+ {$"]$/;"	v
+CPlusPlusThrowPattern	CPlusPlusLanguageSwitcher.py	/^CPlusPlusThrowPattern = "throw *\\([\\w\\d_#:~*&]+\\)"$/;"	v
+CPlusPlusValidClassNamePattern	CPlusPlusLanguageSwitcher.py	/^CPlusPlusValidClassNamePattern = "[\\w\\d_:]+" $/;"	v
+CSingleComment	CLanguageSwitcher.py	/^CSingleComment = ["\/\/"]$/;"	v
+CStringPattern	CLanguageSwitcher.py	/^CStringPattern = "\\".*?\\""$/;"	v
+CStringPattern2	CLanguageSwitcher.py	/^CStringPattern2 = "\\'.*?\\'"$/;"	v
+C_PATH	runAll.py	/^C_PATH = 'projects' + os.sep + 'top_C'$/;"	v
+Change	commit.py	/^Change = namedtuple('Change', 'add delete filename')$/;"	v
+CountException	CountException.py	/^class CountException(Exception):$/;"	c
+DATE	ghLogDb.py	/^DATE  = '[0-9]{4}-[0-9]{2}-[0-9]{2}'$/;"	v
+DECREASE	chunkingConstants.py	/^DECREASE = 2$/;"	v
+DEL_MAX	ghProcNoPatch.py	/^DEL_MAX = 3$/;"	v
+DEL_MIN	ghProcNoPatch.py	/^DEL_MIN = 0$/;"	v
+EMAIL	ghLogDb.py	/^EMAIL = '<[\\w.%\/+-]+@([\\w\/.+-])+>'$/;"	v
+EXCLUDED	chunkingConstants.py	/^EXCLUDED = "excluded"$/;"	v
+FUNC	scopeTracker.py	/^FUNC = "Function"$/;"	v
+GENERIC	scopeTracker.py	/^GENERIC = "Generic"$/;"	v
+INCLUDED	chunkingConstants.py	/^INCLUDED = "included"$/;"	v
+INCREASE	chunkingConstants.py	/^INCREASE = 1$/;"	v
+IndentLanguages	ScopeTrackerFactory.py	/^IndentLanguages = ["Python"]$/;"	v
+InvalidCodeException	InvalidCodeException.py	/^class InvalidCodeException(Exception):$/;"	c
+JavaBlockComments	JavaLanguageSwitcher.py	/^JavaBlockComments = ["\/*", "*\/"]$/;"	v
+JavaClassPatterns	JavaLanguageSwitcher.py	/^JavaClassPatterns = [" class [\\w\\d_: ]+ {$","^class [\\w\\d_: ]+ {$"] $/;"	v
+JavaCommentPattern	JavaLanguageSwitcher.py	/^JavaCommentPattern = "\/\\*.*?\\*\/"$/;"	v
+JavaCommentPattern2	JavaLanguageSwitcher.py	/^JavaCommentPattern2 = "\/\/.*"$/;"	v
+JavaFunctionPatterns	JavaLanguageSwitcher.py	/^JavaFunctionPatterns=["((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s*)+[\\$_\\w\\<\\>\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*\\{?[^\\}]*\\}?"]$/;"	v
+JavaLanguageSwitcher	JavaLanguageSwitcher.py	/^class JavaLanguageSwitcher(BracketLanguageSwitcher.BracketLanguageSwitcher):$/;"	c
+JavaParamPattern	JavaLanguageSwitcher.py	/^JavaParamPattern = " *\\([\\w\\d_=,\\[\\]\\*\\(\\)&:<> ]*\\)[^;]*{" #What parameters to a call look like. C\/C++\/Java specific$/;"	v
+JavaSingleComment	JavaLanguageSwitcher.py	/^JavaSingleComment = ["\/\/"]$/;"	v
+JavaStringPattern	JavaLanguageSwitcher.py	/^JavaStringPattern = "\\".*?\\""$/;"	v
+JavaStringPattern2	JavaLanguageSwitcher.py	/^JavaStringPattern2 = "\\'.*?\\'"$/;"	v
+JavaValidClassNamePattern	JavaLanguageSwitcher.py	/^JavaValidClassNamePattern = "[\\w\\d_:]+" $/;"	v
+KEYLISTSIZE	chunkingConstants.py	/^KEYLISTSIZE = 3$/;"	v
+LABELINDEX	scopeTracker.py	/^LABELINDEX = 1$/;"	v
+LINEINDEX	scopeTracker.py	/^LINEINDEX = 0$/;"	v
+LOG_FILE	ExceptionExtractor.py	/^LOG_FILE="all_changed_log.txt"$/;"	v
+LOG_FILE	getGitLog.py	/^LOG_FILE = "all_log.txt"$/;"	v
+LOOKFOREND	chunkingConstants.py	/^LOOKFOREND = 2$/;"	v
+LOOKFOREXCP	chunkingConstants.py	/^LOOKFOREXCP = 3$/;"	v
+LOOKFOREXCPEND	chunkingConstants.py	/^LOOKFOREXCPEND = 4$/;"	v
+LOOKFORNAME	chunkingConstants.py	/^LOOKFORNAME = 1$/;"	v
+LanguageSwitcherFactory	LanguageSwitcherFactory.py	/^class LanguageSwitcherFactory:$/;"	c
+META	chunkingConstants.py	/^META = 4 #This is a meta information line.  We just want to ignore them.$/;"	v
+MOCK	chunkingConstants.py	/^MOCK = "NO_FUNC_CONTEXT"$/;"	v
+NON_FUNC	chunkingConstants.py	/^NON_FUNC = "GITCPROC_NON_FUNCTION"$/;"	v
+NOT_CONTINUATION	languageSwitcher.py	/^NOT_CONTINUATION = -1$/;"	v
+NULL	scopeTracker.py	/^NULL = "NULL"$/;"	v
+OTHER	chunkingConstants.py	/^OTHER = 3$/;"	v
+Patch	ghLogDb.py	/^class Patch:$/;"	c
+PatchMethod	PatchMethod.py	/^class PatchMethod:$/;"	c
+PythonFunctionPatterns	PythonLanguageSwitcher.py	/^PythonFunctionPatterns = [" *def +[A-Za-z_]+[\\w]*\\(.*\\): *$"]$/;"	v
+PythonScopeTracker	PythonScopeTracker.py	/^class PythonScopeTracker(scopeTracker):$/;"	c
+REMOVE	chunkingConstants.py	/^REMOVE = 2$/;"	v
+SBLOCK	scopeTracker.py	/^SBLOCK = "Block"$/;"	v
+SHA	ghLogDb.py	/^SHA   = '[a-f0-9]{40}'$/;"	v
+SINGLE	chunkingConstants.py	/^SINGLE = "single"$/;"	v
+S_NO	scopeTracker.py	/^S_NO = "NO"$/;"	v
+S_SIMUL	scopeTracker.py	/^S_SIMUL = "SIMUL"$/;"	v
+S_YES	scopeTracker.py	/^S_YES = "YES"$/;"	v
+ScopeTrackerFactory	ScopeTrackerFactory.py	/^class ScopeTrackerFactory:$/;"	c
+Sha	ghLogDb.py	/^class Sha:$/;"	c
+TOTALADD	chunkingConstants.py	/^TOTALADD = 4$/;"	v
+TOTALDEL	chunkingConstants.py	/^TOTALDEL = 5$/;"	v
+TestStringMethods	testExample.py	/^class TestStringMethods(unittest.TestCase):$/;"	c
+TimeExceededError	TimeExceedError.py	/^class TimeExceededError(Exception): $/;"	c
+TimeExceededError	TimeExceededError.py	/^class TimeExceededError(Exception): $/;"	c
+UNCHANGED	chunkingConstants.py	/^UNCHANGED = 1$/;"	v
+UNMARKED	chunkingConstants.py	/^UNMARKED = 0$/;"	v
+UnsupportedLanguageException	UnsupportedLanguageException.py	/^class UnsupportedLanguageException(Exception):$/;"	c
+UnsupportedScopeException	UnsupportedScopeException.py	/^class UnsupportedScopeException(Exception):$/;"	c
+__init__	BracketScopeTracker.py	/^    def __init__(self, language, c_info):$/;"	m	class:BracketScopeTracker
+__init__	CLanguageSwitcher.py	/^    def __init__(self, ext):$/;"	m	class:CLanguageSwitcher
+__init__	CPlusPlusLanguageSwitcher.py	/^    def __init__(self, ext):$/;"	m	class:CPlusPlusLanguageSwitcher
+__init__	JavaLanguageSwitcher.py	/^    def __init__(self, ext):$/;"	m	class:JavaLanguageSwitcher
+__init__	PatchMethod.py	/^    def __init__(self, name, start=0, end=0, added=0, deleted=0,keyDict={}, errNote = False):$/;"	m	class:PatchMethod
+__init__	PythonScopeTracker.py	/^    def __init__(self, language, c_info):$/;"	m	class:PythonScopeTracker
+__init__	commit.py	/^    def __init__(self, add, delete, file_name, tag = None):$/;"	m	class:change
+__init__	commit.py	/^    def __init__(self, project, sha,$/;"	m	class:commit
+__init__	commit.py	/^    def __init__(self, root, impact, component):$/;"	m	class:BugType
+__init__	dumpLogs.py	/^    def __init__(self, password, c_info):$/;"	m	class:dumpLogs
+__init__	ghLogDb.py	/^    def __init__(self, fileName, language):$/;"	m	class:Patch
+__init__	ghLogDb.py	/^    def __init__(self, logFile, c_info=None, is_patch=False, password = ""):$/;"	m	class:ghLogDb
+__init__	ghLogDb.py	/^    def __init__(self, project, sha):$/;"	m	class:Sha
+__init__	ghProcNoPatch.py	/^    def __init__(self, project, no_merge_log, no_stat_log, $/;"	m	class:ghProcNoPatch
+__init__	languageSwitcher.py	/^    def __init__(self, ext):$/;"	m	class:languageSwitcher
+__init__	logChunk.py	/^    def __init__(self, text = "", language = "C", $/;"	m	class:logChunk
+__init__	scopeTracker.py	/^    def __init__(self, language, c_info):$/;"	m	class:scopeTracker
+__str__	commit.py	/^    def __str__(self):$/;"	m	class:commit	file:
+__str__	ghLogDb.py	/^    def __str__(self):$/;"	m	class:Sha	file:
+__str__	ghLogDb.py	/^    def __str__(self):$/;"	m	class:ghLogDb	file:
+addChange	commit.py	/^    def addChange(self, add, delete, file_name, tag):$/;"	m	class:commit
+addFunctions	ghLogDb.py	/^    def addFunctions(self, nextLogChunk):$/;"	m	class:Patch
+addMethod	ghLogDb.py	/^    def addMethod(self, methodName):$/;"	m	class:Patch
+addOutsideFunc	ghLogDb.py	/^    def addOutsideFunc(self, nextLogChunk):$/;"	m	class:Patch
+addToText	logChunk.py	/^    def addToText(self, line):$/;"	m	class:logChunk
+adjustFunctionBorders	BracketScopeTracker.py	/^    def adjustFunctionBorders(self, start, end, adds, deletes):$/;"	m	class:BracketScopeTracker
+adjustFunctionBorders	PythonScopeTracker.py	/^    def adjustFunctionBorders(self, start, end, adds, deletes):$/;"	m	class:PythonScopeTracker
+adjustFunctionBorders	scopeTracker.py	/^    def adjustFunctionBorders(self, start, end, adds, deletes):$/;"	m	class:scopeTracker
+afterBlockCommentEnd	CLanguageSwitcher.py	/^    def afterBlockCommentEnd(self, line):$/;"	m	class:CLanguageSwitcher
+afterBlockCommentEnd	CPlusPlusLanguageSwitcher.py	/^    def afterBlockCommentEnd(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+afterBlockCommentEnd	JavaLanguageSwitcher.py	/^    def afterBlockCommentEnd(self, line):$/;"	m	class:JavaLanguageSwitcher
+afterBlockCommentEnd	languageSwitcher.py	/^    def afterBlockCommentEnd(self, line):$/;"	m	class:languageSwitcher
+afterDecrease	BracketScopeTracker.py	/^    def afterDecrease(self, line):$/;"	m	class:BracketScopeTracker
+afterDecrease	PythonScopeTracker.py	/^    def afterDecrease(self, line): #A decrease always happens at the start of a line, so return nothing.$/;"	m	class:PythonScopeTracker
+afterDecrease	scopeTracker.py	/^    def afterDecrease(self, line):$/;"	m	class:scopeTracker
+afterIncrease	BracketScopeTracker.py	/^    def afterIncrease(self, line):$/;"	m	class:BracketScopeTracker
+afterIncrease	PythonScopeTracker.py	/^    def afterIncrease(self, line): #No need to do anything here. We can't have code before the indentation.$/;"	m	class:PythonScopeTracker
+afterIncrease	scopeTracker.py	/^    def afterIncrease(self, line):$/;"	m	class:scopeTracker
+areAllContextsClosed	scopeTracker.py	/^    def areAllContextsClosed(self):$/;"	m	class:scopeTracker
+beforeBlockCommentStart	CLanguageSwitcher.py	/^    def beforeBlockCommentStart(self, line):$/;"	m	class:CLanguageSwitcher
+beforeBlockCommentStart	CPlusPlusLanguageSwitcher.py	/^    def beforeBlockCommentStart(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+beforeBlockCommentStart	JavaLanguageSwitcher.py	/^    def beforeBlockCommentStart(self, line):$/;"	m	class:JavaLanguageSwitcher
+beforeBlockCommentStart	languageSwitcher.py	/^    def beforeBlockCommentStart(self, line):$/;"	m	class:languageSwitcher
+beforeDecrease	BracketScopeTracker.py	/^    def beforeDecrease(self, line):$/;"	m	class:BracketScopeTracker
+beforeDecrease	PythonScopeTracker.py	/^    def beforeDecrease(self, line): #A decrease always happens at the start of a line, so return nothing.$/;"	m	class:PythonScopeTracker
+beforeDecrease	scopeTracker.py	/^    def beforeDecrease(self, line):$/;"	m	class:scopeTracker
+beforeIncrease	BracketScopeTracker.py	/^    def beforeIncrease(self, line):$/;"	m	class:BracketScopeTracker
+beforeIncrease	PythonScopeTracker.py	/^    def beforeIncrease(self, line): #No need to do anything here. We can't have code before the indentation.$/;"	m	class:PythonScopeTracker
+beforeIncrease	scopeTracker.py	/^    def beforeIncrease(self, line):$/;"	m	class:scopeTracker
+change	commit.py	/^class change:$/;"	c
+changeScopeFirst	BracketScopeTracker.py	/^    def changeScopeFirst(self):$/;"	m	class:BracketScopeTracker
+changeScopeFirst	PythonScopeTracker.py	/^    def changeScopeFirst(self):$/;"	m	class:PythonScopeTracker
+changeScopeFirst	scopeTracker.py	/^    def changeScopeFirst(self):$/;"	m	class:scopeTracker
+checkForClassName	logChunk.py	/^    def checkForClassName(self, searchString, classContext):$/;"	m	class:logChunk
+checkForFunctionEnd	logChunk.py	/^    def checkForFunctionEnd(self, lineType, lineNum, phase, funcStart, funcEnd, functionName, shortFunctionName, ftotal_add, ftotal_del, foundBlock, singleKeyWordList, blockKeyWordList, keywordDictionary, backTrack):$/;"	m	class:logChunk
+checkForFunctionName	logChunk.py	/^    def checkForFunctionName(self, phase, line, lineType, lineNum, functionName, classContext, funcStart, startFlag, ftotal_add, ftotal_del):$/;"	m	class:logChunk
+checkForFunctionReset	CLanguageSwitcher.py	/^    def checkForFunctionReset(self, line):$/;"	m	class:CLanguageSwitcher
+checkForFunctionReset	CPlusPlusLanguageSwitcher.py	/^    def checkForFunctionReset(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+checkForFunctionReset	JavaLanguageSwitcher.py	/^    def checkForFunctionReset(self, line):$/;"	m	class:JavaLanguageSwitcher
+checkForFunctionReset	languageSwitcher.py	/^    def checkForFunctionReset(self, line):$/;"	m	class:languageSwitcher
+checkProj	ghProc.py	/^def checkProj(project):$/;"	f
+cleanClassLine	CLanguageSwitcher.py	/^    def cleanClassLine(self, line):$/;"	m	class:CLanguageSwitcher
+cleanClassLine	CPlusPlusLanguageSwitcher.py	/^    def cleanClassLine(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+cleanClassLine	JavaLanguageSwitcher.py	/^    def cleanClassLine(self, line):$/;"	m	class:JavaLanguageSwitcher
+cleanClassLine	languageSwitcher.py	/^    def cleanClassLine(self, line):$/;"	m	class:languageSwitcher
+cleanConstructorLine	CLanguageSwitcher.py	/^    def cleanConstructorLine(self, line):$/;"	m	class:CLanguageSwitcher
+cleanConstructorOrDestructorLine	CPlusPlusLanguageSwitcher.py	/^    def cleanConstructorOrDestructorLine(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+cleanConstructorOrDestructorLine	JavaLanguageSwitcher.py	/^    def cleanConstructorOrDestructorLine(self, line):$/;"	m	class:JavaLanguageSwitcher
+cleanConstructorOrDestructorLine	languageSwitcher.py	/^    def cleanConstructorOrDestructorLine(self, line):$/;"	m	class:languageSwitcher
+cleanDb	dumpLogs.py	/^    def cleanDb(self):$/;"	m	class:dumpLogs
+cleanFunctionLine	CLanguageSwitcher.py	/^    def cleanFunctionLine(self, line):$/;"	m	class:CLanguageSwitcher
+cleanFunctionLine	CPlusPlusLanguageSwitcher.py	/^    def cleanFunctionLine(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+cleanFunctionLine	JavaLanguageSwitcher.py	/^    def cleanFunctionLine(self, line):$/;"	m	class:JavaLanguageSwitcher
+cleanFunctionLine	languageSwitcher.py	/^    def cleanFunctionLine(self, line):$/;"	m	class:languageSwitcher
+cleanSingleLineBlockComment	CLanguageSwitcher.py	/^    def cleanSingleLineBlockComment(self, line):$/;"	m	class:CLanguageSwitcher
+cleanSingleLineBlockComment	CPlusPlusLanguageSwitcher.py	/^    def cleanSingleLineBlockComment(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+cleanSingleLineBlockComment	JavaLanguageSwitcher.py	/^    def cleanSingleLineBlockComment(self, line):$/;"	m	class:JavaLanguageSwitcher
+cleanSingleLineBlockComment	languageSwitcher.py	/^    def cleanSingleLineBlockComment(self, line):$/;"	m	class:languageSwitcher
+cleanSingleLineComment	CLanguageSwitcher.py	/^    def cleanSingleLineComment(self, line):$/;"	m	class:CLanguageSwitcher
+cleanSingleLineComment	CPlusPlusLanguageSwitcher.py	/^    def cleanSingleLineComment(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+cleanSingleLineComment	JavaLanguageSwitcher.py	/^    def cleanSingleLineComment(self, line):$/;"	m	class:JavaLanguageSwitcher
+cleanSingleLineComment	languageSwitcher.py	/^    def cleanSingleLineComment(self, line):$/;"	m	class:languageSwitcher
+clearFunctionRemnants	BracketLanguageSwitcher.py	/^    def clearFunctionRemnants(self,line):$/;"	m	class:BracketLanguageSwitcher
+clearFunctionRemnants	languageSwitcher.py	/^    def clearFunctionRemnants(self,line):$/;"	m	class:languageSwitcher
+clearScope	BracketScopeTracker.py	/^    def clearScope(self):$/;"	m	class:BracketScopeTracker
+clearScope	scopeTracker.py	/^    def clearScope(self):$/;"	m	class:scopeTracker
+close	dumpLogs.py	/^    def close(self):$/;"	m	class:dumpLogs
+commit	commit.py	/^class commit:$/;"	c
+connectDb	dumpLogs.py	/^    def connectDb(self):$/;"	m	class:dumpLogs
+containsKeyword	logChunk.py	/^    def containsKeyword(self, line, keywords):$/;"	m	class:logChunk
+createFileChangesTable	dumpLogs.py	/^    def createFileChangesTable(self):$/;"	m	class:dumpLogs
+createLS	LanguageSwitcherFactory.py	/^    def createLS(language):$/;"	m	class:LanguageSwitcherFactory
+createMethodChangesTable	dumpLogs.py	/^    def createMethodChangesTable(self, titleString):$/;"	m	class:dumpLogs
+createOutsideFuncSummary	logChunk.py	/^    def createOutsideFuncSummary(self, keywordDictionary = {}): $/;"	m	class:logChunk
+createPatch	ghLogDb.py	/^    def createPatch(self, line):$/;"	m	class:ghLogDb
+createPatchWithNoPrevVersion	ghLogDb.py	/^    def createPatchWithNoPrevVersion(self, line):$/;"	m	class:ghLogDb
+createST	ScopeTrackerFactory.py	/^    def createST(languageSwitcher, c_info):$/;"	m	class:ScopeTrackerFactory
+createSummaryTable	dumpLogs.py	/^    def createSummaryTable(self):$/;"	m	class:dumpLogs
+debugFunctions	logChunkTestC.py	/^    def debugFunctions(self, funcList):$/;"	m	class:logChunktest
+debugFunctions	logChunkTestJAVA.py	/^    def debugFunctions(self, funcList):$/;"	m	class:logChunktest
+debugFunctions	logChunkTestPython.py	/^    def debugFunctions(self, funcList):$/;"	m	class:logChunktest
+decreaseNewBrackets	BracketScopeTracker.py	/^    def decreaseNewBrackets(self, line):$/;"	m	class:BracketScopeTracker
+decreaseNewIndent	PythonScopeTracker.py	/^    def decreaseNewIndent(self):$/;"	m	class:PythonScopeTracker
+decreaseOldBrackets	BracketScopeTracker.py	/^    def decreaseOldBrackets(self, line):$/;"	m	class:BracketScopeTracker
+decreaseOldIndent	PythonScopeTracker.py	/^    def decreaseOldIndent(self):$/;"	m	class:PythonScopeTracker
+decreaseScope	BracketScopeTracker.py	/^    def decreaseScope(self, line, lineType, lineDiff = -1, isSimul = False):$/;"	m	class:BracketScopeTracker
+decreaseScope	PythonScopeTracker.py	/^    def decreaseScope(self, line, lineType, lineDiff = -1, isSimul = False):$/;"	m	class:PythonScopeTracker
+decreaseScope	scopeTracker.py	/^    def decreaseScope(self, line, lineType, lineDiff = -1, isSimul = False):$/;"	m	class:scopeTracker
+delim	ghProcNoPatch.py	/^delim = '<<|>>'$/;"	v
+determineLanguage	LanguageSwitcherFactory.py	/^    def determineLanguage(language): #Replace these with tokens?$/;"	m	class:LanguageSwitcherFactory
+dictToCsv	PatchMethod.py	/^    def dictToCsv(self):$/;"	m	class:PatchMethod
+dump	ghProcNoPatch.py	/^    def dump(self, bug_only):$/;"	m	class:ghProcNoPatch
+dump2csv	ghProcNoPatch.py	/^    def dump2csv(self, bug_only):$/;"	m	class:ghProcNoPatch
+dump2db	ghProcNoPatch.py	/^    def dump2db(self, bug_only):$/;"	m	class:ghProcNoPatch
+dumpFileChanges	dumpLogs.py	/^    def dumpFileChanges(self, summaryStr):$/;"	m	class:dumpLogs
+dumpLog	getGitLog.py	/^def dumpLog(projPath, languages, patch='True'):$/;"	f
+dumpLog	ghProcNoPatch.py	/^    def dumpLog(self, sha, committer, commit_date, author, author_date, change_files):$/;"	m	class:ghProcNoPatch
+dumpLogs	dumpLogs.py	/^class dumpLogs:$/;"	c
+dumpMethod	PatchMethod.py	/^    def dumpMethod(self):$/;"	m	class:PatchMethod
+dumpMethodChanges	dumpLogs.py	/^    def dumpMethodChanges(self, methodChange, titleString):$/;"	m	class:dumpLogs
+dumpMssg	ghProcNoPatch.py	/^    def dumpMssg(self, sha, subject, body, bug_only):$/;"	m	class:ghProcNoPatch
+dumpPatch	ghLogDb.py	/^    def dumpPatch(self, sha, project, dumpLog):$/;"	m	class:Patch
+dumpPatches	ghLogDb.py	/^    def dumpPatches(self,dumpLogDb):$/;"	m	class:Sha
+dumpPatches	ghProcNoPatch.py	/^    def dumpPatches(self, bug_only=True):$/;"	m	class:ghProcNoPatch
+dumpSha	ghLogDb.py	/^    def dumpSha(self, dumpLogDb):$/;"	m	class:Sha
+dumpStr	commit.py	/^    def dumpStr(self):$/;"	m	class:commit
+dumpSummary	dumpLogs.py	/^    def dumpSummary(self, summaryStr):$/;"	m	class:dumpLogs
+dumpSummary	ghLogDb.py	/^    def dumpSummary(self, summaryStr):$/;"	m	class:Sha
+extMap	LanguageSwitcherFactory.py	/^    extMap = {}$/;"	v	class:LanguageSwitcherFactory
+extn2tag	ghProcNoPatch.py	/^        '.hs' : 'haskell'$/;"	v
+extractClassName	logChunk.py	/^    def extractClassName(self, line):$/;"	m	class:logChunk
+extractException	ExceptionExtractor.py	/^def extractException(projPath):$/;"	f
+findAll	runAll.py	/^def findAll(root):$/;"	f
+functionCount	logChunk.py	/^    def functionCount(self):$/;"	m	class:logChunk
+functionPattern2	test.py	/^functionPattern2 = " [\\w\\d:_]+&* *\\** +[\\w\\W\\d_:~]+&* *\\([\\w\\W\\d_,\\[\\]\\*\\(\\)&:<>]*\\) *{$"$/;"	v
+functionUpdateWithoutScopeChange	BracketScopeTracker.py	/^    def functionUpdateWithoutScopeChange(self, line, lineType, functionName, funcIdentFunc):$/;"	m	class:BracketScopeTracker
+functionUpdateWithoutScopeChange	PythonScopeTracker.py	/^    def functionUpdateWithoutScopeChange(self, line, lineType, functionName, funcIdentFunc):$/;"	m	class:PythonScopeTracker
+functionUpdateWithoutScopeChange	scopeTracker.py	/^    def functionUpdateWithoutScopeChange(self, line, lineType, functionName, funcIdentFunc):$/;"	m	class:scopeTracker
+get	commit.py	/^    def get(self):$/;"	m	class:BugType
+get	commit.py	/^    def get(self):$/;"	m	class:change
+getBlockCommentEnd	CLanguageSwitcher.py	/^    def getBlockCommentEnd(self, line):$/;"	m	class:CLanguageSwitcher
+getBlockCommentEnd	CPlusPlusLanguageSwitcher.py	/^    def getBlockCommentEnd(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+getBlockCommentEnd	JavaLanguageSwitcher.py	/^    def getBlockCommentEnd(self, line):$/;"	m	class:JavaLanguageSwitcher
+getBlockCommentEnd	languageSwitcher.py	/^    def getBlockCommentEnd(self, line):$/;"	m	class:languageSwitcher
+getBlockCommentStart	CLanguageSwitcher.py	/^    def getBlockCommentStart(self, line):$/;"	m	class:CLanguageSwitcher
+getBlockCommentStart	CPlusPlusLanguageSwitcher.py	/^    def getBlockCommentStart(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+getBlockCommentStart	JavaLanguageSwitcher.py	/^    def getBlockCommentStart(self, line):$/;"	m	class:JavaLanguageSwitcher
+getBlockCommentStart	languageSwitcher.py	/^    def getBlockCommentStart(self, line):$/;"	m	class:languageSwitcher
+getBlockContext	PythonScopeTracker.py	/^    def getBlockContext(self, lineType):$/;"	m	class:PythonScopeTracker
+getBlockContext	scopeTracker.py	/^    def getBlockContext(self, lineType):$/;"	m	class:scopeTracker
+getBlockPattern	logChunk.py	/^    def getBlockPattern(self,line,keywords):$/;"	m	class:logChunk
+getBlocksFromStack	PythonScopeTracker.py	/^    def getBlocksFromStack(self, stack):$/;"	m	class:PythonScopeTracker
+getBugCompType	commit.py	/^    def getBugCompType(self):$/;"	m	class:commit
+getBugImpactType	commit.py	/^    def getBugImpactType(self):$/;"	m	class:commit
+getBugRootType	commit.py	/^    def getBugRootType(self):$/;"	m	class:commit
+getBugType	commit.py	/^    def getBugType(self, bug_type_str):$/;"	m	class:commit
+getClassPattern	logChunk.py	/^    def getClassPattern(self, line):$/;"	m	class:logChunk
+getClassRegexes	CLanguageSwitcher.py	/^    def getClassRegexes(self):$/;"	m	class:CLanguageSwitcher
+getClassRegexes	CPlusPlusLanguageSwitcher.py	/^    def getClassRegexes(self):$/;"	m	class:CPlusPlusLanguageSwitcher
+getClassRegexes	JavaLanguageSwitcher.py	/^    def getClassRegexes(self):$/;"	m	class:JavaLanguageSwitcher
+getClassRegexes	languageSwitcher.py	/^    def getClassRegexes(self):$/;"	m	class:languageSwitcher
+getConstructorOrDestructorRegex	CLanguageSwitcher.py	/^    def getConstructorOrDestructorRegex(self, classContext):$/;"	m	class:CLanguageSwitcher
+getConstructorOrDestructorRegex	CPlusPlusLanguageSwitcher.py	/^    def getConstructorOrDestructorRegex(self, classContext):$/;"	m	class:CPlusPlusLanguageSwitcher
+getConstructorOrDestructorRegex	JavaLanguageSwitcher.py	/^    def getConstructorOrDestructorRegex(self, classContext):$/;"	m	class:JavaLanguageSwitcher
+getConstructorOrDestructorRegex	languageSwitcher.py	/^    def getConstructorOrDestructorRegex(self, classContext):$/;"	m	class:languageSwitcher
+getContinuationFlag	scopeTracker.py	/^    def getContinuationFlag(self):$/;"	m	class:scopeTracker
+getEmptyKeywordDict	logChunk.py	/^    def getEmptyKeywordDict(self):$/;"	m	class:logChunk
+getExtBugDb	ghProcNoPatch.py	/^    def getExtBugDb(self,bug_db):$/;"	m	class:ghProcNoPatch
+getExtensions	LanguageSwitcherFactory.py	/^    def getExtensions(languages):$/;"	m	class:LanguageSwitcherFactory
+getExtensions	languageSwitcher.py	/^    def getExtensions(self):$/;"	m	class:languageSwitcher
+getFullTitleString	PatchMethod.py	/^    def getFullTitleString(self):$/;"	m	class:PatchMethod
+getFullTitleString	dumpLogs.py	/^    def getFullTitleString(keywordDictionary):$/;"	m	class:dumpLogs
+getFullTitleString	ghLogDb.py	/^    def getFullTitleString(self):$/;"	m	class:Patch
+getFullTitleString	ghLogDb.py	/^    def getFullTitleString(self):$/;"	m	class:Sha
+getFuncContext	PythonScopeTracker.py	/^    def getFuncContext(self, lineType):$/;"	m	class:PythonScopeTracker
+getFuncContext	scopeTracker.py	/^    def getFuncContext(self, lineType):$/;"	m	class:scopeTracker
+getFuncFromStack	PythonScopeTracker.py	/^    def getFuncFromStack(self, stack):$/;"	m	class:PythonScopeTracker
+getFunctionPattern	logChunk.py	/^    def getFunctionPattern(self, line): $/;"	m	class:logChunk
+getFunctionRegexes	CLanguageSwitcher.py	/^    def getFunctionRegexes(self):$/;"	m	class:CLanguageSwitcher
+getFunctionRegexes	CPlusPlusLanguageSwitcher.py	/^    def getFunctionRegexes(self):$/;"	m	class:CPlusPlusLanguageSwitcher
+getFunctionRegexes	JavaLanguageSwitcher.py	/^    def getFunctionRegexes(self):$/;"	m	class:JavaLanguageSwitcher
+getFunctionRegexes	languageSwitcher.py	/^    def getFunctionRegexes(self):$/;"	m	class:languageSwitcher
+getGitLog	getGitLog.py	/^def getGitLog(dumpLocation, repos, languages, patchMode=True):$/;"	f
+getLanguage	languageSwitcher.py	/^    def getLanguage(self):$/;"	m	class:languageSwitcher
+getLineCountOutsideFunc	logChunk.py	/^    def getLineCountOutsideFunc(self):$/;"	m	class:logChunk
+getLog	commit.py	/^    def getLog(self):$/;"	m	class:commit
+getSingleComment	CLanguageSwitcher.py	/^    def getSingleComment(self):$/;"	m	class:CLanguageSwitcher
+getSingleComment	CPlusPlusLanguageSwitcher.py	/^    def getSingleComment(self):$/;"	m	class:CPlusPlusLanguageSwitcher
+getSingleComment	JavaLanguageSwitcher.py	/^    def getSingleComment(self):$/;"	m	class:JavaLanguageSwitcher
+getSingleComment	languageSwitcher.py	/^    def getSingleComment(self):$/;"	m	class:languageSwitcher
+getTitleString	PatchMethod.py	/^    def getTitleString(self):$/;"	m	class:PatchMethod
+getTopType	scopeTracker.py	/^    def getTopType(self, stack, stackType):$/;"	m	class:scopeTracker
+get_time	ghProcNoPatch.py	/^def get_time(commit_date):$/;"	f
+ghLogDb	ghLogDb.py	/^class ghLogDb:$/;"	c
+ghLogDbTest	ghLogDbTest.py	/^class ghLogDbTest(unittest.TestCase):$/;"	c
+ghLogDbTestPython	ghLogDbTestPython.py	/^class ghLogDbTestPython(unittest.TestCase):$/;"	c
+ghProcNoPatch	ghProcNoPatch.py	/^class ghProcNoPatch:$/;"	c
+grabScopeLine	BracketScopeTracker.py	/^    def grabScopeLine(self, functionName, line, lineType):$/;"	m	class:BracketScopeTracker
+grabScopeLine	PythonScopeTracker.py	/^    def grabScopeLine(self, functionName, line, lineType):$/;"	m	class:PythonScopeTracker
+grabScopeLine	scopeTracker.py	/^    def grabScopeLine(self, functionName, line, lineType):$/;"	m	class:scopeTracker
+handleFunctionNameEnding	BracketScopeTracker.py	/^    def handleFunctionNameEnding(self, line, functionName, lineType, funcIdentFunc):$/;"	m	class:BracketScopeTracker
+handleFunctionNameEnding	PythonScopeTracker.py	/^    def handleFunctionNameEnding(self, line, functionName, lineType, funcIdentFunc):$/;"	m	class:PythonScopeTracker
+handleFunctionNameEnding	scopeTracker.py	/^    def handleFunctionNameEnding(self, line, functionName, lineType, funcIdentFunc):$/;"	m	class:scopeTracker
+hasMockFunction	logChunk.py	/^    def hasMockFunction(self):$/;"	m	class:logChunk
+if_bug	ghLogDb.py	/^    def if_bug(self, text):$/;"	m	class:Sha
+if_bug	ghProcNoPatch.py	/^def if_bug(text):$/;"	f
+increaseNewBrackets	BracketScopeTracker.py	/^    def increaseNewBrackets(self, stackValue, line, changeType):$/;"	m	class:BracketScopeTracker
+increaseNewIndent	PythonScopeTracker.py	/^    def increaseNewIndent(self, stackValue, changeType, lineDiff):$/;"	m	class:PythonScopeTracker
+increaseOldBrackets	BracketScopeTracker.py	/^    def increaseOldBrackets(self, stackValue, line, changeType):$/;"	m	class:BracketScopeTracker
+increaseOldIndent	PythonScopeTracker.py	/^    def increaseOldIndent(self, stackValue, changeType, lineDiff):$/;"	m	class:PythonScopeTracker
+increaseScope	BracketScopeTracker.py	/^    def increaseScope(self, stackValue, line, lineType, changeType, lineDiff = -1, isSimul = False):$/;"	m	class:BracketScopeTracker
+increaseScope	PythonScopeTracker.py	/^    def increaseScope(self, stackValue, line, lineType, changeType, lineDiff = -1, isSimul = False):$/;"	m	class:PythonScopeTracker
+increaseScope	scopeTracker.py	/^    def increaseScope(self, stackValue, line, lineType, changeType, lineDiff = -1, isSimul = False):$/;"	m	class:scopeTracker
+incrementBlockContext	logChunk.py	/^    def incrementBlockContext(self, keywordDict, lineType, includedKeywords, blockContext):$/;"	m	class:logChunk
+incrementDict	dictUtil.py	/^def incrementDict(dictKey, dictionary, inc=1):$/;"	f
+indentDepth	PythonScopeTracker.py	/^    def indentDepth(self, whiteSpace):$/;"	m	class:PythonScopeTracker
+isAssignment	logChunk.py	/^    def isAssignment(self, line):$/;"	m	class:logChunk
+isAuthor	ghLogDb.py	/^    def isAuthor(self,line,shaObj):$/;"	m	class:ghLogDb
+isBlockCommentEnd	BracketLanguageSwitcher.py	/^    def isBlockCommentEnd(self, line):$/;"	m	class:BracketLanguageSwitcher
+isBlockCommentEnd	languageSwitcher.py	/^    def isBlockCommentEnd(self, line):$/;"	m	class:languageSwitcher
+isBlockCommentStart	BracketLanguageSwitcher.py	/^    def isBlockCommentStart(self, line):$/;"	m	class:BracketLanguageSwitcher
+isBlockCommentStart	languageSwitcher.py	/^    def isBlockCommentStart(self, line):$/;"	m	class:languageSwitcher
+isClassDef	logChunk.py	/^    def isClassDef(self, line):$/;"	m	class:logChunk
+isConstructorOrDestructor	logChunk.py	/^    def isConstructorOrDestructor(self, line, classContext):$/;"	m	class:logChunk
+isConstructorOrDestructorWithList	logChunk.py	/^    def isConstructorOrDestructorWithList(self, line, classContextList):$/;"	m	class:logChunk
+isContinuationLine	BracketLanguageSwitcher.py	/^    def isContinuationLine(self, line, priorStatus):$/;"	m	class:BracketLanguageSwitcher
+isContinuationLine	languageSwitcher.py	/^    def isContinuationLine(self, line, priorStatus):$/;"	m	class:languageSwitcher
+isDate	ghLogDb.py	/^    def isDate(self,line,shaObj):$/;"	m	class:ghLogDb
+isFunction	logChunk.py	/^    def isFunction(self, line):$/;"	m	class:logChunk
+isFunctionalScopeChange	BracketScopeTracker.py	/^    def isFunctionalScopeChange(self, line, lineType):$/;"	m	class:BracketScopeTracker
+isFunctionalScopeChange	PythonScopeTracker.py	/^    def isFunctionalScopeChange(self, line, lineType):$/;"	m	class:PythonScopeTracker
+isFunctionalScopeChange	scopeTracker.py	/^    def isFunctionalScopeChange(self, line, lineType):$/;"	m	class:scopeTracker
+isObjectOrientedLanguage	CLanguageSwitcher.py	/^    def isObjectOrientedLanguage(self):$/;"	m	class:CLanguageSwitcher
+isObjectOrientedLanguage	CPlusPlusLanguageSwitcher.py	/^    def isObjectOrientedLanguage(self):$/;"	m	class:CPlusPlusLanguageSwitcher
+isObjectOrientedLanguage	JavaLanguageSwitcher.py	/^    def isObjectOrientedLanguage(self):$/;"	m	class:JavaLanguageSwitcher
+isObjectOrientedLanguage	languageSwitcher.py	/^    def isObjectOrientedLanguage(self):$/;"	m	class:languageSwitcher
+isScopeDecrease	BracketScopeTracker.py	/^    def isScopeDecrease(self, line, lineType):$/;"	m	class:BracketScopeTracker
+isScopeDecrease	PythonScopeTracker.py	/^    def isScopeDecrease(self, line, lineType):$/;"	m	class:PythonScopeTracker
+isScopeDecrease	scopeTracker.py	/^    def isScopeDecrease(self, line, lineType):$/;"	m	class:scopeTracker
+isScopeIncrease	BracketScopeTracker.py	/^    def isScopeIncrease(self, line, lineType):$/;"	m	class:BracketScopeTracker
+isScopeIncrease	PythonScopeTracker.py	/^    def isScopeIncrease(self, line, lineType):$/;"	m	class:PythonScopeTracker
+isScopeIncrease	scopeTracker.py	/^    def isScopeIncrease(self, line, lineType):$/;"	m	class:scopeTracker
+isSha	ghLogDb.py	/^    def isSha(self,line):$/;"	m	class:ghLogDb
+isValidClassName	CLanguageSwitcher.py	/^    def isValidClassName(self, name):$/;"	m	class:CLanguageSwitcher
+isValidClassName	CPlusPlusLanguageSwitcher.py	/^    def isValidClassName(self, classContext):$/;"	m	class:CPlusPlusLanguageSwitcher
+isValidClassName	JavaLanguageSwitcher.py	/^    def isValidClassName(self, classContext):$/;"	m	class:JavaLanguageSwitcher
+isValidClassName	languageSwitcher.py	/^    def isValidClassName(self, classContext):$/;"	m	class:languageSwitcher
+keyword	test.py	/^keyword=['throw ', 'included', 'single']$/;"	v
+keywordMatch	logChunk.py	/^    def keywordMatch(self, keyword, line):$/;"	m	class:logChunk
+keywordValidityCheck	logChunk.py	/^    def keywordValidityCheck(self, line):$/;"	m	class:logChunk
+languageSwitcher	languageSwitcher.py	/^class languageSwitcher(object):$/;"	c
+line	test.py	/^line='	private void copy(inputstream is, outputstream os, int max) throws ioexception{'$/;"	v
+line0	test.py	/^line0='@Override public Loader<List<Gist>> onCreateLoader(int i, Bundle bundle) {'$/;"	v
+line1	test.py	/^line1=/;"	v
+listOpenContexts	scopeTracker.py	/^    def listOpenContexts(self):$/;"	m	class:scopeTracker
+lmtzr	ghLogDb.py	/^lmtzr = WordNetLemmatizer()$/;"	v
+lmtzr	ghProcNoPatch.py	/^lmtzr = WordNetLemmatizer()$/;"	v
+loadLanguageMap	LanguageSwitcherFactory.py	/^    def loadLanguageMap(langFile = "..\/..\/Resources\/languages.yml"):$/;"	m	class:LanguageSwitcherFactory
+logChunk	logChunk.py	/^class logChunk:$/;"	c
+logChunktest	logChunkTestC.py	/^class logChunktest(unittest.TestCase):$/;"	c
+logChunktest	logChunkTestJAVA.py	/^class logChunktest(unittest.TestCase):$/;"	c
+logChunktest	logChunkTestPython.py	/^class logChunktest(unittest.TestCase):$/;"	c
+logChunktest	scopeTrackerTest.py	/^class logChunktest(unittest.TestCase):$/;"	c
+main	ExceptionExtractor.py	/^def main():$/;"	f
+main	allRunn.py	/^def main():$/;"	f
+main	getGitLog.py	/^def main():$/;"	f
+main	ghProc.py	/^def main():$/;"	f
+main	repoMiner.py	/^def main():$/;"	f
+main	runAll.py	/^def main(argv):$/;"	f
+markAllWithWarning	logChunk.py	/^    def markAllWithWarning(self):$/;"	m	class:logChunk
+markChunkAsError	logChunk.py	/^    def markChunkAsError(self):$/;"	m	class:logChunk
+markLine	logChunk.py	/^    def markLine(self, line):$/;"	m	class:logChunk
+methodToCsv	PatchMethod.py	/^    def methodToCsv(self):$/;"	m	class:PatchMethod
+modifyCountForComment	logChunk.py	/^    def modifyCountForComment(self, fChange, lineType, keywordDict, keywords, ftotal_add, ftotal_del):$/;"	m	class:logChunk
+nonZeroCount	dictUtil.py	/^def nonZeroCount(dictionary):$/;"	f
+outputKeyword	logChunk.py	/^    def outputKeyword(self, kw):$/;"	m	class:logChunk
+parse	ghProcNoPatch.py	/^    def parse(self, bug_only=False):$/;"	m	class:ghProcNoPatch
+parseFunctionName	BracketLanguageSwitcher.py	/^    def parseFunctionName(self, fullName):$/;"	m	class:BracketLanguageSwitcher
+parseFunctionName	languageSwitcher.py	/^    def parseFunctionName(self, line):$/;"	m	class:languageSwitcher
+parseLineForKeywords	logChunk.py	/^    def parseLineForKeywords(self, line, lineType, keywords, keywordDict, blockContext = []):$/;"	m	class:logChunk
+parseText	logChunk.py	/^    def parseText(self):$/;"	m	class:logChunk
+parse_no_merge	ghProcNoPatch.py	/^    def parse_no_merge(self):$/;"	m	class:ghProcNoPatch
+parse_no_stat	ghProcNoPatch.py	/^    def parse_no_stat(self, bug_only):$/;"	m	class:ghProcNoPatch
+patchToCsv	ghLogDb.py	/^    def patchToCsv(self, sha, project, inf2,fPtrPatchSummary):$/;"	m	class:Patch
+patchesToCsv	ghLogDb.py	/^    def patchesToCsv(self,inf2,fPtrPatchSummary):$/;"	m	class:Sha
+pattern	ExceptionExtractor.py	/^pattern="\\w*Exception"$/;"	v
+printLogChunk	logChunk.py	/^    def printLogChunk(self):$/;"	m	class:logChunk
+printPatch	PatchMethod.py	/^    def printPatch(self):$/;"	m	class:PatchMethod
+printPatch	ghLogDb.py	/^    def printPatch(self):$/;"	m	class:Patch
+printPatches	ghLogDb.py	/^    def printPatches(self):$/;"	m	class:Sha
+printScope	PythonScopeTracker.py	/^    def printScope(self):$/;"	m	class:PythonScopeTracker
+printScope	scopeTracker.py	/^    def printScope(self):$/;"	m	class:scopeTracker
+printSha	ghLogDb.py	/^    def printSha(self):$/;"	m	class:Sha
+processLastChunk	ghLogDb.py	/^    def processLastChunk(self, patchObj, curLogChunk):$/;"	m	class:ghLogDb
+processLog	ghLogDb.py	/^    def processLog(self, config = ""):$/;"	m	class:ghLogDb
+processLog	ghProc.py	/^def processLog(projPath, c_info, is_patch, password = ""):$/;"	f
+processLogNoPatch	ghLogDb.py	/^    def processLogNoPatch(self, config = ""):$/;"	m	class:ghLogDb
+processPatch	ghLogDb.py	/^    def processPatch(self, line, patchObj, curLogChunk):$/;"	m	class:ghLogDb
+processProject	runAll.py	/^def processProject(projPath):$/;"	f
+processProjects	runAll.py	/^def processProjects(projList):$/;"	f
+readHelper	logChunkTestC.py	/^    def readHelper(self,filename):$/;"	m	class:logChunktest
+readHelper	logChunkTestJAVA.py	/^    def readHelper(self,filename):$/;"	m	class:logChunktest
+readHelper	logChunkTestPython.py	/^    def readHelper(self,filename):$/;"	m	class:logChunktest
+readKeywords	logChunk.py	/^    def readKeywords(self, lst):$/;"	m	class:logChunk
+removeComments	logChunk.py	/^    def removeComments(self, line, commentFlag, lineType, commentType, functionName, phase):$/;"	m	class:logChunk
+removeExcludedKeywords	logChunk.py	/^    def removeExcludedKeywords(self, line, keywords):$/;"	m	class:logChunk
+removeStrings	CLanguageSwitcher.py	/^    def removeStrings(self, line):$/;"	m	class:CLanguageSwitcher
+removeStrings	CPlusPlusLanguageSwitcher.py	/^    def removeStrings(self, line):$/;"	m	class:CPlusPlusLanguageSwitcher
+removeStrings	JavaLanguageSwitcher.py	/^    def removeStrings(self, line):$/;"	m	class:JavaLanguageSwitcher
+removeStrings	languageSwitcher.py	/^    def removeStrings(self, line):$/;"	m	class:languageSwitcher
+removeStrings	logChunk.py	/^    def removeStrings(self, line):$/;"	m	class:logChunk
+reset	logChunk.py	/^    def reset(self):$/;"	m	class:logChunk
+resetFunctionName	BracketLanguageSwitcher.py	/^    def resetFunctionName(self, line):$/;"	m	class:BracketLanguageSwitcher
+resetFunctionName	languageSwitcher.py	/^    def resetFunctionName(self, line):$/;"	m	class:languageSwitcher
+runCmd	getGitLog.py	/^def runCmd(git_command, log_file):$/;"	f
+scopeDecreaseCount	BracketScopeTracker.py	/^    def scopeDecreaseCount(self, line, lineType):$/;"	m	class:BracketScopeTracker
+scopeDecreaseCount	PythonScopeTracker.py	/^    def scopeDecreaseCount(self, line, lineType):$/;"	m	class:PythonScopeTracker
+scopeDecreaseCount	scopeTracker.py	/^    def scopeDecreaseCount(self, line, lineType): #Seems to only matter in Bracket Languages$/;"	m	class:scopeTracker
+scopeIncreaseCount	BracketScopeTracker.py	/^    def scopeIncreaseCount(self, line, lineType):$/;"	m	class:BracketScopeTracker
+scopeIncreaseCount	PythonScopeTracker.py	/^    def scopeIncreaseCount(self, line, lineType):$/;"	m	class:PythonScopeTracker
+scopeIncreaseCount	scopeTracker.py	/^    def scopeIncreaseCount(self, line, lineType): #Seems to only matter in Bracket Languages$/;"	m	class:scopeTracker
+scopeOrder	BracketScopeTracker.py	/^    def scopeOrder(self, line, lineType):$/;"	m	class:BracketScopeTracker
+scopeOrder	PythonScopeTracker.py	/^    def scopeOrder(self, line, lineType):$/;"	m	class:PythonScopeTracker
+scopeOrder	scopeTracker.py	/^    def scopeOrder(self, line, lineType): #Seems to only matter in Bracket Languages$/;"	m	class:scopeTracker
+scopeTracker	scopeTracker.py	/^class scopeTracker(object):$/;"	c
+setContinuationFlag	scopeTracker.py	/^    def setContinuationFlag(self, status):$/;"	m	class:scopeTracker
+setLang	logChunk.py	/^    def setLang(self, language = "C"):$/;"	m	class:logChunk
+setLog	ghLogDb.py	/^    def setLog(self, log):$/;"	m	class:Sha
+setUp	ghLogDbTest.py	/^    def setUp(self):$/;"	m	class:ghLogDbTest
+setUp	ghLogDbTestPython.py	/^    def setUp(self):$/;"	m	class:ghLogDbTestPython
+setUp	logChunkTestC.py	/^    def setUp(self):$/;"	m	class:logChunktest
+setUp	logChunkTestJAVA.py	/^    def setUp(self):$/;"	m	class:logChunktest
+setUp	logChunkTestPython.py	/^    def setUp(self):$/;"	m	class:logChunktest
+setUp	scopeTrackerTest.py	/^    def setUp(self):$/;"	m	class:logChunktest
+shaToCsv	ghLogDb.py	/^    def shaToCsv(self,inf1,inf2,fPtrChangeSummary,fPtrPatchSummary):$/;"	m	class:Sha
+shortenConstructorOrDestructor	CLanguageSwitcher.py	/^    def shortenConstructorOrDestructor(self, toShorten):$/;"	m	class:CLanguageSwitcher
+shortenConstructorOrDestructor	CPlusPlusLanguageSwitcher.py	/^    def shortenConstructorOrDestructor(self, toShorten):$/;"	m	class:CPlusPlusLanguageSwitcher
+shortenConstructorOrDestructor	JavaLanguageSwitcher.py	/^    def shortenConstructorOrDestructor(self, toShorten):$/;"	m	class:JavaLanguageSwitcher
+shortenConstructorOrDestructor	languageSwitcher.py	/^    def shortenConstructorOrDestructor(self, toShorten):$/;"	m	class:languageSwitcher
+simulScopeChange	PythonScopeTracker.py	/^    def simulScopeChange(self, stackValue, lineType, changeType, depth, lineDiff):$/;"	m	class:PythonScopeTracker
+stoplist	ghLogDb.py	/^stoplist = stopwords.words('english')$/;"	v
+stoplist	ghProcNoPatch.py	/^stoplist = stopwords.words('english')$/;"	v
+sumLinesForRealFunc	logChunk.py	/^    def sumLinesForRealFunc(self):$/;"	m	class:logChunk
+test	ghLogDb.py	/^def test():$/;"	f
+test	ghProcNoPatch.py	/^def test():$/;"	f
+test_Commit1	ghLogDbTest.py	/^    def test_Commit1(self):$/;"	m	class:ghLogDbTest
+test_Commit1	ghLogDbTestPython.py	/^    def test_Commit1(self):$/;"	m	class:ghLogDbTestPython
+test_Commit2	ghLogDbTest.py	/^    def test_Commit2(self):$/;"	m	class:ghLogDbTest
+test_Commit2	ghLogDbTestPython.py	/^    def test_Commit2(self): $/;"	m	class:ghLogDbTestPython
+test_Commit3	ghLogDbTest.py	/^    def test_Commit3(self):$/;"	m	class:ghLogDbTest
+test_Commit4	ghLogDbTest.py	/^    def test_Commit4(self):$/;"	m	class:ghLogDbTest
+test_Commit5	ghLogDbTest.py	/^    def test_Commit5(self):$/;"	m	class:ghLogDbTest
+test_Commit7	ghLogDbTest.py	/^    def test_Commit7(self):$/;"	m	class:ghLogDbTest
+test_Commitb1	ghLogDbTest.py	/^    def test_Commitb1(self):$/;"	m	class:ghLogDbTest
+test_FunctionNameParse	logChunkTestC.py	/^    def test_FunctionNameParse(self):$/;"	m	class:logChunktest
+test_FunctionNameParseJAVA	logChunkTestJAVA.py	/^    def test_FunctionNameParseJAVA(self):$/;"	m	class:logChunktest
+test_KeywordValidityCheck	logChunkTestC.py	/^    def test_KeywordValidityCheck(self):$/;"	m	class:logChunktest
+test_cleanFunctionLine	logChunkTestPython.py	/^    def test_cleanFunctionLine(self):$/;"	m	class:logChunktest
+test_commit10	ghLogDbTest.py	/^    def test_commit10(self):$/;"	m	class:ghLogDbTest
+test_commit9	ghLogDbTest.py	/^    def test_commit9(self):$/;"	m	class:ghLogDbTest
+test_commmit11	ghLogDbTest.py	/^    def test_commmit11(self):$/;"	m	class:ghLogDbTest
+test_commmit12	ghLogDbTest.py	/^    def test_commmit12(self):$/;"	m	class:ghLogDbTest
+test_commmit14	ghLogDbTest.py	/^    def test_commmit14(self):$/;"	m	class:ghLogDbTest
+test_commmit15	ghLogDbTest.py	/^    def test_commmit15(self):$/;"	m	class:ghLogDbTest
+test_continuationLines	logChunkTestPython.py	/^    def test_continuationLines(self):$/;"	m	class:logChunktest
+test_isClassDef	logChunkTestC.py	/^    def test_isClassDef(self):$/;"	m	class:logChunktest
+test_isConstructorOrDestructor	logChunkTestC.py	/^    def test_isConstructorOrDestructor(self):$/;"	m	class:logChunktest
+test_isFuncC	logChunkTestC.py	/^    def test_isFuncC(self):$/;"	m	class:logChunktest
+test_isFunction	logChunkTestC.py	/^    def test_isFunction(self):$/;"	m	class:logChunktest
+test_isFunction	logChunkTestPython.py	/^    def test_isFunction(self):$/;"	m	class:logChunktest
+test_isupper	testExample.py	/^  def test_isupper(self):$/;"	m	class:TestStringMethods
+test_keyword_parse	logChunkTestPython.py	/^    def test_keyword_parse(self):$/;"	m	class:logChunktest
+test_parseText1	logChunkTestPython.py	/^    def test_parseText1(self):$/;"	m	class:logChunktest
+test_parseText10	logChunkTestPython.py	/^    def test_parseText10(self):$/;"	m	class:logChunktest
+test_parseText11	logChunkTestPython.py	/^    def test_parseText11(self):$/;"	m	class:logChunktest
+test_parseText12	logChunkTestPython.py	/^    def test_parseText12(self):$/;"	m	class:logChunktest
+test_parseText13	logChunkTestPython.py	/^    def test_parseText13(self):$/;"	m	class:logChunktest
+test_parseText14	logChunkTestPython.py	/^    def test_parseText14(self):$/;"	m	class:logChunktest
+test_parseText15	logChunkTestPython.py	/^    def test_parseText15(self):$/;"	m	class:logChunktest
+test_parseText16	logChunkTestPython.py	/^    def test_parseText16(self):$/;"	m	class:logChunktest
+test_parseText17	logChunkTestPython.py	/^    def test_parseText17(self):$/;"	m	class:logChunktest
+test_parseText18	logChunkTestPython.py	/^    def test_parseText18(self):$/;"	m	class:logChunktest
+test_parseText19	logChunkTestPython.py	/^    def test_parseText19(self): #Error with exact matching$/;"	m	class:logChunktest
+test_parseText2	logChunkTestPython.py	/^    def test_parseText2(self):$/;"	m	class:logChunktest
+test_parseText3	logChunkTestPython.py	/^    def test_parseText3(self):$/;"	m	class:logChunktest
+test_parseText4	logChunkTestPython.py	/^    def test_parseText4(self):$/;"	m	class:logChunktest
+test_parseText5	logChunkTestPython.py	/^    def test_parseText5(self):$/;"	m	class:logChunktest
+test_parseText6	logChunkTestPython.py	/^    def test_parseText6(self):$/;"	m	class:logChunktest
+test_parseText7	logChunkTestPython.py	/^    def test_parseText7(self):$/;"	m	class:logChunktest
+test_parseText8	logChunkTestPython.py	/^    def test_parseText8(self):$/;"	m	class:logChunktest
+test_parseText9	logChunkTestPython.py	/^    def test_parseText9(self):$/;"	m	class:logChunktest
+test_parseText_Block1	logChunkTestJAVA.py	/^    def test_parseText_Block1(self):$/;"	m	class:logChunktest
+test_parseText_Block10	logChunkTestJAVA.py	/^    def test_parseText_Block10(self):$/;"	m	class:logChunktest
+test_parseText_Block11	logChunkTestJAVA.py	/^    def test_parseText_Block11(self):$/;"	m	class:logChunktest
+test_parseText_Block2	logChunkTestJAVA.py	/^    def test_parseText_Block2(self): #ISSUE: the current cannot assign values to multiple blocks.$/;"	m	class:logChunktest
+test_parseText_Block3	logChunkTestJAVA.py	/^    def test_parseText_Block3(self):$/;"	m	class:logChunktest
+test_parseText_Block4	logChunkTestJAVA.py	/^    def test_parseText_Block4(self):$/;"	m	class:logChunktest
+test_parseText_Block5	logChunkTestJAVA.py	/^    def test_parseText_Block5(self):$/;"	m	class:logChunktest
+test_parseText_Block6	logChunkTestJAVA.py	/^    def test_parseText_Block6(self):$/;"	m	class:logChunktest
+test_parseText_Block7	logChunkTestJAVA.py	/^    def test_parseText_Block7(self): #Need to update expected result (Question, we seem to not count the } at end of block?)$/;"	m	class:logChunktest
+test_parseText_Block8	logChunkTestJAVA.py	/^    def test_parseText_Block8(self): #Need to update expected result (Question, we seem to not count the } at end of block?)$/;"	m	class:logChunktest
+test_parseText_Block9	logChunkTestJAVA.py	/^    def test_parseText_Block9(self):$/;"	m	class:logChunktest
+test_parseText_Single1	logChunkTestC.py	/^    def test_parseText_Single1(self):$/;"	m	class:logChunktest
+test_parseText_Single10	logChunkTestC.py	/^    def test_parseText_Single10(self):$/;"	m	class:logChunktest
+test_parseText_Single11	logChunkTestC.py	/^    def test_parseText_Single11(self):$/;"	m	class:logChunktest
+test_parseText_Single12	logChunkTestC.py	/^    def test_parseText_Single12(self):$/;"	m	class:logChunktest
+test_parseText_Single13	logChunkTestC.py	/^    def test_parseText_Single13(self):$/;"	m	class:logChunktest
+test_parseText_Single14	logChunkTestC.py	/^    def test_parseText_Single14(self):$/;"	m	class:logChunktest
+test_parseText_Single15	logChunkTestC.py	/^    def test_parseText_Single15(self):$/;"	m	class:logChunktest
+test_parseText_Single2	logChunkTestC.py	/^    def test_parseText_Single2(self):$/;"	m	class:logChunktest
+test_parseText_Single21	logChunkTestC.py	/^    def test_parseText_Single21(self):$/;"	m	class:logChunktest
+test_parseText_Single22	logChunkTestC.py	/^    def test_parseText_Single22(self):$/;"	m	class:logChunktest
+test_parseText_Single23	logChunkTestC.py	/^    def test_parseText_Single23(self):$/;"	m	class:logChunktest
+test_parseText_Single24	logChunkTestC.py	/^    def test_parseText_Single24(self):$/;"	m	class:logChunktest
+test_parseText_Single25	logChunkTestC.py	/^    def test_parseText_Single25(self):$/;"	m	class:logChunktest
+test_parseText_Single27	logChunkTestC.py	/^    def test_parseText_Single27(self):$/;"	m	class:logChunktest
+test_parseText_Single29	logChunkTestC.py	/^    def test_parseText_Single29(self):$/;"	m	class:logChunktest
+test_parseText_Single3	logChunkTestC.py	/^    def test_parseText_Single3(self):$/;"	m	class:logChunktest
+test_parseText_Single31	logChunkTestC.py	/^    def test_parseText_Single31(self):$/;"	m	class:logChunktest
+test_parseText_Single32	logChunkTestC.py	/^    def test_parseText_Single32(self):$/;"	m	class:logChunktest
+test_parseText_Single33	logChunkTestC.py	/^    def test_parseText_Single33(self):$/;"	m	class:logChunktest
+test_parseText_Single35	logChunkTestC.py	/^    def test_parseText_Single35(self):$/;"	m	class:logChunktest
+test_parseText_Single36	logChunkTestC.py	/^    def test_parseText_Single36(self):$/;"	m	class:logChunktest
+test_parseText_Single37	logChunkTestC.py	/^    def test_parseText_Single37(self):$/;"	m	class:logChunktest
+test_parseText_Single38	logChunkTestC.py	/^    def test_parseText_Single38(self):$/;"	m	class:logChunktest
+test_parseText_Single40	logChunkTestC.py	/^    def test_parseText_Single40(self):$/;"	m	class:logChunktest
+test_parseText_Single41	logChunkTestC.py	/^    def test_parseText_Single41(self):$/;"	m	class:logChunktest
+test_parseText_Single42	logChunkTestC.py	/^    def test_parseText_Single42(self):$/;"	m	class:logChunktest
+test_parseText_Single43	logChunkTestC.py	/^    def test_parseText_Single43(self):$/;"	m	class:logChunktest
+test_parseText_Single44	logChunkTestC.py	/^    def test_parseText_Single44(self):$/;"	m	class:logChunktest
+test_parseText_Single45	logChunkTestC.py	/^    def test_parseText_Single45(self): #Not Sure how I want to handle this$/;"	m	class:logChunktest
+test_parseText_Single46	logChunkTestC.py	/^    def test_parseText_Single46(self): #Not Sure how I want to handle this$/;"	m	class:logChunktest
+test_parseText_Single47	logChunkTestC.py	/^    def test_parseText_Single47(self): #Not Sure how I want to handle this$/;"	m	class:logChunktest
+test_parseText_Single48	logChunkTestC.py	/^    def test_parseText_Single48(self): #Not Sure how I want to handle this$/;"	m	class:logChunktest
+test_parseText_Single49	logChunkTestC.py	/^    def test_parseText_Single49(self): #Not Sure how I want to handle this$/;"	m	class:logChunktest
+test_parseText_Single50	logChunkTestC.py	/^    def test_parseText_Single50(self): #Not Sure how I want to handle this$/;"	m	class:logChunktest
+test_parseText_Single51	logChunkTestC.py	/^    def test_parseText_Single51(self):$/;"	m	class:logChunktest
+test_parseText_Single52	logChunkTestC.py	/^    def test_parseText_Single52(self): #Not Sure how I want to handle this, this case is part of a larger failing chunk.$/;"	m	class:logChunktest
+test_parseText_Single53	logChunkTestC.py	/^    def test_parseText_Single53(self): $/;"	m	class:logChunktest
+test_parseText_Single54	logChunkTestC.py	/^    def test_parseText_Single54(self): $/;"	m	class:logChunktest
+test_parseText_Single55	logChunkTestC.py	/^    def test_parseText_Single55(self): # Testing our ability to find struct constructors.$/;"	m	class:logChunktest
+test_parseText_Single6	logChunkTestC.py	/^    def test_parseText_Single6(self):$/;"	m	class:logChunktest
+test_parseText_Single7	logChunkTestC.py	/^    def test_parseText_Single7(self):$/;"	m	class:logChunktest
+test_parseText_Single8	logChunkTestC.py	/^    def test_parseText_Single8(self):$/;"	m	class:logChunktest
+test_parseText_Single9	logChunkTestC.py	/^    def test_parseText_Single9(self):$/;"	m	class:logChunktest
+test_removeComments	logChunkTestC.py	/^    def test_removeComments(self):$/;"	m	class:logChunktest
+test_scopeOrder	scopeTrackerTest.py	/^    def test_scopeOrder(self):$/;"	m	class:logChunktest
+test_split	testExample.py	/^  def test_split(self):$/;"	m	class:TestStringMethods
+test_upper	testExample.py	/^  def test_upper(self):$/;"	m	class:TestStringMethods
+timeout	ghLogDb.py	/^def timeout(signum, frame):$/;"	f
+toStr	PatchMethod.py	/^def toStr(text):$/;"	f
+toStr	ghLogDb.py	/^def toStr(text):$/;"	f
+toStr	ghProcNoPatch.py	/^def toStr(text):$/;"	f
+updateCounts	logChunk.py	/^    def updateCounts(self, lineType, ftotal_add, ftotal_del, phase, startFlag):$/;"	m	class:logChunk
+updateScopeAndKeywords	logChunk.py	/^    def updateScopeAndKeywords(self, phase, line, lineType, lineNum, sT, foundBlock, blockKeywordLine, blockKeywordType, shortFunctionName, singleKeyWordList, blockKeyWordList, keywordDictionary):$/;"	m	class:logChunk
