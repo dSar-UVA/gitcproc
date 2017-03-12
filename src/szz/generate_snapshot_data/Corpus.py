@@ -28,6 +28,11 @@ from Util import cd
 import Util
 
 
+DEL_MIN = 0
+DEL_MAX = 3
+ADD_MIN = 0
+ADD_MAX = 3
+
 
 class Corpus:
 
@@ -76,6 +81,7 @@ class Corpus:
         print "fetchEditsFromCsv"
         proj_loc = self.cfg_info.getProjectLocation(self.project_name)
         change_db_csv = os.path.join(proj_loc,'FileChanges.csv')
+        
         if not os.path.isfile(change_db_csv):
             print "!!! %s does not exist, first dump the changes" % (change_db_csv)
         else:
@@ -86,9 +92,16 @@ class Corpus:
             csvreader = csv.reader(csvfile, delimiter=',', quotechar='|')
             csvreader.next()
             for row in csvreader:
+                print row
                 project, sha, language, file_name, is_test, committer, \
                 commit_date, author, author_date, is_bug, total_add, total_del = row[:]
                 #print (',').join((project, file_name, sha, commit_date, is_bug, is_test))
+                
+                if int(total_del) > DEL_MAX or int(total_add) > ADD_MAX:
+                    continue
+                if int(total_del) == DEL_MIN or int(total_add) == ADD_MIN:
+                    continue
+                
                 e = edit(project, file_name, is_test, sha, commit_date, is_bug)
                 csv_edits.append(e)
 

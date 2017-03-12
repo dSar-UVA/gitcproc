@@ -18,7 +18,7 @@ class ConfigInfoSZZ(ConfigInfo):
     
     def __init__(self, newFile):
         ConfigInfo.__init__(self, newFile)    
-        self.config_szz    = self.cfg.ConfigSectionMap('SZZ')
+        self.config_szz    = self.cfg.ConfigSectionMap('Szz')
         
     def getSnapshotInterval(self):
         

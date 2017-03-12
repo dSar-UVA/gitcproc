@@ -9,7 +9,7 @@ from git import *
 import csv
 from shlex import split as format_cmd
 from subprocess import Popen, PIPE, STDOUT, call
-
+from datetime import datetime
 from projDB import DbProj
 
 from os.path import dirname
@@ -165,7 +165,16 @@ def dumpSnapshotsBySha(srcPath, destPath, shaList):
                 Util.runCmd("git reset --hard")
 
 #--------------------------------------------------------------------------------------------------------------------------
-def dumpSnapshotsByInterval(srcPath, destPath, ss_interval_len, commitDateMin, commitDateMax):
+
+def gitDumpSnapshot(gitCommand):
+    os.system("git reset --hard")
+    os.system(gitCommand)
+    print gitCommand
+    os.system("git reset --hard")
+    os.system("git clean -fd .")
+
+def dumpSnapshotsByInterval(srcPath, destPath, ss_interval_len,
+         commitDateMin, commitDateMax):
 
     print srcPath, destPath, commitDateMin, commitDateMax
 
@@ -176,44 +185,47 @@ def dumpSnapshotsByInterval(srcPath, destPath, ss_interval_len, commitDateMin, c
 
     project_name = getProjName(srcPath)
 
+    print project_name
+
     start_date = commitDateMin + timedelta(days=1)
 
     while start_date <= commitDateMax:
         #snapshot = destPath + os.sep + project_name + os.sep + project_name + "_" + str(start_date)
-        snapshot = destPath + os.sep + project_name + os.sep + str(start_date)
+        #snapshot = destPath + os.sep + project_name + os.sep + str(start_date)
+        snapshot = destPath + os.sep + str(start_date)
         print snapshot
 
         if not os.path.isdir(snapshot):
             Util.copy_dir(srcPath,snapshot)
             git_command = "git checkout `git rev-list -n 1 --no-merges --before=\"" + str(start_date) + "\" " +  str(branch) + "`"
             with cd(snapshot):
-                Util.runCmd("git reset --hard")
-                #Util.runCmd("git checkout")
-                Util.runCmd(git_command)
-                Util.runCmd("git reset --hard")
+                gitDumpSnapshot(git_command)
 
         start_date = start_date + timedelta(days=ss_interval_len*30)
 
     #snapshot = destPath + os.sep + project_name + os.sep + project_name + "_" + str(commitDateMax)
     start_date = commitDateMax
-    snapshot = destPath + os.sep + project_name + os.sep + str(start_date)
+    snapshot = destPath + os.sep + str(start_date)
 
     print snapshot
     if not os.path.isdir(snapshot):
         Util.copy_dir(srcPath,snapshot)
         git_command = "git checkout `git rev-list -n 1 --no-merges --before=\"" + str(start_date) + "\" " +  str(branch) + "`"
         with cd(snapshot):
-            Util.runCmd("git reset --hard")
+            gitDumpSnapshot(git_command)
+            #os.system("git reset --hard")
             #Util.runCmd("git checkout")
-            Util.runCmd(git_command)
+            #os.system(git_command)
 
 
 
 
 #--------------------------------------------------------------------------------------------------------------------------
+
 def fetchCommitDate(cfg, projectPath, languages):
 
     db_config = cfg.ConfigSectionMap("Database")
+    print db_config
     logging.debug("Database configuration = %r\n", db_config)
 
     proj_path = projectPath.rstrip(os.sep)
@@ -251,7 +263,27 @@ def fetchCommitDates(cfg, projectPath, languages):
     return (min(min_commit_date), max(max_commit_date))
 
 
+def fetchCommitDatesFromPatchDump(projectPath):
+    commit_dates = set()
 
+    patch_loc = os.path.join(projectPath,'patches')
+    patch_files = [f for f in os.listdir(patch_loc) \
+                if f.endswith('.patch')]
+    #print len(patch_files)
+    
+    for f in patch_files:
+      #print f
+      f1 = f.split('__')[1]
+      f2 = f1.split('__')[0]
+      #print "-->", f2
+      commit_dates.add(f2)
+      
+    min_commit_date = datetime.strptime(min(commit_dates), '%Y-%m-%d').date()
+    max_commit_date = datetime.strptime(max(commit_dates), '%Y-%m-%d').date()
+    
+    print min_commit_date, max_commit_date
+    return (min_commit_date, max_commit_date)
+    
 
 #=============================================================================================
 def downloadSnapshot(snapshotDir, projectDir, projectName, configInfo):
@@ -260,23 +292,35 @@ def downloadSnapshot(snapshotDir, projectDir, projectName, configInfo):
     msg += ' Dump the snapshots for project %s \n' % projectName
     msg += '---------------------------------------------------- \n'
     print(msg)
+
+    print snapshotDir
     
     project_snapshot_dir = os.path.join(snapshotDir, projectName)
     project_cur_clone    = os.path.join(projectDir, projectName)
     
     if os.path.isdir(project_snapshot_dir):
-        print "!! %s already exists...going to delete it \n" % project_snapshot_dir
+        print "!! %s already exists...going to delete it \n" \
+            % project_snapshot_dir
         Util.runCmd("rm -rf " + project_snapshot_dir)
         
     interval_option, interval = configInfo.getSnapshotInterval()
+    print "--->", interval_option, interval
+    
         
     if interval_option == True:
-        '''
-            This path is not tested
-        '''
+        '''      This path is not tested '''
         #1. First, retrieve the 1st commit date from SQL server
         langs = configInfo.getLanguages()
-        commit_dates = fetchCommitDates(configInfo, project_cur_clone, langs)
+        snapshot_sha_file = configInfo.getShaFiles()
+        
+        if not os.path.isfile(snapshot_sha_file):
+          print "!! %s does not exist, going to look into repo dump" \
+            % snapshot_sha_file
+
+          commit_dates = fetchCommitDatesFromPatchDump(project_cur_clone)
+        
+        else:
+          commit_dates = fetchCommitDates(configInfo, project_cur_clone, langs)
 
         #2. Snapshot
         dumpSnapshotsByInterval(project_cur_clone, project_snapshot_dir, \
@@ -332,7 +376,7 @@ def downloadSnapshots(config_info):
         
     repos = config_info.getRepos()
     for r in repos:
-        print r
+        print "===", r
         downloadSnapshot(snapshot_dir, project_dir, r, config_info)
 #=============================================================================================
 
@@ -344,17 +388,20 @@ def downloadSnapshots(config_info):
 
 def main():
 
-    parser = argparse.ArgumentParser(description='Utility to take snapshots of git repositories at specified (in months) interval')
+    parser = argparse.ArgumentParser(description='Utility to take " \
+        + "snapshots of git repositories at specified (in months) interval')
 
     #project specific arguments
-    parser.add_argument("config_file", help = "This is the path to your configuration file.")
+    parser.add_argument("config_file", \
+        help = "This is the path to your configuration file.")
 
     #logging and config specific arguments
     parser.add_argument("-v", "--verbose", default = 'w', nargs="?", \
-                            help="increase verbosity: d = debug, i = info, w = warnings, e = error, c = critical.  " \
+        help="increase verbosity: d = debug, i = info, w = warnings, e = error, c = critical.  " \
                             "By default, we will log everything above warnings.")
+    
     parser.add_argument("--log", dest="log_file", default='log.txt', \
-    					help="file to store the logs, by default it will be stored at log.txt")
+    	help="file to store the logs, by default it will be stored at log.txt")
     
 
     args = parser.parse_args()

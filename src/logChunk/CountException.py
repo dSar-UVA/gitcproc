@@ -1,2 +1,0 @@
-class CountException(Exception):
-    pass

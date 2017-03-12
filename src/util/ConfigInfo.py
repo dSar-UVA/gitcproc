@@ -11,14 +11,18 @@ from Config import Config
 class ConfigInfo:
   
   def __init__(self, newFile):
+
     self.configFile = newFile
+    
     self.cfg = Config(self.configFile)
+
     
     self.config_db    = self.cfg.ConfigSectionMap("Database")
     self.config_repo  = self.cfg.ConfigSectionMap("Repos")
     self.config_key   = self.cfg.ConfigSectionMap("Keywords")
     self.config_log   = self.cfg.ConfigSectionMap("Log")    
     self.config_flags = self.cfg.ConfigSectionMap("Flags")
+
     
     self.setFlags()
 
@@ -31,6 +35,7 @@ class ConfigInfo:
     self.DATABASE     = bool(util.strtobool(self.config_flags['database']))
     self.CSV          = bool(util.strtobool(self.config_flags['csv']))
     self.LOGTIME      = bool(util.strtobool(self.config_flags['logtime']))
+    self.SZZ          = bool(util.strtobool(self.config_flags['szz']))
     
 
   def getRepos(self):
@@ -89,6 +94,14 @@ class ConfigInfo:
       except:
         patch = True
       return patch
+  
+  def getBugPatchMode(self):
+      try:
+        bug_patch = bool(util.strtobool(self.config_log['bugPatch']))
+        
+      except:
+        bug_patch = True
+      return bug_patch
       
   def getLanguages(self):
      try:

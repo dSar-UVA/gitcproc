@@ -23,6 +23,7 @@ def runCmd(cmd):
     out, err = proc.communicate()
     exitcode = proc.returncode
     #
+    
     return exitcode, out, err
 
 class cd:
